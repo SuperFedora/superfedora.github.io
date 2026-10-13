@@ -63,7 +63,7 @@
 
     // Center sun behind the logo/center
     centerX = width * 0.5;
-    centerY = height * 0.46;
+    centerY = height * 0.5;
 
     if (prefersReduced) renderFrame(performance.now());
   }

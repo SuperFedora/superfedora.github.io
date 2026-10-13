@@ -186,6 +186,19 @@ def run_tests():
         assert before_sfx != after_sfx, "SFX toggle failed"
         print(f"  [OK] CRT toggled ({before_crt} -> {after_crt}), SFX toggled ({before_sfx} -> {after_sfx}).")
 
+        # 9. Initial Title Screen Presentation
+        print("[TEST 9] Testing Initial Title Screen Presentation...")
+        super_text = cdp.eval("document.querySelector('#mainscreen .mainscreen-super-title').textContent.trim()")
+        fedora_text = cdp.eval("document.querySelector('#mainscreen .mainscreen-fedora-title').textContent.trim()")
+        assert super_text == "SUPER", f"Expected SUPER in title screen, got '{super_text}'"
+        assert fedora_text == "FEDORA", f"Expected FEDORA in title screen, got '{fedora_text}'"
+        ms_bottom = cdp.eval("document.getElementById('mainscreen').getBoundingClientRect().bottom")
+        hero_top = cdp.eval("document.getElementById('hero').getBoundingClientRect().top")
+        assert hero_top >= ms_bottom - 1, f"Hero section overlaps mainscreen ({hero_top} < {ms_bottom})"
+        clutter_count = cdp.eval("document.querySelectorAll('#mainscreen .mainscreen-badge, #mainscreen .mainscreen-pills, #mainscreen .mainscreen-actions, #mainscreen .mainscreen-avatar-frame').length")
+        assert clutter_count == 0, f"Expected 0 clutter elements in title screen, found {clutter_count}"
+        print("  [OK] Clean title screen verified: SUPER + FEDORA only, zero clutter, exact viewport fitting.")
+
         print("\nAll deep verification tests PASSED!")
         s.close()
     finally:

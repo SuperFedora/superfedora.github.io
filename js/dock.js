@@ -4,6 +4,7 @@
 
   var sectionIds = [
     "mainscreen",
+    "hero",
     "install",
     "pre-installed",
     "philosophy",
