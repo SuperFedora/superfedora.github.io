@@ -179,6 +179,16 @@
             Installed via 10 idempotent modules in one single command.
           </p>
 
+          <!-- Install Mode Selector: Quick Install vs Build from Source -->
+          <div class="key-filter-tabs" role="group" aria-label="Installation mode selector" style="margin-bottom: 8px;">
+            <button type="button" class="key-filter-btn install-mode-btn active" data-install-mode="quick" aria-pressed="true" onclick="setInstallMode('quick', this)">
+              [ 1. QUICK INSTALL (BINARY) ]
+            </button>
+            <button type="button" class="key-filter-btn install-mode-btn" data-install-mode="source" aria-pressed="false" onclick="setInstallMode('source', this)">
+              [ 2. BUILD FROM SOURCE (-march=native) ]
+            </button>
+          </div>
+
           <!-- 16-Bit Terminal Install Box -->
           <div class="terminal-install-box">
             <div class="install-cmd-wrap">
@@ -191,14 +201,14 @@
           </div>
 
           <div class="install-meta">
-            <span>Zero Drive Wipe Required</span>
-            <span>Idempotent (Safe to Re-Run)</span>
+            <span>Quick Binary or Localhost Source Build</span>
+            <span>Quake AI Console (Super + `)</span>
             <span>Baseline Btrfs Snapshot First</span>
           </div>
 
           <!-- Hero Action Buttons -->
           <div class="hero-actions">
-            <a href="#install" class="btn-snes-primary">&gt; Quick Install</a>
+            <a href="#install" class="btn-snes-primary">&gt; Quick / Source Install</a>
             <a href="#pre-installed" class="btn-snes-secondary">&gt; Pre-Installed Stack</a>
             <a href="#modules" class="btn-snes-secondary">&gt; 10 Modules HUD</a>
             <a href="#keybindings" class="btn-snes-secondary">&gt; COSMIC Keys</a>
@@ -230,16 +240,16 @@
               <span class="snes-spec-val">Hyprland (Wayland)</span>
             </div>
             <div class="snes-spec-item">
-              <span class="snes-spec-label">Keybindings</span>
-              <span class="snes-spec-val">Pop!_OS COSMIC</span>
+              <span class="snes-spec-label">Install Modes</span>
+              <span class="snes-spec-val">Quick or Source (-march=native)</span>
             </div>
             <div class="snes-spec-item">
-              <span class="snes-spec-label">Status Bar</span>
-              <span class="snes-spec-val">Quickshell Bar</span>
+              <span class="snes-spec-label">Desktop HUD</span>
+              <span class="snes-spec-val">Quickshell Multi-Edge + Quake AI</span>
             </div>
             <div class="snes-spec-item">
               <span class="snes-spec-label">Screensaver</span>
-              <span class="snes-spec-val">IdleScreen (2m)</span>
+              <span class="snes-spec-val">IdleScreen 16-Bit (2m)</span>
             </div>
             <div class="snes-spec-item">
               <span class="snes-spec-label">Rollback</span>
@@ -254,25 +264,25 @@
         <div class="dual-marquee-track-stack">
           <!-- Stream 1: Scrolling Left -->
           <div class="marquee-stream stream-left">
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>HYPRLAND 0.47+</b> WAYLAND NATIVE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>HYPRLAND 0.53+</b> WAYLAND NATIVE<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>BTRFS SNAPPER</b> #1 BASELINE GUARANTEE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>COSMIC KEYS</b> POP!_OS MUSCLE MEMORY<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>QUICKSHELL</b> REACTIVE QML DESKTOP HUD<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>IDLESCREEN</b> 48 IN-TREE ASCII SCENES<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>ZERO CYCLES</b> WHILE WORKSTATION ACTIVE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>QUAKE AI</b> SUPER + ` SLIDE-DOWN CONSOLE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>MULTI-EDGE DOCKS</b> TOP • BOTTOM • LEFT • RIGHT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>IDLESCREEN</b> EXCLUSIVE 16-BIT SUPERFEDORA<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>16-BIT THEMES</b> 8 JEWELS X DARK &amp; LIGHT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>SOURCE BUILDER</b> LOCALHOST -march=native<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>DUAL CLI</b> sf &amp; superfedora COMMANDS<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>100% IDEMPOTENT</b> 10 ORDERED MODULES<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>ZERO-SYMLINKS</b> DIRECT ~/.config/ DEPLOY<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>UWSM CITIZEN</b> FIRST-CLASS SYSTEMD USER UNITS<span class="marquee-bracket">]</span></span>
             <!-- Seamless infinite loop duplicate -->
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>HYPRLAND 0.47+</b> WAYLAND NATIVE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>HYPRLAND 0.53+</b> WAYLAND NATIVE<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>BTRFS SNAPPER</b> #1 BASELINE GUARANTEE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>COSMIC KEYS</b> POP!_OS MUSCLE MEMORY<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>QUICKSHELL</b> REACTIVE QML DESKTOP HUD<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>IDLESCREEN</b> 48 IN-TREE ASCII SCENES<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>ZERO CYCLES</b> WHILE WORKSTATION ACTIVE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>QUAKE AI</b> SUPER + ` SLIDE-DOWN CONSOLE<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>MULTI-EDGE DOCKS</b> TOP • BOTTOM • LEFT • RIGHT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>IDLESCREEN</b> EXCLUSIVE 16-BIT SUPERFEDORA<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>16-BIT THEMES</b> 8 JEWELS X DARK &amp; LIGHT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>SOURCE BUILDER</b> LOCALHOST -march=native<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>DUAL CLI</b> sf &amp; superfedora COMMANDS<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>100% IDEMPOTENT</b> 10 ORDERED MODULES<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>ZERO-SYMLINKS</b> DIRECT ~/.config/ DEPLOY<span class="marquee-bracket">]</span></span>
@@ -281,10 +291,10 @@
 
           <!-- Stream 2: Scrolling Right -->
           <div class="marquee-stream stream-right">
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>GHOSTTY &amp; ALACRITTY</b> GPU TERMINALS<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>FUZZEL</b> WAYLAND FAST APP LAUNCHER<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>NEOVIM</b> MODERN LUA DEV SUITE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>RUST TOOLCHAIN</b> RUSTUP + CARGO-BINSTALL<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>ANTIGRAVITY CLI</b> DEFAULT QUAKE AI AGENT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>RATATUI TUIS</b> WIREMIX • WLCTL • BLUETUI<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>HARDWARE TELEMETRY</b> CPU • GPU • RAM • TEMP • NET<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip"><span class="marquee-bracket">[</span><b>RUST TOOLCHAIN</b> target-cpu=native + LTO<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>PYTHON UV</b> ULTRA-FAST PACKAGE ENGINE<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>NODE.JS LTS</b> ASYNCHRONOUS RUNTIME<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>PIPEWIRE</b> LOW-LATENCY WIREPLUMBER<span class="marquee-bracket">]</span></span>
@@ -293,10 +303,10 @@
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>CRT SHADER</b> 16-BIT SCANLINE SIMULATION<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip"><span class="marquee-bracket">[</span><b>APACHE 2.0</b> PURE OPEN SOURCE ASSETS<span class="marquee-bracket">]</span></span>
             <!-- Seamless infinite loop duplicate -->
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>GHOSTTY &amp; ALACRITTY</b> GPU TERMINALS<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>FUZZEL</b> WAYLAND FAST APP LAUNCHER<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>NEOVIM</b> MODERN LUA DEV SUITE<span class="marquee-bracket">]</span></span>
-            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>RUST TOOLCHAIN</b> RUSTUP + CARGO-BINSTALL<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>ANTIGRAVITY CLI</b> DEFAULT QUAKE AI AGENT<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>RATATUI TUIS</b> WIREMIX • WLCTL • BLUETUI<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>HARDWARE TELEMETRY</b> CPU • GPU • RAM • TEMP • NET<span class="marquee-bracket">]</span></span>
+            <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>RUST TOOLCHAIN</b> target-cpu=native + LTO<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>PYTHON UV</b> ULTRA-FAST PACKAGE ENGINE<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>NODE.JS LTS</b> ASYNCHRONOUS RUNTIME<span class="marquee-bracket">]</span></span>
             <span class="marquee-chip" aria-hidden="true"><span class="marquee-bracket">[</span><b>PIPEWIRE</b> LOW-LATENCY WIREPLUMBER<span class="marquee-bracket">]</span></span>
@@ -313,11 +323,11 @@
     <section class="panel-section" id="install">
       <div class="snes-eyebrow">
         <span class="snes-eyebrow-pip"></span>
-        DEPLOYMENT // 3-STEP BOOTSTRAP
+        DEPLOYMENT // QUICK INSTALL OR LOCALHOST SOURCE BUILD
       </div>
-      <h2 class="section-heading">Installation &amp; Rollback Guarantee</h2>
+      <h2 class="section-heading">Installation &amp; Localhost Hardware Optimization</h2>
       <p class="section-desc">
-        Install cleanly from a fresh Fedora netinstall, or run it over an existing Fedora Workstation or Server.
+        Install cleanly from a fresh Fedora netinstall, or run it over an existing Fedora Workstation or Server. The interactive installer lets you choose between <strong>Quick Install</strong> (prebuilt binaries) or <strong>Build from Source</strong> (compiled specifically for your localhost CPU microarchitecture).
       </p>
 
       <div class="compare-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
@@ -336,14 +346,15 @@
         <!-- Step 2 -->
         <div class="compare-card">
           <span class="compare-badge badge-super">STEP 2</span>
-          <h3 class="compare-title">One-Line Bootstrap</h3>
+          <h3 class="compare-title">Select Quick or Source Build</h3>
           <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.55; margin-bottom: 12px;">
-            Log into your console and execute the bootstrap script:
+            Run the interactive bootstrap (prompts for <code>[1] Quick Install</code> or <code>[2] Build from Source</code>), or pass a mode flag directly:
           </p>
-          <pre><code>curl -fsSL https://superfedora.github.io/install.sh | bash</code></pre>
-          <p style="color: var(--text-secondary); font-size: 13px; margin-top: 10px; line-height: 1.5;">
-            This takes a Snapper baseline snapshot (#1) and runs modules 00 through 90 automatically.
-          </p>
+          <pre><code># [1] Quick Install (Prebuilt Binaries)
+curl -fsSL https://superfedora.github.io/install.sh | bash -s -- --quick
+
+# [2] Build from Source (Localhost -march=native)
+curl -fsSL https://superfedora.github.io/install.sh | bash -s -- --build-from-source</code></pre>
         </div>
 
         <!-- Step 3 -->
@@ -351,24 +362,24 @@
           <span class="compare-badge badge-super">STEP 3</span>
           <h3 class="compare-title">Reboot &amp; Flow</h3>
           <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.55; margin-bottom: 12px;">
-            Reboot your machine. Enter your password at the retro <strong>tuigreet</strong> login prompt. Hyprland starts automatically with Quickshell, Tokyo Night theme, and Pop!_OS COSMIC shortcuts.
+            Reboot into the 16-bit <strong>tuigreet</strong> login prompt. Hyprland starts with Multi-Edge Quickshell docks, 4K 16-bit Hero wallpapers, and the <strong>Quake AI Console</strong> on <code>Super + `</code>.
           </p>
           <div style="font-size: 14px; color: var(--jewel-hot); font-family: var(--font-mono); font-weight: 600; line-height: 1.5;">
-            KEYBINDINGS: Press Super + F1 for the instant cheat sheet!
+            QUAKE AI: Press Super + ` for drop-down Antigravity CLI!
           </div>
         </div>
       </div>
 
-      <!-- Snapper Safety Guarantee RPG Box -->
+      <!-- Localhost Hardware Optimization & Snapper Safety Guarantee RPG Box -->
       <div class="rpg-window" style="margin-top: 24px;">
         <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 8px; line-height: 1.4;">
-          The Zero-Risk Snapper Rollback Guarantee
+          Localhost Hardware Source Compilation (-march=native) &amp; Snapper Rollback Guarantee
         </h3>
         <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 14px;">
-          Module <code>00-preflight</code> captures an immutable Snapper snapshot (#1) labeled <code>superfedora-preinstall-baseline</code> before a single package or config is touched on your machine.
-          If you ever want to revert back to your exact pristine system state, simply execute:
+          When <code>--build-from-source</code> (or <code>sf build all</code>) is selected, SuperFedora introspects your exact CPU microarchitecture, thread count, and SIMD extensions (AVX2/AVX-512/BMI2/AES), generating <code>~/.config/superfedora/hardware-flags.env</code> and compiling workstation tools (<code>wlctl</code>, <code>bluetui</code>, <code>wiremix</code>, <code>tuigreet</code>, <code>fuzzel</code>, <code>btop</code>) with <code>CFLAGS="-O3 -pipe -march=native -mtune=native -flto=auto"</code> and <code>RUSTFLAGS="-C opt-level=3 -C target-cpu=native"</code>. And because Module <code>00-preflight</code> captures an immutable Btrfs snapshot (#1) first, you can inspect or revert anytime:
         </p>
-        <pre><code style="color: #9ece6a; font-family: var(--font-mono); font-size: 14px;">sf rollback --confirm</code></pre>
+        <pre><code style="color: #9ece6a; font-family: var(--font-mono); font-size: 14px;">sf build status   # Inspect localhost CPU target &amp; native build status
+sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</code></pre>
       </div>
     </section>
 
@@ -1553,10 +1564,11 @@
         <div class="cli-tabs" role="tablist" aria-label="CLI commands">
           <button type="button" class="cli-tab-btn active" data-cmd="sf-doctor" role="tab">&gt; sf doctor</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-install" role="tab">&gt; sf install</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-build" role="tab">&gt; sf build</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-status" role="tab">&gt; sf status</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-rollback" role="tab">&gt; sf rollback</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-dotfiles" role="tab">&gt; sf dotfiles</button>
-          <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; sf bindings</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; sf ai</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-theme" role="tab">&gt; sf theme</button>
         </div>
         <div class="cli-window rpg-window">

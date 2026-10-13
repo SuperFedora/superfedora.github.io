@@ -229,7 +229,12 @@ def run_tests():
         assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4"), "4 wallpapers"
         assert cdp.eval("!document.querySelector('#wallpapers .marquee-track-continuous img[src*=\"avatar.jpg\"]')"), "Marquee wallpapers must use real pixel art"
         assert cdp.eval("Boolean(document.getElementById('header-theme-toggle') && document.getElementById('nav-theme-name').textContent.includes('THEME:'))"), "Header theme toggle"
-        print("  [OK] Modules HUD (10), dynamic telemetry, COSMIC Matrix (20), CLI Simulator, and Wallpaper Gallery verified.")
+        assert cdp.eval("Array.from(document.querySelectorAll('#keys-grid .key-card')).some(el => el.textContent.includes('Quake AI'))"), "Quake AI keybinding present"
+        cdp.eval("document.getElementById('installModeSource').click();")
+        assert cdp.eval("document.getElementById('installCmd').textContent.includes('--build-from-source')"), "Build from Source toggle updates command"
+        cdp.eval("document.getElementById('installModeQuick').click();")
+        assert cdp.eval("!document.getElementById('installCmd').textContent.includes('--build-from-source')"), "Quick Install toggle restores command"
+        print("  [OK] Modules HUD (10), Install Mode toggle, COSMIC Matrix (20 incl. Quake AI), CLI Simulator, and Wallpaper Gallery verified.")
 
 
         print("\nAll deep verification tests PASSED!")

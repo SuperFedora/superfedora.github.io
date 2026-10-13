@@ -20,9 +20,9 @@
       num: "10",
       slug: "10-repos",
       name: "Third-Party & COPR Repos",
-      desc: "Enables curated repositories without risking upstream breakage. Configures RPM Fusion (free & nonfree), lionheartp/Hyprland COPR, phracek/PyCharm, idlescreen COPR, Google Chrome, Microsoft Edge, and Tailscale.",
+      desc: "Enables curated repositories without risking upstream breakage. Configures RPM Fusion (free & nonfree), lionheartp/Hyprland COPR, phracek/PyCharm, idlescreen repo, Google Chrome, Microsoft Edge, and Tailscale.",
       packages: ["fedora-workstation-repositories", "dnf5-plugins"],
-      configs: ["/etc/yum.repos.d/rpmfusion-*.repo", "/etc/yum.repos.d/_copr_lionheartp-hyprland.repo"],
+      configs: ["/etc/yum.repos.d/rpmfusion-*.repo", "/etc/yum.repos.d/idlescreen.repo"],
       verification: "dnf repolist | grep -E 'rpmfusion|copr|tailscale'",
       tags: ["RPM Fusion", "COPR", "Tailscale", "Hyprland Repo"],
       stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[REPOS: RPM FUSION+COPR]", type: "hot" }, { text: "[SAFETY: CLEAN SPLIT]", type: "cyan" }]
@@ -32,10 +32,10 @@
       num: "20",
       slug: "20-base",
       name: "Hardware, Drivers & Media Base",
-      desc: "Fills everything stripped from Fedora Minimal netinstall for daily workstation duty. Installs NetworkManager and Wi-Fi drivers, PipeWire audio server and WirePlumber, Bluetooth, power-profiles-daemon, VA-API hardware acceleration, full ffmpeg codecs, and core Unicode fonts.",
-      packages: ["NetworkManager-wifi", "pipewire", "wireplumber", "bluez", "power-profiles-daemon", "mesa-va-drivers", "ffmpeg", "dejavu-sans-fonts"],
-      configs: ["/etc/systemd/system/bluetooth.service", "/etc/pipewire/pipewire.conf"],
-      verification: "wpctl status && bluetoothctl show && vainfo",
+      desc: "Fills everything stripped from Fedora Minimal netinstall for daily workstation duty. Installs NetworkManager and Wi-Fi drivers, PipeWire audio server and WirePlumber, Bluetooth, tuned-ppd, VA-API hardware acceleration, full ffmpeg codecs, and writes /etc/superfedora/release system identity markers.",
+      packages: ["NetworkManager-wifi", "pipewire", "wireplumber", "bluez", "tuned-ppd", "mesa-va-drivers-freeworld", "ffmpeg"],
+      configs: ["/etc/superfedora/release", "/etc/profile.d/superfedora.sh"],
+      verification: "wpctl status && bluetoothctl show",
       tags: ["PipeWire", "Wi-Fi", "Bluetooth", "VA-API", "FFmpeg"],
       stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[HARDWARE: ACCELERATED]", type: "hot" }, { text: "[AUDIO: LOW-LATENCY]", type: "cyan" }]
     },
@@ -44,33 +44,33 @@
       num: "30",
       slug: "30-session",
       name: "Greetd & UWSM Wayland Session",
-      desc: "Installs greetd with the lightweight tuigreet console greeter. Configures Hyprland to launch through uwsm (Universal Wayland Session Manager) as a first-class systemd user session, providing clean lifecycle management and environment variable synchronization.",
-      packages: ["greetd", "greetd-tuigreet", "uwsm"],
-      configs: ["/etc/greetd/config.toml", "/usr/share/wayland-sessions/hyprland-uwsm.desktop"],
-      verification: "systemctl is-active greetd",
+      desc: "Installs greetd with the lightweight tuigreet console greeter styled to match the active 16-bit theme. Configures Hyprland to launch through uwsm (Universal Wayland Session Manager) as a first-class systemd user session.",
+      packages: ["greetd", "tuigreet", "uwsm"],
+      configs: ["/etc/greetd/config.toml", "/etc/tmpfiles.d/superfedora-tuigreet.conf"],
+      verification: "systemctl is-enabled greetd",
       tags: ["greetd", "tuigreet", "uwsm", "systemd session"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SESSION: UWSM SYSTEMD]", type: "hot" }, { text: "[LOGIN: TUIGREET]", type: "cyan" }]
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SESSION: UWSM SYSTEMD]", type: "hot" }, { text: "[LOGIN: 16-BIT TUIGREET]", type: "cyan" }]
     },
     {
       id: "40",
       num: "40",
       slug: "40-desktop",
-      name: "Hyprland & Quickshell Desktop",
-      desc: "The primary graphical workstation interface. High-refresh Hyprland compositor with smooth animations, Quickshell interactive status bar (workspaces, tray, battery, network, notifications), hypridle screen timeout daemon, hyprlock screen lock, hyprpaper wallpaper manager, fuzzel launcher, grim/slurp screenshots, and JetBrainsMono Nerd Font.",
-      packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "fuzzel", "grim", "slurp", "wl-clipboard", "jetbrains-mono-nerd-fonts"],
-      configs: ["~/.config/hypr/hyprland.conf", "~/.config/quickshell/shell.qml", "~/.config/fuzzel/fuzzel.ini"],
-      verification: "hyprctl version && quickshell --version",
-      tags: ["Hyprland", "Quickshell", "fuzzel", "hypridle", "hyprlock"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[WAYLAND: 144Hz HYPR]", type: "hot" }, { text: "[HUD: QUICKSHELL QML]", type: "cyan" }]
+      name: "Hyprland, Multi-Edge Panels & TUIs",
+      desc: "High-refresh Hyprland 0.53+ compositor, Quickshell multi-edge panels (Top Bar, Intellihide Bottom Dock, Left/Right Hardware Telemetry Docks, Panel Studio, and Quake AI Drop-Down HUD), GNOME-style 16-bit hyprlock, fuzzel, and Omarchy-style Ratatui TUIs (wiremix, wlctl, bluetui).",
+      packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "fuzzel", "wiremix", "wlctl", "bluetui"],
+      configs: ["~/.config/hypr/hyprland.conf", "~/.config/quickshell/shell.qml", "~/.config/quickshell/panels/QuakeAi.qml"],
+      verification: "hyprctl version && qs ipc call panels reload",
+      tags: ["Hyprland", "Quickshell", "Multi-Edge Dock", "wiremix", "wlctl", "bluetui"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[HUD: MULTI-EDGE QML]", type: "hot" }, { text: "[TUIS: WIREMIX/WLCTL/BLUETUI]", type: "cyan" }]
     },
     {
       id: "50",
       num: "50",
       slug: "50-apps",
       name: "Curated Workstation Apps",
-      desc: "Fast, keyboard-driven day-to-day productivity suite. Kitty and foot GPU-accelerated terminals, Firefox with Wayland hardware video decode, GNOME Files (Nautilus) file manager, Google Chrome, Microsoft Edge, Tailscale mesh VPN, btop resource monitor, and fastfetch system summary.",
+      desc: "Fast, keyboard-driven day-to-day productivity suite. Kitty and foot GPU-accelerated terminals, Firefox with Wayland hardware video decode, GNOME Files (Nautilus), Google Chrome, Microsoft Edge, Tailscale mesh VPN, btop monitor, and fastfetch.",
       packages: ["kitty", "foot", "firefox", "nautilus", "google-chrome-stable", "microsoft-edge-stable", "tailscale", "btop", "fastfetch"],
-      configs: ["~/.config/kitty/kitty.conf", "~/.config/foot/foot.ini", "~/.config/mimeapps.list"],
+      configs: ["~/.config/kitty/kitty.conf", "~/.config/mimeapps.list"],
       verification: "kitty -v && firefox -v && btop -v",
       tags: ["kitty", "Firefox", "Nautilus", "Tailscale", "btop"],
       stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[GPU: TERMINALS]", type: "hot" }, { text: "[NETWORK: TAILSCALE]", type: "cyan" }]
@@ -80,48 +80,48 @@
       num: "60",
       slug: "60-idlescreen",
       name: "IdleScreen Screensaver Suite",
-      desc: "Artisanal Wayland screensaver suite with 48 in-tree ASCII scenes and host OS/DE/Kernel tri-rotation. Automatically wired into hypridle to launch after 2 minutes of system idle time. Zero CPU cycles drawn while your desktop is active.",
-      packages: ["idlescreen", "idlescreen-themes"],
-      configs: ["~/.config/hypr/conf/hypridle.conf", "~/.config/idlescreen/config.toml"],
+      desc: "Artisanal Wayland screensaver suite locked to the exclusive 16-bit SuperFedora pixel art & spotlight theme. Wired into hypridle (120s timeout) with instant stop when locking the screen via hyprlock. Zero active CPU cycles when desktop is in use.",
+      packages: ["idlescreen", "idlescreen-extras"],
+      configs: ["~/.config/hypr/hypridle.conf", "~/.config/idlescreen/config.toml"],
       verification: "idlescreen status && idlescreen tui",
-      tags: ["IdleScreen", "Wayland Screensaver", "ASCII", "Zero Cycles"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[IDLE: ZERO-CYCLES]", type: "hot" }, { text: "[SCREENSAVER: 48 SCENES]", type: "cyan" }]
+      tags: ["IdleScreen", "16-Bit SuperFedora", "ASCII", "Zero Cycles"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[THEME: SUPERFEDORA 16-BIT]", type: "hot" }, { text: "[IDLE: ZERO-CYCLES]", type: "cyan" }]
     },
     {
       id: "70",
       num: "70",
       slug: "70-dev",
-      name: "Developer Toolchain & Rust",
-      desc: "Modern development environment out of the box. GCC compiler toolchain, Make, CMake, Git, GitHub CLI (gh), Node.js LTS, Rustup toolchain manager with musl target, cargo-binstall, cargo-deb, cargo-generate-rpm, and uv ultra-fast Python package runner.",
-      packages: ["gcc", "make", "cmake", "git", "gh", "nodejs", "rustup", "uv"],
-      configs: ["~/.cargo/env", "~/.rustup/"],
-      verification: "rustc --version && cargo --version && node --version && uv --version",
-      tags: ["Rust", "Node.js", "Python uv", "GCC", "GitHub CLI"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[POLYGLOT: RUST/UV/NODE]", type: "hot" }, { text: "[DEV: NEOVIM LUA]", type: "cyan" }]
+      name: "Dev Toolchain & Native Source Builder",
+      desc: "Polyglot developer toolchain (GCC, CMake, Git, gh, Node.js 22, Rustup with musl target, cargo-binstall, uv) plus the Localhost Source Builder (lib/build-source.sh). When --build-from-source is selected, tunes and compiles workstation binaries with -march=native -mtune=native -flto=auto and target-cpu=native.",
+      packages: ["gcc", "gcc-c++", "make", "cmake", "gh", "nodejs22-bin", "rustup", "cargo-binstall", "uv"],
+      configs: ["~/.config/superfedora/hardware-flags.env", "~/.rpmmacros"],
+      verification: "sf build status && rustc --version && uv --version",
+      tags: ["Build from Source", "-march=native", "Rust", "Node.js", "Python uv"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[NATIVE: -march=native]", type: "hot" }, { text: "[RUST: target-cpu=native]", type: "cyan" }]
     },
     {
       id: "80",
       num: "80",
       slug: "80-ai",
-      name: "AI Engineer CLI Suite",
-      desc: "A curated suite of modern AI terminal engineering tools ready for coding and automation: Antigravity CLI, xAI Grok CLI, MiniMax Code, and Mistral Vibe.",
-      packages: ["antigravity-cli", "grok-cli", "minimax-code", "mistral-vibe"],
-      configs: ["~/.local/bin/antigravity", "~/.config/antigravity/"],
-      verification: "antigravity --version && grok --version",
-      tags: ["Antigravity", "Grok CLI", "MiniMax", "Mistral Vibe"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[AI: CODING CLIS]", type: "hot" }, { text: "[WRAPPERS: NATIVE]", type: "cyan" }]
+      name: "AI CLI Suite & Quake Drop-Down",
+      desc: "Curated terminal AI engineering agents: Antigravity CLI (agy / antigravity-cli), xAI Grok CLI, MiniMax Code, and Mistral Vibe — integrated into the Quake-style slide-down AI console on Super + ` (grave) with instant agent switching.",
+      packages: ["agy (antigravity-cli)", "grok", "mcode", "vibe"],
+      configs: ["~/.config/hypr/scripts/quake-ai.sh", "~/.config/quickshell/panels/QuakeAi.qml"],
+      verification: "sf ai status && agy --version",
+      tags: ["Quake AI (Super+`)", "Antigravity CLI", "Grok CLI", "MiniMax", "Mistral Vibe"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[QUAKE AI: SUPER+`]", type: "hot" }, { text: "[DEFAULT: ANTIGRAVITY]", type: "cyan" }]
     },
     {
       id: "90",
       num: "90",
       slug: "90-dotfiles",
-      name: "Zero-Symlink Dotfiles & CLI",
-      desc: "Deploys production configurations into ~/.config/ as direct files. Preserves existing configs with timestamped backups. Installs sf and superfedora dual symlinks to ~/.local/bin/ and executes full workstation validation.",
+      name: "Zero-Symlink Dotfiles & 16-Bit Themes",
+      desc: "Deploys direct files into ~/.config/ and 16 4K 16-bit wallpapers into ~/Pictures/Wallpapers/ with automatic timestamped backups. Enforces Firefox default browser MIME handlers and provides sf theme, sf panel, sf build, and sf ai orchestrators.",
       packages: ["sf", "superfedora"],
-      configs: ["~/.config/hypr/", "~/.config/quickshell/", "~/.config/fuzzel/", "~/.local/bin/sf"],
-      verification: "sf doctor && sf verify",
-      tags: ["Zero Symlinks", "sf CLI", "Backups", "Dotfiles"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[DOTFILES: 0-SYMLINK]", type: "hot" }, { text: "[SAFETY: TIMESTAMPED BACKUPS]", type: "cyan" }]
+      configs: ["~/.config/hypr/", "~/.config/quickshell/", "~/Pictures/Wallpapers/", "~/.local/bin/sf"],
+      verification: "sf dotfiles --check && sf status",
+      tags: ["Zero Symlinks", "16-Bit Themes", "4K Wallpapers", "sf CLI"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[DOTFILES: 0-SYMLINK]", type: "hot" }, { text: "[THEMES: 8 JEWELS X DARK/LIGHT]", type: "cyan" }]
     }
   ];
 
@@ -210,4 +210,3 @@
 
   document.addEventListener("DOMContentLoaded", initModules);
 })();
-

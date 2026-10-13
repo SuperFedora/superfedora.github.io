@@ -3,26 +3,26 @@
   'use strict';
 
   var keysData = [
-    { kbd: "Super + Left / Right", action: "Focus window in direction", cat: "window" },
+    { kbd: "Super + Left / Right", action: "Focus window in direction (stack-aware)", cat: "window" },
     { kbd: "Super + Up / Down", action: "Focus window above / below", cat: "window" },
-    { kbd: "Super + Shift + Arrows", action: "Swap window with neighbor", cat: "window" },
+    { kbd: "Super + Shift + Arrows", action: "Move / swap window or join stack", cat: "window" },
     { kbd: "Super + Q", action: "Close focused window", cat: "window" },
     { kbd: "Super + M", action: "Toggle window maximize / monocle", cat: "window" },
-    { kbd: "Super + Space", action: "Toggle window float / tile state", cat: "window" },
-    { kbd: "Super + G", action: "Toggle grouped tabbed windows", cat: "window" },
-    { kbd: "Super + T", action: "Launch GPU terminal (Ghostty/Kitty)", cat: "launch" },
-    { kbd: "Super + D", action: "Launch Fuzzel app menu", cat: "launch" },
+    { kbd: "Super + G", action: "Toggle window float / tile state", cat: "window" },
+    { kbd: "Super + S", action: "Toggle grouped tabbed windows", cat: "window" },
+    { kbd: "Super + ` (Grave)", action: "Quake AI drop-down console (Antigravity / agy)", cat: "launch" },
+    { kbd: "Super + T", action: "Launch GPU terminal (Kitty)", cat: "launch" },
+    { kbd: "Super + A / Super", action: "Launch Fuzzel app library", cat: "launch" },
     { kbd: "Super + B", action: "Launch Firefox browser", cat: "launch" },
-    { kbd: "Super + E", action: "Launch Nautilus file manager", cat: "launch" },
-    { kbd: "Super + Shift + Esc", action: "Launch btop resource monitor", cat: "launch" },
-    { kbd: "Super + 1 .. 9", action: "Switch to workspace 1–9", cat: "workspace" },
-    { kbd: "Super + Shift + 1 .. 9", action: "Move active window to workspace 1–9", cat: "workspace" },
-    { kbd: "Super + Tab", action: "Switch to previous workspace", cat: "workspace" },
-    { kbd: "Super + Shift + S", action: "Interactive screen area snip (slurp)", cat: "system" },
-    { kbd: "Print", action: "Full desktop screenshot to clipboard", cat: "system" },
-    { kbd: "Super + L", action: "Lock screen immediately (hyprlock)", cat: "system" },
-    { kbd: "Super + Esc", action: "Power & session logout menu", cat: "system" },
-    { kbd: "Super + Shift + I", action: "Preview IdleScreen screensaver suite", cat: "system" }
+    { kbd: "Super + F", action: "Launch Files (Nautilus) manager", cat: "launch" },
+    { kbd: "Super + 1 .. 9", action: "Switch to workspace 1-9", cat: "workspace" },
+    { kbd: "Super + Ctrl + Left/Right", action: "Previous / next occupied workspace (r-1 / r+1)", cat: "workspace" },
+    { kbd: "Super + W", action: "Workspace & window overview picker", cat: "workspace" },
+    { kbd: "Super + Ctrl + Space", action: "Cycle 16-bit SNES jewel theme palette", cat: "system" },
+    { kbd: "Super + Ctrl + A / W / B", action: "Audio (wiremix) / Wi-Fi (wlctl) / Bluetooth (bluetui)", cat: "system" },
+    { kbd: "Super + Escape", action: "Lock screen immediately (16-bit hyprlock)", cat: "system" },
+    { kbd: "Super + Shift + Escape", action: "Power & session logout menu", cat: "system" },
+    { kbd: "Super + Shift + I", action: "Start 16-bit SuperFedora IdleScreen now", cat: "system" }
   ];
 
   var activeCat = "all";
@@ -97,77 +97,79 @@
     renderKeybindings();
   }
 
-
-  // Interactive CLI Control Center
   var cliCommands = {
     "sf-doctor": {
       prompt: "sf doctor",
-      output: "[OK] Host OS: Fedora 42 Workstation (x86_64)\n" +
-              "[OK] Compositor: Hyprland 0.47.2 (Wayland native 144Hz)\n" +
+      output: "[OK] Host OS: Fedora 44 Workstation (x86_64)\n" +
+              "[OK] Compositor: Hyprland 0.53+ (Wayland native, layerrule v2)\n" +
               "[OK] Session Manager: uwsm (systemd user session bound)\n" +
-              "[OK] Status Bar: Quickshell v0.2.1 online\n" +
+              "[OK] Panels & Dock: Quickshell Multi-Edge + Quake AI (Super+`) online\n" +
               "[OK] Btrfs Root: /dev/nvme0n1p3 (Snapper baseline #1 verified)\n" +
-              "[OK] Idle Screensaver: idlescreen v4.1.21 registered with hypridle\n" +
+              "[OK] IdleScreen: 16-bit superfedora theme unlocked & active\n" +
               "[OK] Dotfiles Integrity: Zero-symlink direct deployment intact\n\n" +
               "Result: 7/7 systems healthy. Workstation is operational."
     },
     "sf-install": {
-      prompt: "sf install",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.2.0\n" +
-              "[+] Initializing 10-module idempotent execution sequence...\n" +
-              "[OK] [00-preflight] Host: Fedora 42 (x86_64) | Sudo: YES | Network: UP\n" +
-              "[OK] [00-preflight] Btrfs root snapshot #1 captured: superfedora-preinstall-baseline\n" +
-              "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, Tailscale configured\n" +
-              "[OK] [20-base] PipeWire, VA-API, mesa-va-drivers, ffmpeg installed\n" +
+      prompt: "sf install --build-from-source",
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.3.0\n" +
+              "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
+              "[OK] [00-preflight] Host: Fedora 44 (x86_64) | Sudo: YES | Baseline snapshot #1 ready\n" +
+              "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
+              "[OK] [20-base] PipeWire, VA-API, mesa-va-drivers, ffmpeg, /etc/superfedora/release\n" +
               "[OK] [30-session] greetd & tuigreet enabled | uwsm systemd targets bound\n" +
-              "[OK] [40-desktop] Hyprland v0.47+, Quickshell, Fuzzel, JetBrainsMono deployed\n" +
-              "[OK] [50-apps] Ghostty, Alacritty, Firefox, Nautilus, btop ready\n" +
-              "[OK] [60-idlescreen] 48 ASCII scenes registered | hypridle 120s timeout\n" +
-              "[OK] [70-dev] GCC, Rustup, Cargo-binstall, Node.js LTS, Python uv installed\n" +
-              "[OK] [80-ai] Antigravity CLI, Grok CLI, MiniMax, Mistral Vibe ready\n" +
-              "[OK] [90-dotfiles] Direct configs deployed to ~/.config/ | sf CLI linked\n" +
-              "[DONE] Workstation installation complete in 42.1s (10/10 modules passed)."
+              "[OK] [40-desktop] Hyprland, Quickshell Multi-Edge, wiremix, wlctl, bluetui ready\n" +
+              "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
+              "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
+              "[OK] [70-dev] Localhost hardware profile generated + native source builds complete\n" +
+              "[OK] [80-ai] Antigravity CLI (agy), Grok CLI, MiniMax, Mistral Vibe ready\n" +
+              "[OK] [90-dotfiles] Direct configs + Quake AI (Super+`) deployed | sf CLI linked"
+    },
+    "sf-build": {
+      prompt: "sf build status",
+      output: "SuperFedora Localhost Hardware Build Profile\n" +
+              "  Install Mode   : source (--build-from-source)\n" +
+              "  Target Arch    : -march=native / target-cpu=native (8 threads, LTO=auto)\n" +
+              "  ISA Extensions : aes avx avx2 bmi2 fma sse4_2\n" +
+              "  CFLAGS         : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
+              "  RUSTFLAGS      : -C opt-level=3 -C target-cpu=native -C codegen-units=1\n\n" +
+              "  COMPONENT   STATE           BINARY\n" +
+              "  wlctl       [source-native] ~/.local/bin/wlctl\n" +
+              "  bluetui     [source-native] ~/.local/bin/bluetui\n" +
+              "  wiremix     [source-native] ~/.local/bin/wiremix\n" +
+              "  fuzzel      [source-native] ~/.local/bin/fuzzel\n" +
+              "  btop        [source-native] ~/.local/bin/btop"
     },
     "sf-status": {
       prompt: "sf status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.2.0\n" +
-              "Kernel: Linux 6.13.4-200.fc42.x86_64\n" +
+      output: "SuperFedora 16-Bit Workstation // Release 0.3.0\n" +
               "Session: hyprland-uwsm.desktop (Wayland)\n" +
-              "Theme: Tokyo Night (16-bit SNES Jewel active)\n" +
-              "Snapper Snapshots: 4 active (Latest: #4 pre-dnf update)\n" +
-              "IdleScreen: Standby (Activation timeout: 120s)\n" +
-              "Audio: PipeWire 1.2.7 (WirePlumber 0.5.8)"
+              "Theme: Super Blue (01-super-blue) [dark]\n" +
+              "Panels: Top Bar [ON] | Bottom Intellihide Dock [ON] | Quake AI [SUPER+`]\n" +
+              "Snapper Snapshots: Baseline #1 verified (sf rollback)\n" +
+              "IdleScreen: superfedora 16-bit theme (120s timeout)\n" +
+              "Audio / Net / BT TUIs: wiremix + wlctl + bluetui"
     },
     "sf-rollback": {
       prompt: "sf rollback --dry-run",
       output: "[+] Querying Btrfs Snapper snapshot timeline...\n" +
               "[OK] Found immutable baseline snapshot #1 (superfedora-preinstall-baseline)\n" +
-              "[OK] Target snapshot timestamp: 2026-10-13 06:14:02 UTC\n" +
               "[+] Prepared rollback target: Subvolume /@ to snapshot #1\n" +
               "[--] DRY-RUN MODE: No modifications applied to disk.\n" +
-              "To execute live rollback: run 'sf rollback --confirm'"
+              "To execute live rollback: run 'sf rollback'"
     },
     "sf-dotfiles": {
-      prompt: "sf dotfiles status",
-      output: "[OK] ~/.config/hypr/hyprland.conf -> in sync\n" +
-              "[OK] ~/.config/quickshell/shell.qml -> in sync\n" +
-              "[OK] ~/.config/fuzzel/fuzzel.ini -> in sync\n" +
-              "[OK] ~/.config/idlescreen/config.toml -> in sync\n" +
-              "[OK] Managed symlinks: 0 (Strict direct file deployment enforced)\n" +
-              "[OK] Backup archive: ~/.config/superfedora/backups/ (2 baselines stored)"
+      prompt: "sf dotfiles --check",
+      output: "In sync with SuperFedora v0.3.0\n" +
+              "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
+              "[OK] ~/.config/quickshell/ (Bar, EdgePanel, DockApps, QuakeAi, PanelSettingsPopup)\n" +
+              "[OK] ~/Pictures/Wallpapers/ (16 4K dark/light 16-bit Hero wallpapers)\n" +
+              "[OK] Managed symlinks: 0 (Strict direct file deployment enforced)"
     },
     "sf-bindings": {
-      prompt: "sf bindings --category window",
-      output: "+--- POP!_OS COSMIC WINDOW SHORTCUTS -----------------------------------+\n" +
-              "| Super + Left/Right     Focus tiled window in direction                |\n" +
-              "| Super + Up/Down        Focus window above or below                    |\n" +
-              "| Super + Shift + Arrows Swap active window with neighbor in direction  |\n" +
-              "| Super + Q              Close focused window                           |\n" +
-              "| Super + M              Toggle monocle fullscreen maximize             |\n" +
-              "| Super + Space          Toggle floating / tiling mode                  |\n" +
-              "| Super + G              Toggle grouped window tabbed container         |\n" +
-              "| Super + F1             Launch live on-screen keybindings HUD          |\n" +
-              "+-----------------------------------------------------------------------+"
+      prompt: "sf ai status",
+      output: "Agent: Antigravity CLI (agy) (agy) | Geometry: 1280x626+320+74\n" +
+              "Keybinding : Super + ` (toggle slide-down) | Super + Shift + ` (cycle agent)\n" +
+              "Agents     : [1] Antigravity (agy)  [2] xAI Grok  [3] MiniMax  [4] Mistral Vibe"
     },
     "sf-theme": {
       prompt: "sf theme status",
@@ -175,10 +177,8 @@
               "Palettes     : 01-super-blue 02-metroid-violet 03-super-ruby 04-emerald-green\n" +
               "               05-star-gold 06-electric-cyan 07-flame-orange 08-neon-coral\n\n" +
               "[OK] Desktop Wallpaper : ~/Pictures/Wallpapers/dark/01-super-blue.png (4K)\n" +
-              "[OK] Lockscreen        : ~/.config/hypr/hyprlock.conf (Unblurred 4K Hero)\n" +
-              "[OK] Compositor & Bar  : Hyprland borders + Quickshell Theme.qml synced\n" +
-              "[OK] Launcher & Term   : Fuzzel + Kitty (SIGUSR1 live reload) synced\n" +
-              "[OK] Login & IdleScreen: tuigreet ANSI theme + superfedora screensaver active"
+              "[OK] Lockscreen        : ~/.config/hypr/hyprlock.conf (Clock-free 4K Hero)\n" +
+              "[OK] Quickshell IPC    : Live color reload (zero popup) + Multi-Edge Panels"
     }
   };
 
@@ -229,4 +229,3 @@
     initCliSimulator();
   });
 })();
-
