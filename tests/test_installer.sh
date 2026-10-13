@@ -36,6 +36,14 @@ else
   fail "-h short flag did not exit 0 with usage documentation"
 fi
 
+# 4. Piped stdin execution (curl ... | bash -s -- --help) returns 0 and prints usage
+pipe_output="$(cat "$INSTALLER" | bash -s -- --help 2>&1)" || true
+if [[ "$pipe_output" == *"SuperFedora web installer"* ]]; then
+  pass "Piped stdin execution (curl ... | bash -s -- --help) prints usage"
+else
+  fail "Piped stdin execution failed"
+fi
+
 # 4. Version file exists and is semver format
 if [[ -f "$SCRIPT_DIR/VERSION" ]] && grep -qE '^[0-9]+\.[0-9]+\.[0-9]+' "$SCRIPT_DIR/VERSION"; then
   pass "VERSION file exists and contains valid semver: $(cat "$SCRIPT_DIR/VERSION")"
