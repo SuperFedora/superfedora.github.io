@@ -65,6 +65,10 @@
 
     localStorage.setItem("superfedora_theme", key);
 
+    if (window.updateStarfieldTheme) {
+      window.updateStarfieldTheme();
+    }
+
     if (playSound && window.SFX) {
       window.SFX.playBlip(720);
     }

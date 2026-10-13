@@ -35,6 +35,24 @@ img, svg, video, canvas {
   max-width: 100%;
 }
 
+/* Ambient 16-Bit SNES Starfield Canvas */
+.snes-starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.85;
+  image-rendering: pixelated;
+}
+
+main, .site-header, .site-footer {
+  position: relative;
+  z-index: 10;
+}
+
 img.pixelated {
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;

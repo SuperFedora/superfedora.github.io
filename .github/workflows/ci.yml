@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Lint & Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Check Bash Syntax
+        run: |
+          bash -n install.sh
+          bash -n tests/test_installer.sh
+
+      - name: Run ShellCheck
+        run: |
+          shellcheck -S warning -x install.sh
+          shellcheck -S warning -x tests/test_installer.sh
+
+      - name: Run Installer Test Suite
+        run: bash tests/test_installer.sh
+
+      - name: Run Page Rules & Asset Validation
+        run: python3 tests/test_page_rules.py

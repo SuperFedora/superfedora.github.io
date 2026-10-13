@@ -166,23 +166,23 @@
 
   // CLI Outputs
   var cliOutputs = {
-    status: `root@superfedora:~# superfedora status
+    status: `user@superfedora:~$ sf status
 SuperFedora 0.1.0 (x86_64) on Fedora Linux 42
 Checking system components:
-  \x1b[32m✓\x1b[0m 00 preflight:   btrfs root subvolume, snapper initialized (snapshot #1 baseline)
-  \x1b[32m✓\x1b[0m 10 repos:       RPM Fusion (free & nonfree), lionheartp/Hyprland, tailscale
-  \x1b[32m✓\x1b[0m 20 base:        pipewire, wireplumber, bluetooth, mesa-va-drivers, ffmpeg
-  \x1b[32m✓\x1b[0m 30 session:     greetd 0.10, tuigreet, uwsm session orchestrator
-  \x1b[32m✓\x1b[0m 40 desktop:     Hyprland 0.47, hypridle, hyprlock, quickshell, fuzzel
-  \x1b[32m✓\x1b[0m 50 apps:        kitty, foot, firefox, nautilus, tailscale, btop, fastfetch
-  \x1b[32m✓\x1b[0m 60 idlescreen:  IdleScreen 4.1.21 Wayland daemon online (screensaver @ 2m)
-  \x1b[32m✓\x1b[0m 70 dev:         gcc 15, rustup (stable-x86_64), cargo-binstall, nodejs 22, uv 0.6
-  \x1b[32m✓\x1b[0m 80 ai:          antigravity CLI, grok CLI, minimax-code, mistral-vibe
-  \x1b[32m✓\x1b[0m 90 dotfiles:    14 config files deployed, 0 drift detected
+  \x1b[32m[OK]\x1b[0m 00 preflight:   btrfs root subvolume, snapper initialized (snapshot #1 baseline)
+  \x1b[32m[OK]\x1b[0m 10 repos:       RPM Fusion (free & nonfree), lionheartp/Hyprland, tailscale
+  \x1b[32m[OK]\x1b[0m 20 base:        pipewire, wireplumber, bluetooth, mesa-va-drivers, ffmpeg
+  \x1b[32m[OK]\x1b[0m 30 session:     greetd 0.10, tuigreet, uwsm session orchestrator
+  \x1b[32m[OK]\x1b[0m 40 desktop:     Hyprland 0.47, hypridle, hyprlock, quickshell, fuzzel
+  \x1b[32m[OK]\x1b[0m 50 apps:        kitty, foot, firefox, nautilus, tailscale, btop, fastfetch
+  \x1b[32m[OK]\x1b[0m 60 idlescreen:  IdleScreen 4.1.21 Wayland daemon online (screensaver @ 2m)
+  \x1b[32m[OK]\x1b[0m 70 dev:         gcc 15, rustup (stable-x86_64), cargo-binstall, nodejs 22, uv 0.6
+  \x1b[32m[OK]\x1b[0m 80 ai:          antigravity CLI, grok CLI, minimax-code, mistral-vibe
+  \x1b[32m[OK]\x1b[0m 90 dotfiles:    14 config files deployed, 0 drift detected
 
 \x1b[36mStatus:\x1b[0m All components verified. System is 100% SuperFedora.`,
 
-    install: `root@superfedora:~# superfedora install
+    install: `user@superfedora:~$ sf install
 SuperFedora 0.1.0 — Running installer pipeline...
 [00/90] Preflight checks passed. Baseline Btrfs snapshot created (#1).
 [10/90] Enabling RPM Fusion & lionheartp/Hyprland COPR repos... Done.
@@ -195,9 +195,9 @@ SuperFedora 0.1.0 — Running installer pipeline...
 [80/90] Installing AI engineering CLI tools... Done.
 [90/90] Deploying Tokyo Night desktop dotfiles & COSMIC keybindings... Done.
 
-\x1b[32m✓ SuperFedora install complete!\x1b[0m Reboot to start your 16-bit workstation.`,
+\x1b[32m[OK] SuperFedora install complete!\x1b[0m Reboot to start your 16-bit workstation.`,
 
-    update: `root@superfedora:~# superfedora update
+    update: `user@superfedora:~$ sf update
 Fetching latest SuperFedora release manifest from GitHub...
 Current: v0.1.0  |  Remote: v0.1.0 (Up to date)
 Running idempotent verification scan...
@@ -205,19 +205,19 @@ Checking packages... all 142 packages present.
 Checking dotfiles... all configs up to date.
 No changes required. Workstation is pristine.`,
 
-    dotfiles: `root@superfedora:~# superfedora dotfiles --check
+    dotfiles: `user@superfedora:~$ sf dotfiles --check
 Scanning dotfiles in ~/.config against SuperFedora manifests:
-  ✓ ~/.config/hypr/hyprland.conf           (in sync)
-  ✓ ~/.config/hypr/conf/bindings.conf      (in sync)
-  ✓ ~/.config/hypr/conf/hypridle.conf      (in sync)
-  ✓ ~/.config/quickshell/shell.qml         (in sync)
-  ✓ ~/.config/kitty/kitty.conf             (in sync)
-  ✓ ~/.config/fuzzel/fuzzel.ini            (in sync)
-  ✓ ~/.config/mimeapps.list                (in sync)
+  [OK] ~/.config/hypr/hyprland.conf           (in sync)
+  [OK] ~/.config/hypr/conf/bindings.conf      (in sync)
+  [OK] ~/.config/hypr/conf/hypridle.conf      (in sync)
+  [OK] ~/.config/quickshell/shell.qml         (in sync)
+  [OK] ~/.config/kitty/kitty.conf             (in sync)
+  [OK] ~/.config/fuzzel/fuzzel.ini            (in sync)
+  [OK] ~/.config/mimeapps.list                (in sync)
 
 0 local modifications, 0 drifts detected. Everything in sync.`,
 
-    rollback: `root@superfedora:~# superfedora rollback
+    rollback: `user@superfedora:~$ sf rollback
 SuperFedora Btrfs Snapshot Rollback Utility
 Discovered baseline snapshots created by SuperFedora:
   ID  | Date                     | Type   | Description
@@ -274,18 +274,18 @@ Target snapshot verified. System is ready to roll back upon confirmation.`
       </div>
       <div class="module-detail-grid">
         <div class="module-spec-card">
-          <h4>📦 Key Packages Installed</h4>
+          <h4>[PACKAGES] Key Packages Installed</h4>
           <div class="module-tag-cloud">${pkgsHtml}</div>
         </div>
         <div class="module-spec-card">
-          <h4>📁 Managed Files &amp; Configurations</h4>
+          <h4>[CONFIG] Managed Files &amp; Configurations</h4>
           <ul style="font-size: 13px; line-height: 1.6; display: flex; flex-direction: column; gap: 4px;">
             ${configsHtml}
           </ul>
         </div>
       </div>
       <div class="module-spec-card" style="margin-top: 16px;">
-        <h4>🔍 Verification Command</h4>
+        <h4>[VERIFY] Verification Command</h4>
         <pre><code>${m.verification}</code></pre>
       </div>
     `;

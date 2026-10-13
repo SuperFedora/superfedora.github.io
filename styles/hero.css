@@ -135,7 +135,7 @@
 }
 
 .install-meta span::before {
-  content: "✓";
+  content: "+";
   color: #9ece6a;
   font-weight: 700;
 }

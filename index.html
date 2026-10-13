@@ -3,13 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SuperFedora 🛸 // 16-Bit Curated Keyboard-Driven Workstation</title>
+  <title>SuperFedora // 16-Bit Curated Keyboard-Driven Workstation</title>
   <meta name="description" content="SuperFedora — A curated, keyboard-driven workstation on clean Fedora. Hyprland compositor, Pop!_OS COSMIC keybindings, Quickshell status bar, IdleScreen screensaver suite, and Btrfs Snapper rollbacks in one command.">
-  <meta property="og:title" content="SuperFedora 🛸 // 16-Bit Curated Workstation">
+  <meta property="og:title" content="SuperFedora // 16-Bit Curated Workstation">
   <meta property="og:description" content="Clean Fedora + Hyprland + COSMIC Keybindings + Quickshell + IdleScreen + Snapper Rollbacks.">
   <meta property="og:image" content="https://superfedora.github.io/assets/branding/avatar.jpg">
   <meta property="og:type" content="website">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts: Google Fonts Preconnect for fast 16-bit pixel rendering -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap">
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="styles/tokens.css">
@@ -53,6 +58,9 @@
 <body>
   <!-- CRT Shader Overlay -->
   <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- Ambient 16-Bit SNES Parallax Starfield Canvas -->
+  <canvas id="snes-starfield" class="snes-starfield" aria-hidden="true"></canvas>
 
   <!-- Sticky 16-Bit HUD Header -->
   <header class="site-header">
@@ -151,11 +159,11 @@
           <!-- 16-Bit Terminal Install Box -->
           <div class="terminal-install-box">
             <div class="install-cmd-wrap">
-              <span class="install-prompt">root@superfedora:~#</span>
+              <span class="install-prompt">user@superfedora:~$</span>
               <code class="install-code" id="install-cmd">curl -fsSL https://superfedora.github.io/install.sh | bash</code>
             </div>
             <button type="button" class="copy-btn" onclick="copySnippet('install-cmd', this)" aria-label="Copy install script command">
-              [ ⚡ COPY INSTALL ]
+              [ COPY INSTALL ]
             </button>
           </div>
 
@@ -167,10 +175,10 @@
 
           <!-- Hero Action Buttons -->
           <div class="hero-actions">
-            <a href="#install" class="btn-snes-primary">⚡ Quick Install ↓</a>
-            <a href="#modules" class="btn-snes-secondary">📜 10 Modules HUD ↓</a>
-            <a href="#keybindings" class="btn-snes-secondary">⌨️ COSMIC Keybindings ↓</a>
-            <a href="#wallpapers" class="btn-snes-secondary">🖼️ Wallpapers ↓</a>
+            <a href="#install" class="btn-snes-primary">&gt; Quick Install</a>
+            <a href="#modules" class="btn-snes-secondary">&gt; 10 Modules HUD</a>
+            <a href="#keybindings" class="btn-snes-secondary">&gt; COSMIC Keybindings</a>
+            <a href="#wallpapers" class="btn-snes-secondary">&gt; Wallpapers</a>
           </div>
         </div>
 
@@ -221,23 +229,23 @@
       <!-- Scrolling Tenets Marquee -->
       <div class="marquee-container" aria-label="SuperFedora Tenets">
         <div class="marquee-track">
-          <span class="marquee-item">⚡ <b>ZERO BLOAT</b> (CLEAN MINIMAL INSTALL)</span>
-          <span class="marquee-item">🛡️ <b>BTRFS SNAPSHOT ROLLBACK</b> GUARANTEED</span>
-          <span class="marquee-item">⌨️ <b>POP!_OS COSMIC</b> KEYBINDING MUSCLE MEMORY</span>
-          <span class="marquee-item">🛸 <b>IDLESCREEN SUITE</b> IN-TREE &amp; INTEGRATED</span>
-          <span class="marquee-item">🚀 <b>HYPRLAND NATIVE</b> WAYLAND ACCELERATION</span>
-          <span class="marquee-item">📊 <b>QUICKSHELL</b> STATUS BAR WITH TRAY &amp; WORKSPACES</span>
-          <span class="marquee-item">✨ <b>10 IDEMPOTENT MODULES</b> (SAFE TO RE-RUN)</span>
-          <span class="marquee-item">🔮 <b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE</span>
+          <span class="marquee-item">[CLEAN] <b>ZERO BLOAT</b> (CLEAN MINIMAL INSTALL)</span>
+          <span class="marquee-item">[BTRFS] <b>BTRFS SNAPSHOT ROLLBACK</b> GUARANTEED</span>
+          <span class="marquee-item">[COSMIC] <b>POP!_OS COSMIC</b> KEYBINDING MUSCLE MEMORY</span>
+          <span class="marquee-item">[IDLESCREEN] <b>IDLESCREEN SUITE</b> IN-TREE &amp; INTEGRATED</span>
+          <span class="marquee-item">[HYPRLAND] <b>HYPRLAND NATIVE</b> WAYLAND ACCELERATION</span>
+          <span class="marquee-item">[QUICKSHELL] <b>QUICKSHELL</b> STATUS BAR WITH TRAY &amp; WORKSPACES</span>
+          <span class="marquee-item">[MODULES] <b>10 IDEMPOTENT MODULES</b> (SAFE TO RE-RUN)</span>
+          <span class="marquee-item">[PALETTE] <b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE</span>
           <!-- Repeat for smooth loop -->
-          <span class="marquee-item" aria-hidden="true">⚡ <b>ZERO BLOAT</b> (CLEAN MINIMAL INSTALL)</span>
-          <span class="marquee-item" aria-hidden="true">🛡️ <b>BTRFS SNAPSHOT ROLLBACK</b> GUARANTEED</span>
-          <span class="marquee-item" aria-hidden="true">⌨️ <b>POP!_OS COSMIC</b> KEYBINDING MUSCLE MEMORY</span>
-          <span class="marquee-item" aria-hidden="true">🛸 <b>IDLESCREEN SUITE</b> IN-TREE &amp; INTEGRATED</span>
-          <span class="marquee-item" aria-hidden="true">🚀 <b>HYPRLAND NATIVE</b> WAYLAND ACCELERATION</span>
-          <span class="marquee-item" aria-hidden="true">📊 <b>QUICKSHELL</b> STATUS BAR WITH TRAY &amp; WORKSPACES</span>
-          <span class="marquee-item" aria-hidden="true">✨ <b>10 IDEMPOTENT MODULES</b> (SAFE TO RE-RUN)</span>
-          <span class="marquee-item" aria-hidden="true">🔮 <b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE</span>
+          <span class="marquee-item" aria-hidden="true">[CLEAN] <b>ZERO BLOAT</b> (CLEAN MINIMAL INSTALL)</span>
+          <span class="marquee-item" aria-hidden="true">[BTRFS] <b>BTRFS SNAPSHOT ROLLBACK</b> GUARANTEED</span>
+          <span class="marquee-item" aria-hidden="true">[COSMIC] <b>POP!_OS COSMIC</b> KEYBINDING MUSCLE MEMORY</span>
+          <span class="marquee-item" aria-hidden="true">[IDLESCREEN] <b>IDLESCREEN SUITE</b> IN-TREE &amp; INTEGRATED</span>
+          <span class="marquee-item" aria-hidden="true">[HYPRLAND] <b>HYPRLAND NATIVE</b> WAYLAND ACCELERATION</span>
+          <span class="marquee-item" aria-hidden="true">[QUICKSHELL] <b>QUICKSHELL</b> STATUS BAR WITH TRAY &amp; WORKSPACES</span>
+          <span class="marquee-item" aria-hidden="true">[MODULES] <b>10 IDEMPOTENT MODULES</b> (SAFE TO RE-RUN)</span>
+          <span class="marquee-item" aria-hidden="true">[PALETTE] <b>TOKYO NIGHT</b> 16-BIT RETRO PALETTE</span>
         </div>
       </div>
     </section>
@@ -260,10 +268,10 @@
           <h3 class="compare-title">The Default Way</h3>
           <ul class="compare-list">
             <li><span class="compare-icon-mid">~</span> Solid RPM &amp; kernel foundation, but mouse-heavy GNOME default.</li>
-            <li><span class="compare-icon-no">✕</span> No keyboard-driven tiling or COSMIC stack navigation.</li>
-            <li><span class="compare-icon-no">✕</span> No automated pre-install Snapper baseline snapshot.</li>
-            <li><span class="compare-icon-no">✕</span> Missing essential multimedia codecs and VA-API hardware drivers out of the box.</li>
-            <li><span class="compare-icon-no">✕</span> Requires hours of manual hunting across RPM Fusion and COPRs.</li>
+            <li><span class="compare-icon-no">[-]</span> No keyboard-driven tiling or COSMIC stack navigation.</li>
+            <li><span class="compare-icon-no">[-]</span> No automated pre-install Snapper baseline snapshot.</li>
+            <li><span class="compare-icon-no">[-]</span> Missing essential multimedia codecs and VA-API hardware drivers out of the box.</li>
+            <li><span class="compare-icon-no">[-]</span> Requires hours of manual hunting across RPM Fusion and COPRs.</li>
           </ul>
         </div>
 
@@ -272,25 +280,25 @@
           <span class="compare-badge badge-red">Dogmatic Tiling Rices</span>
           <h3 class="compare-title">The Fragile Way</h3>
           <ul class="compare-list">
-            <li><span class="compare-icon-no">✕</span> Demands wiping your entire drive with opinionated partitions.</li>
-            <li><span class="compare-icon-no">✕</span> Locked to Arch Linux AUR churn with high maintenance breakage.</li>
-            <li><span class="compare-icon-no">✕</span> Hundreds of esoteric keybindings that break your existing muscle memory.</li>
-            <li><span class="compare-icon-no">✕</span> No idempotent re-run or safe component rollback capability.</li>
-            <li><span class="compare-icon-no">✕</span> Brittle shell coupling that fails when configs drift.</li>
+            <li><span class="compare-icon-no">[-]</span> Demands wiping your entire drive with opinionated partitions.</li>
+            <li><span class="compare-icon-no">[-]</span> Locked to Arch Linux AUR churn with high maintenance breakage.</li>
+            <li><span class="compare-icon-no">[-]</span> Hundreds of esoteric keybindings that break your existing muscle memory.</li>
+            <li><span class="compare-icon-no">[-]</span> No idempotent re-run or safe component rollback capability.</li>
+            <li><span class="compare-icon-no">[-]</span> Brittle shell coupling that fails when configs drift.</li>
           </ul>
         </div>
 
         <!-- SuperFedora -->
         <div class="compare-card card-featured">
-          <span class="compare-badge badge-super">★ SuperFedora</span>
+          <span class="compare-badge badge-super">SuperFedora</span>
           <h3 class="compare-title">The 16-Bit Supercharged Way</h3>
           <ul class="compare-list">
-            <li><span class="compare-icon-yes">✓</span> <strong>Clean Fedora Minimal netinstall</strong> foundation — enterprise stability.</li>
-            <li><span class="compare-icon-yes">✓</span> <strong>Pop!_OS COSMIC keybinding muscle memory</strong> (Super+T, Super+B, Super+S).</li>
-            <li><span class="compare-icon-yes">✓</span> <strong>Automatic Btrfs Snapper baseline snapshot</strong> — 100% reversible anytime.</li>
-            <li><span class="compare-icon-yes">✓</span> <strong>10 Idempotent modules</strong>: checks before installing, runs safely repeatedly.</li>
-            <li><span class="compare-icon-yes">✓</span> <strong>IdleScreen screensaver suite</strong> integrated with zero cycles active.</li>
-            <li><span class="compare-icon-yes">✓</span> <strong>Complete polyglot dev stack</strong>: Rust, Node, Python uv, GCC, Git &amp; AI CLIs.</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>Clean Fedora Minimal netinstall</strong> foundation — enterprise stability.</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>Pop!_OS COSMIC keybinding muscle memory</strong> (Super+T, Super+B, Super+S).</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>Automatic Btrfs Snapper baseline snapshot</strong> — 100% reversible anytime.</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>10 Idempotent modules</strong>: checks before installing, runs safely repeatedly.</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>IdleScreen screensaver suite</strong> integrated with zero cycles active.</li>
+            <li><span class="compare-icon-yes">[+]</span> <strong>Complete polyglot dev stack</strong>: Rust, Node, Python uv, GCC, Git &amp; AI CLIs.</li>
           </ul>
         </div>
       </div>
@@ -363,16 +371,16 @@
       </div>
       <h2 class="section-heading">CLI Command Control Center</h2>
       <p class="section-desc">
-        Everything is orchestrated through the lightweight <code>superfedora</code> binary.
+        Everything is orchestrated through the lightweight <code>sf</code> CLI (with <code>superfedora</code> as full alias).
         Inspect real-time health, run dry-run simulations, check for config drift, or trigger a full baseline rollback. Select a command to preview its live terminal output:
       </p>
 
       <div class="cli-tabs">
-        <button type="button" class="cli-tab-btn active" data-cmd="status">superfedora status</button>
-        <button type="button" class="cli-tab-btn" data-cmd="install">superfedora install</button>
-        <button type="button" class="cli-tab-btn" data-cmd="update">superfedora update</button>
-        <button type="button" class="cli-tab-btn" data-cmd="dotfiles">superfedora dotfiles --check</button>
-        <button type="button" class="cli-tab-btn" data-cmd="rollback">superfedora rollback</button>
+        <button type="button" class="cli-tab-btn active" data-cmd="status">sf status</button>
+        <button type="button" class="cli-tab-btn" data-cmd="install">sf install</button>
+        <button type="button" class="cli-tab-btn" data-cmd="update">sf update</button>
+        <button type="button" class="cli-tab-btn" data-cmd="dotfiles">sf dotfiles --check</button>
+        <button type="button" class="cli-tab-btn" data-cmd="rollback">sf rollback</button>
       </div>
 
       <div class="cli-window">
@@ -400,7 +408,7 @@
             Download the official Fedora <a href="https://fedoraproject.org/misc/#everything" target="_blank" rel="noopener noreferrer">Everything netinstall ISO</a>. Under <i>Software Selection</i>, choose <strong>Minimal Install</strong> and create your user account with administrator privileges.
           </p>
           <div style="font-size: 12px; color: var(--text-dim); font-family: var(--font-mono);">
-            💡 Keep the default Btrfs layout to enable instant snapshot rollbacks.
+            TIP: Keep the default Btrfs layout to enable instant snapshot rollbacks.
           </div>
         </div>
 
@@ -425,7 +433,7 @@
             Reboot your machine. Enter your password at the retro <strong>tuigreet</strong> login prompt. Hyprland starts automatically with Quickshell, Tokyo Night theme, and Pop!_OS COSMIC shortcuts.
           </p>
           <div style="font-size: 12px; color: var(--jewel-hot); font-family: var(--font-pixel-sub);">
-            ⌨️ Press Super + F1 for the instant keybindings cheat sheet!
+            KEYBINDINGS: Press Super + F1 for the instant cheat sheet!
           </div>
         </div>
       </div>
@@ -433,11 +441,11 @@
       <!-- Snapper Safety Guarantee RPG Box -->
       <div class="rpg-window" style="margin-top: 24px;">
         <h3 style="font-family: var(--font-pixel-sub); font-size: 14px; color: var(--jewel-hot); margin-bottom: 8px;">
-          🛡️ The Zero-Risk Snapper Rollback Guarantee
+          The Zero-Risk Snapper Rollback Guarantee
         </h3>
         <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
           Before changing a single package or config file, SuperFedora executes <code>00-preflight</code> to create an immutable Btrfs snapshot baseline labeled <code>superfedora-preinstall-baseline</code>.
-          If you ever want to revert your machine to the exact state it was in before SuperFedora ran, simply execute <code>superfedora rollback</code>.
+          If you ever want to revert your machine to the exact state it was in before SuperFedora ran, simply execute <code>sf rollback</code> (or <code>superfedora rollback</code>).
         </p>
       </div>
     </section>
@@ -592,7 +600,7 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="brand-name" style="font-size: 16px;">
-        <span class="super-metallic" style="font-size: 14px;">SUPER</span>FEDORA 🛸
+        <span class="super-metallic" style="font-size: 14px;">SUPER</span>FEDORA
       </div>
       <p style="color: var(--text-secondary); font-size: 14px; max-width: 580px;">
         A curated, keyboard-driven workstation setup on clean Fedora. Not an OS, not a DE, not an init system — the collection of things set up how you want them.
@@ -610,7 +618,7 @@
       </nav>
 
       <div class="footer-copy">
-        MIT License © 2026 <a href="https://github.com/SuperFedora" target="_blank" rel="noopener noreferrer">SuperFedora</a>. Built with 16-bit SNES &amp; Tokyo Night energy.
+        Apache License 2.0 © 2026 <a href="https://github.com/SuperFedora" target="_blank" rel="noopener noreferrer">SuperFedora</a>. Built with 16-bit SNES &amp; Tokyo Night energy.
       </div>
     </div>
   </footer>
@@ -619,6 +627,7 @@
   <script src="js/audio.js"></script>
   <script src="js/theme.js"></script>
   <script src="js/crt.js"></script>
+  <script src="js/starfield.js"></script>
   <script src="js/copy.js"></script>
   <script src="js/hud.js"></script>
 </body>

@@ -1,5 +1,5 @@
 /* styles/typography.css — 16-Bit SNES & Super Metroid typography */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+/* Fonts preconnected and loaded via link tags in HTML head */
 
 /* Angled 3D Metallic "SUPER" title styling */
 .super-metallic {
@@ -81,7 +81,7 @@ h2.section-heading {
 }
 
 h2.section-heading::before {
-  content: "◆";
+  content: ">";
   color: var(--jewel-primary);
   font-size: 0.9em;
   text-shadow: 0 0 8px var(--jewel-primary);

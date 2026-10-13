@@ -32,7 +32,7 @@ function copySnippet(elementId, btnElement) {
     if (btnElement) {
       var orig = btnElement.getAttribute("data-orig") || btnElement.innerHTML;
       btnElement.setAttribute("data-orig", orig);
-      btnElement.innerHTML = "[ ✓ COPIED! ]";
+      btnElement.innerHTML = "[ OK: COPIED ]";
       btnElement.classList.add("copied");
 
       setTimeout(function() {
