@@ -208,42 +208,36 @@ def run_tests():
         ratio = state["wordmarkWidth"] / state["stageWidth"]
         assert ratio >= 0.85, f"Wordmark width ratio {ratio:.2f} is less than 0.85 dominant threshold"
 
-        # Zero-Cycles: should be idle initially once prior test transitions settle
-        time.sleep(0.6)
-        init_state = cdp.eval("window.__getSpotlightState()")
-        assert not init_state["isRunning"], "Expected spotlight engine to be idle (0 cycles) on initial load"
-
         # Active on pointer move
         cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 400, clientY: 300, bubbles: true }));")
         move_state = cdp.eval("window.__getSpotlightState()")
-        assert move_state["isRunning"], "Expected spotlight engine to wake and run while pointer is moving"
+        assert move_state["mouseActive"], "Expected mouseActive to be true on pointer move"
 
-        # Settles to zero cycles when pointer is still
-        time.sleep(0.9)
-        still_state = cdp.eval("window.__getSpotlightState()")
-        assert not still_state["isRunning"], "Expected spotlight engine to settle to 0 cycles when pointer is still"
+        # Text hit detection & spotlight shrinking over text
+        cdp.eval("var el = document.querySelector('.site-header .brand-name'); var r = el.getBoundingClientRect(); window.dispatchEvent(new PointerEvent('pointermove', { clientX: Math.round(r.left + r.width * 0.5), clientY: Math.round(r.top + r.height * 0.5), bubbles: true }));")
+        time.sleep(0.1)
+        text_state = cdp.eval("window.__getSpotlightState()")
+        assert text_state["isOverText"], "Expected isOverText to be true over text element"
 
-        # Wakes up immediately when pointer moves again
-        cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 450, clientY: 320, bubbles: true }));")
-        wake_state = cdp.eval("window.__getSpotlightState()")
-        assert wake_state["isRunning"], "Expected spotlight engine to resume running when pointer moves again"
-
-        # Returns to 0 cycles when pointer leaves
+        # Window leave orbit: eases to continuous orbit
         cdp.eval("document.dispatchEvent(new Event('pointerleave'));")
-        time.sleep(0.6)
         leave_state = cdp.eval("window.__getSpotlightState()")
-        assert not leave_state["isRunning"], "Expected spotlight engine to settle to 0 cycles after pointerleave"
+        assert not leave_state["mouseActive"], "Expected mouseActive to be false after pointerleave"
+        assert leave_state["isRunning"], "Expected spotlight to orbit when pointer leaves"
 
-        # Zero cycles when scrolled away
+        # Scroll persistence: spotlight persists across site
         cdp.eval("window.scrollTo({ top: 1500, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
-        time.sleep(0.3)
+        cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 500, clientY: 400, bubbles: true }));")
         scroll_state = cdp.eval("window.__getSpotlightState()")
-        assert not scroll_state["isRunning"], "Expected spotlight engine to remain 0 cycles when scrolled away"
+        assert scroll_state["mouseActive"] and scroll_state["isRunning"], "Expected spotlight to persist on scroll"
 
-        # Scroll back up to reset
+        # Zero-cycles idle invariant when tab is hidden
+        cdp.eval("Object.defineProperty(document, 'hidden', { value: true, configurable: true }); document.dispatchEvent(new Event('visibilitychange'));")
+        hidden_state = cdp.eval("window.__getSpotlightState()")
+        assert not hidden_state["isRunning"], "Expected 0 cycles (paused) when tab is hidden"
+        cdp.eval("Object.defineProperty(document, 'hidden', { value: false, configurable: true }); document.dispatchEvent(new Event('visibilitychange'));")
         cdp.eval("window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
-        time.sleep(0.3)
-        print("  [OK] Deep zero-cycles invariant (still / offscreen / scroll) & dominant sizing verified.")
+        print("  [OK] Deep spotlight verification (dominant sizing, text shrinking, leave orbit, scroll persistence, zero-cycles) verified.")
 
         print("\nAll deep verification tests PASSED!")
         s.close()

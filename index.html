@@ -70,12 +70,15 @@
   <!-- Ambient 16-Bit SNES Parallax Starfield Canvas -->
   <canvas id="snes-starfield" class="snes-starfield" aria-hidden="true"></canvas>
 
+  <!-- Global Fixed Plasma & Interactive Spotlight Canvas (IdleScreen Style) -->
+  <canvas id="spotlight-canvas" class="spotlight-canvas mainscreen-canvas" aria-hidden="true"></canvas>
+
   <!-- Clean Minimal Sticky Header -->
   <header class="site-header">
     <div class="nav-container">
       <a href="#mainscreen" class="brand-link" aria-label="SuperFedora Homepage">
         <span class="brand-name">
-          <span class="super-metallic" style="font-size: 14px;">SUPER</span>FEDORA
+          <span class="super-pixel-word">SUPER</span> <span class="fedora-pixel-word">FEDORA</span>
         </span>
       </a>
 
@@ -93,11 +96,9 @@
   <main id="main-content">
     <!-- 16-BIT RETRO MAINSCREEN STAGE (INTERACTIVE SPOTLIGHT & PIXEL WORDMARK) -->
     <section class="mainscreen-stage" id="mainscreen" aria-label="SuperFedora Title Screen">
-      <canvas id="mainscreen-canvas" class="mainscreen-canvas" aria-hidden="true"></canvas>
-
       <div class="mainscreen-overlay">
         <div class="mainscreen-title-box">
-          <span class="mainscreen-super-title super-metallic">SUPER</span>
+          <span class="mainscreen-super-title">SUPER</span>
           <span class="mainscreen-fedora-title">FEDORA</span>
         </div>
       </div>
@@ -115,7 +116,7 @@
 
           <div class="hero-title-group">
             <h1 class="hero-main-title">
-              <span class="super-metallic">SUPER</span><span class="fedora-word">FEDORA</span>
+              <span class="super-pixel-word">SUPER</span> <span class="fedora-pixel-word">FEDORA</span>
             </h1>
             <p class="hero-subtitle">Curated keyboard-driven workstation on clean Fedora.</p>
 
@@ -1982,8 +1983,8 @@
   <!-- CONTENT FOOTER -->
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="brand-name" style="font-size: 16px;">
-        <span class="super-metallic" style="font-size: 14px;">SUPER</span>FEDORA
+      <div class="brand-name" style="font-size: 14px;">
+        <span class="super-pixel-word">SUPER</span> <span class="fedora-pixel-word">FEDORA</span>
       </div>
       <p style="color: var(--text-secondary); font-size: 14px; max-width: 580px;">
         A curated, keyboard-driven workstation setup on clean Fedora. Not an OS, not a DE, not an init system — the collection of things set up how you want them.

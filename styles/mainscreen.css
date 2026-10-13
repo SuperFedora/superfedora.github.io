@@ -1,4 +1,17 @@
-/* styles/mainscreen.css — 16-Bit SuperFedora Mainscreen Stage & Spotlight Canvas */
+/* styles/mainscreen.css — Fixed Global Spotlight Canvas & Mainscreen Stage */
+
+.spotlight-canvas,
+.mainscreen-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
 
 .mainscreen-stage {
   position: relative;
@@ -15,19 +28,7 @@
   cursor: crosshair;
   overflow: hidden;
   z-index: 10;
-  background-color: #07080b;
-}
-
-.mainscreen-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  background: transparent;
 }
 
 /* Visually-hidden accessible container preserving semantic titles for screen readers and tests */
@@ -49,14 +50,26 @@
 .mainscreen-title-box {
   display: inline-flex;
   flex-direction: column;
+  font-family: var(--font-pixel-title);
+  image-rendering: pixelated;
 }
 
 .mainscreen-super-title {
   font-family: var(--font-pixel-title);
   font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--jewel-primary);
+  letter-spacing: 0.06em;
+  text-shadow: 2px 2px 0px #07080b;
 }
 
 .mainscreen-fedora-title {
   font-family: var(--font-pixel-title);
   font-size: 64px;
+  font-style: normal;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+  text-shadow: 3px 3px 0px #07080b;
 }

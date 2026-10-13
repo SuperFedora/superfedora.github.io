@@ -1,32 +1,34 @@
 /* styles/typography.css — 16-Bit SNES & Super Metroid typography */
 /* Fonts preconnected and loaded via link tags in HTML head */
 
-/* Angled 3D Metallic "SUPER" title styling */
+/* Opinionated 2D Pixel Art "SUPER FEDORA" Wordmark Styling (Omarchy-Inspired) */
+.super-pixel-word,
 .super-metallic {
   font-family: var(--font-pixel-title);
-  font-style: italic;
-  letter-spacing: -0.05em;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    #e2e8f0 25%,
-    #93c5fd 50%,
-    #3b82f6 70%,
-    #1d4ed8 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(2px 2px 0px #0a0b10) drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.8));
+  font-weight: 700;
+  font-style: normal;
+  color: var(--jewel-primary);
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  filter: none;
+  transform: none;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0px #07080b;
   display: inline-block;
-  transform: skewX(-6deg);
+  image-rendering: pixelated;
 }
 
+.fedora-pixel-word,
 .fedora-word {
   font-family: var(--font-pixel-title);
+  font-weight: 700;
+  font-style: normal;
   color: #ffffff;
-  letter-spacing: -0.02em;
-  text-shadow: 2px 2px 0px #0a0b10;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0px #07080b;
   display: inline-block;
+  image-rendering: pixelated;
 }
 
 /* SNES Section Eyebrows & Badges */

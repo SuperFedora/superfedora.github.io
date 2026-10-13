@@ -33,14 +33,15 @@
 }
 
 .brand-name {
-  font-family: var(--font-mono);
-  font-size: 15px;
+  font-family: var(--font-pixel-title);
+  font-size: 13px;
   font-weight: 700;
   color: var(--text-white);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
   gap: 6px;
+  text-shadow: 2px 2px 0px #07080b;
 }
 
 .header-actions {
