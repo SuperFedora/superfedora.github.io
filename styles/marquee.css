@@ -1,4 +1,6 @@
-/* styles/marquee.css — Dual-opposing 16-bit infinite horizontal scrolling marquees */
+/* styles/marquee.css — Alternating Continuous 16-Bit Marquee Streams */
+
+/* Hero Dual-Opposing Marquees */
 .dual-marquee-wrap {
   position: relative;
   overflow: hidden;
@@ -46,8 +48,8 @@
 
 .marquee-chip {
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  font-size: 14px;
+  letter-spacing: 0.02em;
   color: var(--text-secondary);
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -67,7 +69,7 @@
   border-color: var(--jewel-primary);
   color: var(--text-white);
   background: var(--bg-elevated);
-  box-shadow: var(--bevel-snes-raised), 0 0 10px var(--jewel-glow);
+  box-shadow: var(--bevel-snes-raised);
 }
 
 .marquee-chip b {
@@ -76,31 +78,159 @@
 }
 
 .marquee-bracket {
+  font-family: var(--font-pixel-sub);
+  font-size: 10px;
   color: var(--jewel-primary);
   font-weight: 700;
 }
 
-/* Single Marquee Strip (Hero Tenets) */
-.marquee-container {
-  margin: 30px 0 10px;
-  background: #141520;
-  border-top: 2px solid var(--border-subtle);
-  border-bottom: 2px solid var(--border-subtle);
-  box-shadow: var(--bevel-snes-box);
+/* Continuous Section Marquee Wrapper */
+.marquee-section-wrap {
+  position: relative;
   overflow: hidden;
-  padding: 8px 0;
-  white-space: nowrap;
+  width: 100%;
+  padding: 16px 0;
   mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
 }
 
-.marquee-track {
-  display: inline-flex;
+.marquee-track-continuous {
+  display: flex;
   gap: 16px;
-  animation: snes-stream-left 36s linear infinite;
+  width: max-content;
   will-change: transform;
 }
 
-.marquee-container:hover .marquee-track {
+.marquee-scroll-left {
+  animation: marquee-left 44s linear infinite;
+}
+
+.marquee-scroll-right {
+  animation: marquee-right 44s linear infinite;
+}
+
+.marquee-section-wrap:hover .marquee-track-continuous {
   animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Marquee Cards Base (High Readability JetBrains Mono) */
+.module-card,
+.module-card-clone {
+  width: 380px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-mono);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.key-marquee-card,
+.key-marquee-card-clone {
+  width: 320px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.cli-card,
+.cli-card-clone {
+  width: 440px;
+  max-width: 88vw;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--jewel-hot);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-mono);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.wallpaper-marquee-card,
+.wallpaper-marquee-card-clone {
+  width: 360px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-mono);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.repo-marquee-card,
+.repo-marquee-card-clone {
+  width: 380px;
+  max-width: 85vw;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.module-card:hover,
+.module-card-clone:hover,
+.key-marquee-card:hover,
+.key-marquee-card-clone:hover,
+.cli-card:hover,
+.cli-card-clone:hover,
+.wallpaper-marquee-card:hover,
+.wallpaper-marquee-card-clone:hover,
+.repo-marquee-card:hover,
+.repo-marquee-card-clone:hover {
+  transform: translateY(-2px);
+  border-color: var(--jewel-primary);
+  box-shadow: var(--bevel-snes-box), 0 0 16px var(--jewel-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track-continuous,
+  .marquee-stream {
+    animation: none !important;
+    overflow-x: auto;
+  }
 }

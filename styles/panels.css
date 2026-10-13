@@ -47,16 +47,19 @@
 .badge-gray { background: #24283b; color: var(--text-dim); }
 .badge-red  { background: rgba(247, 118, 142, 0.15); color: #f7768e; border: 1px solid rgba(247, 118, 142, 0.3); }
 .badge-super { background: var(--jewel-dim); color: var(--jewel-hot); border: 1px solid var(--jewel-primary); }
-.compare-title { font-family: var(--font-pixel-sub); font-size: 15px; color: var(--text-white); margin-bottom: 14px; }
+.compare-title { font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--text-white); margin-bottom: 14px; }
 .compare-list { display: flex; flex-direction: column; gap: 10px; font-size: 14px; flex: 1; }
-.compare-list li { display: flex; align-items: flex-start; gap: 8px; line-height: 1.45; color: var(--text-secondary); }
+.compare-list li { display: flex; align-items: flex-start; gap: 8px; line-height: 1.55; color: var(--text-secondary); }
 .compare-icon-yes { color: #9ece6a; font-weight: 700; flex-shrink: 0; }
 .compare-icon-no  { color: #f7768e; font-weight: 700; flex-shrink: 0; }
 .compare-icon-mid { color: #e0af68; font-weight: 700; flex-shrink: 0; }
 
 /* Dedicated Pre-Installed Section Grid */
-.preinstalled-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px; margin-top: 24px; }
-.preinstalled-card {
+.preinstalled-card,
+.preinstalled-card-clone {
+  width: 380px;
+  max-width: 85vw;
+  flex-shrink: 0;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-left: 4px solid var(--jewel-primary);
@@ -68,16 +71,17 @@
   gap: 10px;
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.preinstalled-card:hover {
+.preinstalled-card:hover,
+.preinstalled-card-clone:hover {
   transform: translateY(-2px);
   border-color: var(--jewel-primary);
   box-shadow: var(--bevel-snes-box), 0 0 16px var(--jewel-dim);
 }
 .preinstalled-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.preinstalled-title { font-family: var(--font-pixel-sub); font-size: 13px; color: var(--text-white); letter-spacing: 0.04em; }
+.preinstalled-title { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-white); letter-spacing: -0.01em; }
 .preinstalled-badge {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--jewel-hot);
   background: var(--jewel-dim);
@@ -85,11 +89,11 @@
   padding: 2px 7px;
   border-radius: 3px;
 }
-.preinstalled-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+.preinstalled-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; flex: 1; }
 .preinstalled-meta {
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-dim);
+  font-size: 12px;
+  color: var(--text-secondary);
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -115,13 +119,14 @@
 .wallpaper-thumb { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; transition: transform 0.3s ease; }
 .wallpaper-card:hover .wallpaper-thumb { transform: scale(1.05); }
 .wallpaper-meta { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.wallpaper-name { font-family: var(--font-pixel-sub); font-size: 13px; color: var(--text-white); }
-.wallpaper-specs { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); display: flex; justify-content: space-between; }
+.wallpaper-name { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-white); }
+.wallpaper-specs { font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary); display: flex; justify-content: space-between; }
 .wallpaper-actions { display: flex; gap: 8px; margin-top: auto; }
 .wallpaper-btn {
-  font-family: var(--font-pixel-sub);
-  font-size: 10px;
-  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
   background: var(--bg-panel);
   border: 1px solid var(--border-hard);
   color: var(--jewel-hot);
@@ -149,11 +154,11 @@
 }
 .repo-card:hover { transform: translateY(-2px); border-color: var(--jewel-primary); }
 .repo-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.repo-title { font-family: var(--font-pixel-sub); font-size: 14px; color: var(--text-white); }
-.repo-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.45; margin-bottom: 12px; flex: 1; }
+.repo-title { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-white); }
+.repo-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; flex: 1; }
 
 /* Page Bottom Footer */
 .site-footer { margin-top: 80px; border-top: 2px solid var(--border-subtle); background: #0f1017; padding: 40px 20px 84px; }
 .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
-.footer-nav { display: flex; flex-wrap: wrap; gap: 20px; font-family: var(--font-pixel-sub); font-size: 11px; }
-.footer-copy { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 24px; font-family: var(--font-mono); font-size: 14px; font-weight: 600; line-height: 1.6; }
+.footer-copy { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }

@@ -1,6 +1,6 @@
 /* js/crt.js — Toggleable CRT Scanlines Shader */
 (function() {
-  var crtActive = localStorage.getItem("superfedora_crt") !== "false";
+  var crtActive = localStorage.getItem("superfedora_crt") === "true";
 
   function updateCrt(playSound) {
     if (crtActive) {

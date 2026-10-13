@@ -46,7 +46,7 @@
 /* 16-Bit Arcade Navigation Buttons */
 .dock-arrow-btn {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: var(--jewel-primary);
@@ -67,7 +67,7 @@
   background: var(--bg-elevated);
   border-color: var(--jewel-primary);
   color: var(--jewel-hot);
-  box-shadow: var(--bevel-snes-raised), 0 0 10px var(--jewel-glow);
+  box-shadow: var(--bevel-snes-raised);
 }
 .dock-arrow-btn:active:not(:disabled) {
   transform: translateY(2px);
@@ -83,17 +83,18 @@
   transform: none;
 }
 .pixel-glyph {
-  font-family: var(--font-mono);
+  font-family: var(--font-pixel-sub);
   font-weight: 700;
-  font-size: 11px;
+  font-size: 10px;
   color: var(--jewel-hot);
 }
 /* Dock Toggle Buttons (CRT & SFX) */
 .dock-toggle-btn {
-  font-family: var(--font-pixel-sub);
-  font-size: 9px;
-  letter-spacing: 0.05em;
-  padding: 5px 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
   background: var(--bg-panel);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pixel);
@@ -112,7 +113,7 @@
 .dock-toggle-btn.active {
   color: var(--jewel-primary);
   border-color: var(--jewel-primary);
-  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2), 0 0 8px var(--jewel-glow);
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2);
 }
 /* 16-Bit Rainbow Swatches (Center) */
 .footer-accent-picker {
@@ -185,20 +186,22 @@
   margin-bottom: 16px;
 }
 .snes-modal-title {
-  font-family: var(--font-pixel-sub);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
   color: var(--jewel-hot);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
 }
 .modal-close-btn {
-  font-family: var(--font-pixel-sub);
-  font-size: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
   background: var(--bg-panel);
   border: 1px solid var(--border-hard);
   color: var(--text-secondary);
   border-radius: var(--radius-pixel);
   box-shadow: var(--bevel-snes-raised);
-  padding: 4px 8px;
+  padding: 4px 10px;
   cursor: pointer;
 }
 .modal-close-btn:hover {
@@ -210,11 +213,12 @@
   border-collapse: collapse;
 }
 .modal-shortcuts-table td {
-  padding: 7px 6px;
-  font-size: 13px;
+  padding: 8px 6px;
+  font-size: 14px;
+  line-height: 1.5;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
-.modal-shortcuts-table td:first-child { width: 130px; }
+.modal-shortcuts-table td:first-child { width: 140px; }
 .modal-shortcuts-table td:last-child { color: var(--text-secondary); }
 @media (max-width: 768px) {
   .dock-toggle-btn { display: none; }

@@ -49,11 +49,11 @@
 }
 
 .brand-name {
-  font-family: var(--font-pixel-sub);
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-white);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -61,7 +61,7 @@
 
 .brand-version-badge {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   color: var(--jewel-hot);
   background: var(--jewel-dim);
   border: 1px solid rgba(var(--jewel-rgb), 0.3);
@@ -74,24 +74,25 @@
 .desktop-nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
 }
 
 .nav-link {
-  font-family: var(--font-pixel-sub);
-  font-size: 11px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  transition: all 0.15s ease;
+  letter-spacing: 0.04em;
+  transition: color 0.15s ease;
   padding: 6px 4px;
   position: relative;
   text-decoration: none;
+  line-height: 1.5;
 }
 
 .nav-link:hover {
   color: var(--text-white);
-  text-shadow: 0 0 8px var(--jewel-glow);
 }
 
 .nav-link.active,
@@ -114,9 +115,10 @@
 }
 
 .btn-github {
-  font-family: var(--font-pixel-sub);
-  font-size: 11px;
-  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
   background: #24283b;
   border: 1px solid var(--border-hard);
   color: var(--text-white);
@@ -133,7 +135,7 @@
   background: var(--jewel-primary);
   color: var(--bg-void);
   border-color: var(--jewel-hot);
-  box-shadow: 0 0 12px var(--jewel-glow);
+  box-shadow: var(--bevel-snes-raised);
 }
 
 /* Mobile Toggle & Drawer */

@@ -2,7 +2,7 @@
 (function() {
   'use strict';
 
-  var SELECTORS = ['.stream-left', '.stream-right', '.marquee-track'];
+  var SELECTORS = ['.stream-left', '.stream-right', '.marquee-track', '.marquee-track-continuous'];
   var observedElements = new Set();
   var visibilityMap = new Map();
 

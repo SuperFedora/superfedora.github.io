@@ -1,4 +1,4 @@
-/* js/sun.js — 16-Bit Rotating Pixel Sun & Solar Corona Engine */
+/* js/sun.js — 16-Bit SuperFedora Interactive Spotlight & Pixel Wordmark Engine */
 (function() {
   'use strict';
 
@@ -6,248 +6,248 @@
   if (!canvas) return;
   var stage = document.getElementById('mainscreen');
   if (!stage) return;
-  var ctx = canvas.getContext('2d');
+  var ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
 
-  var BAYER = [
-     0, 32,  8, 40,  2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26,
-    12, 44,  4, 36, 14, 46,  6, 38, 60, 28, 52, 20, 62, 30, 54, 22,
-     3, 35, 11, 43,  1, 33,  9, 41, 51, 19, 59, 27, 49, 17, 57, 25,
-    15, 47,  7, 39, 13, 45,  5, 37, 63, 31, 55, 23, 61, 29, 53, 21
+  var BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22, 3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
+  var N = 128, WM_W = 96, WM_H = 24;
+  var noiseTable = (function() {
+    var seed = 10407530, buf = new Float32Array(N * N);
+    for (var i = 0; i < buf.length; i++) { seed = (seed * 1664525 + 1013904223) >>> 0; buf[i] = seed / 4294967296; }
+    for (var p = 0; p < 2; p++) {
+      var next = new Float32Array(N * N);
+      for (var y = 0; y < N; y++) for (var x = 0; x < N; x++) {
+        var sum = 0;
+        for (var dy = -1; dy <= 1; dy++) for (var dx = -1; dx <= 1; dx++) sum += buf[((y + dy + N) % N) * N + ((x + dx + N) % N)];
+        next[y * N + x] = sum / 9;
+      }
+      buf = next;
+    }
+    var min = Infinity, max = -Infinity; for (var j = 0; j < buf.length; j++) { if (buf[j] < min) min = buf[j]; if (buf[j] > max) max = buf[j]; }
+    var span = max - min || 1; for (var k = 0; k < buf.length; k++) buf[k] = (buf[k] - min) / span;
+    return buf;
+  })();
+
+  function sampleNoise(x, y) {
+    var ix = Math.floor(x), iy = Math.floor(y), fx = x - ix, fy = y - iy;
+    var x0 = (ix % N + N) % N, y0 = (iy % N + N) % N, x1 = (x0 + 1) % N, y1 = (y0 + 1) % N;
+    var sx = fx * fx * (3 - 2 * fx), sy = fy * fy * (3 - 2 * fy);
+    return (noiseTable[y0 * N + x0] * (1 - sx) + noiseTable[y0 * N + x1] * sx) * (1 - sy) + (noiseTable[y1 * N + x0] * (1 - sx) + noiseTable[y1 * N + x1] * sx) * sy;
+  }
+
+  // 96x24 Pixel Art Matrix: SUPER in upper-left shoulder, FEDORA spanning wide & large
+  var WM_ROWS = [
+    "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "000000111110110011011111001111110111110000000000000000000000000000000000000000000000000000000000",
+    "000001100000110011011001101100000110011000000000000000000000000000000000000000000000000000000000",
+    "000001111100110011011111101111100111111000000000000000000000000000000000000000000000000000000000",
+    "000000000110110011011000001100000110110000000000000000000000000000000000000000000000000000000000",
+    "000000000110110011011000001100000110011000000000000000000000000000000000000000000000000000000000",
+    "000001111100011110011000001111110110011000000000000000000000000000000000000000000000000000000000",
+    "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "000111111111111000111111111111000111111111000000000111111110000001111111110000000000011110000000",
+    "000111111111111000111111111111000111111111110000001111111111000001111111111100000001111111100000",
+    "000111111111111000111111111111000111111111111000011111111111100001111111111100000001111111100000",
+    "000111000000000000111000000000000111000000111000011100000011100001110000011100000111110011111000",
+    "000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000",
+    "000111000000000000111000000000000111000000111000011100000011100001111111111100000111000000111000",
+    "000111111111000000111111111000000111000000111000011100000011100001111111110000000111000000111000",
+    "000111111111000000111111111000000111000000111000011100000011100001111111110000000111111111111000",
+    "000111111111000000111111111000000111000000111000011100000011100001110001110000000111111111111000",
+    "000111000000000000111000000000000111000000111000011100000011100001110000011100000111111111111000",
+    "000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000",
+    "000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000",
+    "000111000000000000111111111111000111111111111000011111111111100001110000000111000111000000111000",
+    "000111000000000000111111111111000111111111110000001111111111000001110000000111000111000000111000",
+    "000111000000000000111111111111000111111111000000000111111110000001110000000111000111000000111000",
+    "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
   ];
 
-  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var dpr = 1, width = 0, height = 0, cellPx = 6, cols = 0, rows = 0;
-  var centerX = 0, centerY = 0;
-  var mouseX = -9999, mouseY = -9999, smoothMouseX = -9999, smoothMouseY = -9999;
-  var mouseActive = false, mouseStrength = 0;
-  var isVisible = true, isIntersecting = true, rafId = null;
-  var shockwaves = [];
-
-  // 16-Bit Palette State
-  var colCore = '#ffffff', colHot = '#ff9e64', colMid = '#7aa2f7', colDim = 'rgba(41, 65, 114, 0.45)';
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = 1, width = 0, height = 0, cellPx = 10, originX = 0, originY = 0, gridCols = 0, gridRows = 0;
+  var mouse = { x: -2000, y: -2000, active: false }, smoothMouse = { x: -2000, y: -2000, strength: 0 };
+  var wander = { x: 0, y: 0, reach: 200 }, ripples = [], rafId = 0, isVisible = true, isIntersecting = true;
+  var currentSubdued = 0, targetSubdued = 0, lastPointerTime = 0, lastRender = 0, smoothAcc = [122, 162, 247];
 
   function hexToRgb(hex) {
     hex = hex.replace('#', '');
     if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-    var num = parseInt(hex, 16);
-    return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+    var n = parseInt(hex, 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
 
-  function updatePalette() {
+  function getAccentRgb() {
     try {
-      var cs = getComputedStyle(document.documentElement);
-      var hot = cs.getPropertyValue('--jewel-hot').trim() || '#ff9e64';
-      var prim = cs.getPropertyValue('--jewel-primary').trim() || '#7aa2f7';
-      colHot = hot;
-      colMid = prim;
-      var rgb = hexToRgb(prim.charAt(0) === '#' ? prim : '#7aa2f7');
-      colDim = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ', 0.35)';
-    } catch (e) {}
+      var p = getComputedStyle(document.documentElement).getPropertyValue('--jewel-primary').trim() || '#7aa2f7';
+      return hexToRgb(p.charAt(0) === '#' ? p : '#7aa2f7');
+    } catch (e) { return [122, 162, 247]; }
   }
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     var rect = stage.getBoundingClientRect();
-    width = Math.round(rect.width * dpr);
-    height = Math.round(rect.height * dpr);
+    width = Math.round(rect.width * dpr); height = Math.round(rect.height * dpr);
+    if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+    var targetW = Math.min(width * 0.94, 1150 * dpr);
+    cellPx = Math.max(3, Math.floor(targetW / WM_W));
+    originX = Math.round((width - WM_W * cellPx) / 2);
+    originY = Math.round((height - WM_H * cellPx) / 2);
+    gridCols = Math.ceil(width / cellPx) + 1; gridRows = Math.ceil(height / cellPx) + 1;
+    wander.reach = 200 * dpr;
+    if (reducedMotion) render(performance.now());
+  }
 
-    if (canvas.width !== width || canvas.height !== height) {
-      canvas.width = width;
-      canvas.height = height;
+  function wakeRender() {
+    if (!rafId && !reducedMotion && isVisible && isIntersecting) rafId = requestAnimationFrame(render);
+  }
+
+  function updateScroll() {
+    var rect = stage.getBoundingClientRect(), stageH = stage.offsetHeight || window.innerHeight;
+    targetSubdued = Math.min(1, Math.max(0, -rect.top / (stageH * 0.55)));
+    if (targetSubdued < 1.0 || mouse.active) wakeRender();
+  }
+
+  function deactivate() {
+    if (!mouse.active && smoothMouse.strength <= 0) return;
+    mouse.active = false;
+    if (reducedMotion) render(performance.now());
+  }
+
+  function onPointerMove(e) {
+    var rect = stage.getBoundingClientRect();
+    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+      deactivate(); return;
     }
-
-    cellPx = Math.max(4, Math.floor(Math.min(width, height) / 130));
-    cols = Math.ceil(width / cellPx) + 1;
-    rows = Math.ceil(height / cellPx) + 1;
-
-    // Center sun behind the logo/center
-    centerX = width * 0.5;
-    centerY = height * 0.5;
-
-    if (prefersReduced) renderFrame(performance.now());
+    var px = (e.clientX - rect.left) * dpr, py = (e.clientY - rect.top) * dpr;
+    if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) {
+      smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 0;
+    }
+    mouse.x = px; mouse.y = py; mouse.active = true;
+    lastPointerTime = performance.now();
+    if (reducedMotion) render(performance.now()); else wakeRender();
   }
 
-  function triggerShockwave(x, y) {
-    shockwaves.push({
-      x: x,
-      y: y,
-      born: performance.now(),
-      maxR: Math.min(width, height) * 0.7,
-      dur: 900
-    });
-    if (shockwaves.length > 4) shockwaves.shift();
+  function onPointerDown(e) {
+    var rect = stage.getBoundingClientRect();
+    var px = (e.clientX - rect.left) * dpr, py = (e.clientY - rect.top) * dpr;
+    smoothMouse.x = px; smoothMouse.y = py; mouse.x = px; mouse.y = py; mouse.active = true;
+    lastPointerTime = performance.now();
+    ripples.push({ x: px, y: py, born: performance.now(), maxR: 400 * dpr, dur: 950 });
+    if (ripples.length > 4) ripples.shift();
+    if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(540);
+    if (reducedMotion) render(performance.now()); else wakeRender();
   }
 
-  function renderFrame(now) {
-    ctx.clearRect(0, 0, width, height);
+  function updateLights(t) {
+    smoothMouse.x += (mouse.x - smoothMouse.x) * 0.22;
+    smoothMouse.y += (mouse.y - smoothMouse.y) * 0.22;
+    smoothMouse.strength += ((mouse.active ? 1 : 0) - smoothMouse.strength) * 0.12;
+    if (smoothMouse.strength < 0.005) smoothMouse.strength = 0;
+    currentSubdued += (targetSubdued - currentSubdued) * 0.15;
+    if (Math.abs(targetSubdued - currentSubdued) < 0.005) currentSubdued = targetSubdued;
+    var sec = t * 0.001;
+    wander.x = width * (0.5 + 0.35 * Math.sin(sec * 0.7));
+    wander.y = height * (0.48 + 0.22 * Math.sin(sec * 1.1 + 1.2));
+    ripples = ripples.filter(function(rp) { return (t - rp.born) < rp.dur; });
+  }
 
-    var sec = now * 0.001;
-    var rotSpeed = prefersReduced ? 0 : sec * 0.16;
+  function render(t) {
+    if (!isVisible || !isIntersecting) { rafId = 0; return; }
+    if (targetSubdued >= 1.0 && !mouse.active && smoothMouse.strength <= 0.005 && ripples.length === 0) {
+      rafId = 0; return;
+    }
+    var recent = (t - lastPointerTime) < 1400, hasRipples = ripples.length > 0;
+    var strChanging = Math.abs((mouse.active ? 1 : 0) - smoothMouse.strength) > 0.005;
+    var trans = Math.abs(targetSubdued - currentSubdued) > 0.005 || strChanging;
+    if (!recent && !hasRipples && !trans && (t - lastRender) < 45) {
+      rafId = requestAnimationFrame(render); return;
+    }
+    lastRender = t;
+    updateLights(t);
+    ctx.fillStyle = '#07080b'; ctx.fillRect(0, 0, width, height);
 
-    // Smooth mouse interpolation
-    smoothMouseX += (mouseX - smoothMouseX) * 0.15;
-    smoothMouseY += (mouseY - smoothMouseY) * 0.15;
-    var targetStr = mouseActive ? 1.0 : 0.0;
-    mouseStrength += (targetStr - mouseStrength) * 0.12;
-
-    var sunMaxR = Math.min(width, height) * 0.52;
-    var coreR = sunMaxR * 0.22;
-    var raySpokes = 18;
-
-    // Filter active shockwaves
-    shockwaves = shockwaves.filter(function(sw) {
-      return (now - sw.born) < sw.dur;
+    var sub = currentSubdued, mouseReach = (260 + 60 * sub) * dpr, mouseReachSq = mouseReach * mouseReach;
+    var wanderReachSq = wander.reach * wander.reach, ringW = 28 * dpr, sec = t * 0.001;
+    var activeRipples = ripples.map(function(rp) {
+      var p = (t - rp.born) / rp.dur, curR = rp.maxR * (1 - Math.pow(1 - p, 3));
+      var minR = Math.max(0, curR - ringW), maxR = curR + ringW;
+      return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - p, 1.8) };
     });
 
-    for (var r = 0; r < rows; r++) {
-      var py = r * cellPx;
-      for (var c = 0; c < cols; c++) {
-        var px = c * cellPx;
-        var cx = px + cellPx * 0.5;
-        var cy = py + cellPx * 0.5;
+    var ambientWeight = 0.65 * (1 - smoothMouse.strength * 0.75) * (1 - sub);
+    var acc = getAccentRgb();
+    for (var i = 0; i < 3; i++) smoothAcc[i] += (acc[i] - smoothAcc[i]) * 0.1;
+    var ar = Math.round(smoothAcc[0]), ag = Math.round(smoothAcc[1]), ab = Math.round(smoothAcc[2]);
+    var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.45)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.45)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.45));
+    var hotRgb = hr + ',' + hg + ',' + hb, midRgb = ar + ',' + ag + ',' + ab;
+    var colorSpotHigh = 'rgb(' + hotRgb + ')', colorSpotMid = 'rgba(' + midRgb + ', 0.9)';
+    var colorFieldHigh = 'rgba(' + ar + ',' + ag + ',' + ab + ', 0.22)', colorFieldLow = 'rgba(' + ar + ',' + ag + ',' + ab + ', 0.07)';
 
-        var dx = cx - centerX;
-        var dy = cy - centerY;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist > sunMaxR) continue;
-
-        var angle = Math.atan2(dy, dx);
-        var rotAngle = angle + rotSpeed;
-
-        // 16-Bit stepped rotating ray harmonics
-        var rayPrimary = Math.sin(rotAngle * raySpokes);
-        var raySecondary = Math.sin(rotAngle * (raySpokes * 2) - sec * 0.4) * 0.35;
-        var rayPulse = Math.sin(dist * 0.035 - sec * 1.8) * 0.2;
-        var rayVal = (rayPrimary + 1) * 0.5 + raySecondary + rayPulse;
-
-        // Radial falloff
-        var normDist = dist / sunMaxR;
-        var falloff = Math.pow(Math.max(0, 1 - normDist), 1.6);
-        var intensity = rayVal * falloff;
-
-        // Solid solar core
-        if (dist < coreR) {
-          intensity = 1.3 + (1 - dist / coreR) * 0.6;
+    for (var r = 0; r < gridRows; r++) {
+      var py = r * cellPx, wmRow = Math.floor((py - originY) / cellPx);
+      var hasWordRow = (sub < 0.98) && wmRow >= 0 && wmRow < WM_H;
+      for (var c = 0; c < gridCols; c++) {
+        var px = c * cellPx, wmCol = Math.floor((px - originX) / cellPx);
+        var inWordBox = hasWordRow && wmCol >= 0 && wmCol < WM_W;
+        var isWord = inWordBox && WM_ROWS[wmRow] && WM_ROWS[wmRow][wmCol] === '1';
+        var cx = px + cellPx * 0.5, cy = py + cellPx * 0.5;
+        var dxm = cx - smoothMouse.x, dym = cy - smoothMouse.y, dsqM = dxm * dxm + dym * dym;
+        var sm = dsqM < mouseReachSq ? Math.pow(1 - Math.sqrt(dsqM) / mouseReach, 2) * smoothMouse.strength : 0;
+        var dxw = cx - wander.x, dyw = cy - wander.y, dsqW = dxw * dxw + dyw * dyw;
+        var sw = dsqW < wanderReachSq ? Math.pow(1 - Math.sqrt(dsqW) / wander.reach, 2) * ambientWeight : 0;
+        var spot = Math.max(sm, sw), ripGlow = 0;
+        for (var i = 0; i < activeRipples.length; i++) {
+          var rp = activeRipples[i], rx = cx - rp.x, ry = cy - rp.y, dsqR = rx * rx + ry * ry;
+          if (dsqR >= rp.minRSq && dsqR <= rp.maxRSq) ripGlow = Math.max(ripGlow, (1 - Math.abs(Math.sqrt(dsqR) - rp.r) / ringW) * rp.amp);
         }
-
-        // Mouse spotlight influence
-        if (mouseStrength > 0.01) {
-          var mdx = cx - smoothMouseX;
-          var mdy = cy - smoothMouseY;
-          var mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-          var mReach = 280 * dpr;
-          if (mDist < mReach) {
-            intensity += Math.pow(1 - mDist / mReach, 2) * 0.7 * mouseStrength;
+        var wordDrawn = false;
+        if (isWord) {
+          var lit = (0.42 + spot * 1.8 + ripGlow * 1.5) * (1 - sub);
+          if (lit > 0.05) {
+            ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.9 ? ('rgb(' + hotRgb + ')') : lit > 0.5 ? ('rgb(' + midRgb + ')') : ('rgb(' + Math.round(ar * 0.6) + ',' + Math.round(ag * 0.6) + ',' + Math.round(ab * 0.6) + ')');
+            ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
+            wordDrawn = true;
           }
         }
-
-        // Shockwave ripples
-        for (var i = 0; i < shockwaves.length; i++) {
-          var sw = shockwaves[i];
-          var progress = (now - sw.born) / sw.dur;
-          var curR = sw.maxR * (1 - Math.pow(1 - progress, 2.5));
-          var rDist = Math.abs(dist - curR);
-          var ringWidth = 32 * dpr;
-          if (rDist < ringWidth) {
-            intensity += (1 - rDist / ringWidth) * (1 - progress) * 0.9;
+        if (!wordDrawn) {
+          var nx = c * 0.07 + sec * 0.16, ny = r * 0.07 - sec * 0.11;
+          var nVal = 0.6 * sampleNoise(nx, ny) + 0.4 * sampleNoise(nx * 0.5 - sec * 0.08, ny * 0.5 + sec * 0.07);
+          var energy = nVal * 0.75 + (0.5 + 0.5 * Math.sin(sec * 1.8 + (r * 37 + c * 11) % 6.283)) * 0.25;
+          if (inWordBox) energy *= sub;
+          var fieldVal = energy * 0.44 + spot * 0.85 + ripGlow * 0.95;
+          var dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
+          if (fieldVal > dither * 0.76) {
+            ctx.fillStyle = (spot > 0.38 || ripGlow > 0.4) ? colorSpotHigh : (spot > 0.14 || ripGlow > 0.15) ? colorSpotMid : fieldVal > 0.56 ? colorFieldHigh : colorFieldLow;
+            ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
           }
-        }
-
-        // Bayer 8x8 matrix dithering threshold
-        var dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
-
-        if (intensity > dither * 0.78) {
-          if (intensity > 1.25) {
-            ctx.fillStyle = colCore;
-          } else if (intensity > 0.78) {
-            ctx.fillStyle = colHot;
-          } else if (intensity > 0.42) {
-            ctx.fillStyle = colMid;
-          } else {
-            ctx.fillStyle = colDim;
-          }
-          ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
         }
       }
     }
+    if (!reducedMotion && isVisible && isIntersecting) rafId = requestAnimationFrame(render);
   }
 
-  function loop(now) {
-    if (!isVisible || !isIntersecting || prefersReduced) {
-      rafId = null;
-      return;
+  window.idleRenderSpotlight = window.updateMainscreenSun = function() { wakeRender(); render(performance.now()); };
+
+  function start() {
+    resize(); updateScroll();
+    if (isVisible) render(performance.now());
+    ["resize", "scroll"].forEach(function(ev) { window.addEventListener(ev, function() { if (ev === "resize") resize(); updateScroll(); }, { passive: true }); });
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    stage.addEventListener('pointerdown', onPointerDown, { passive: true });
+    document.addEventListener('pointerleave', deactivate, { passive: true });
+    document.addEventListener('visibilitychange', function() {
+      isVisible = !document.hidden;
+      if (isVisible) wakeRender(); else { deactivate(); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          isIntersecting = e.isIntersecting;
+          if (isIntersecting) wakeRender(); else if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+        });
+      }, { threshold: 0.05 }).observe(stage);
     }
-    renderFrame(now);
-    rafId = requestAnimationFrame(loop);
   }
 
-  function wake() {
-    if (!rafId && isVisible && isIntersecting && !prefersReduced) {
-      rafId = requestAnimationFrame(loop);
-    }
-  }
-
-  // Event Listeners
-  window.addEventListener('resize', function() {
-    resize();
-    wake();
-  }, { passive: true });
-
-  stage.addEventListener('mousemove', function(e) {
-    var rect = stage.getBoundingClientRect();
-    mouseX = (e.clientX - rect.left) * dpr;
-    mouseY = (e.clientY - rect.top) * dpr;
-    mouseActive = true;
-    wake();
-  }, { passive: true });
-
-  stage.addEventListener('mouseleave', function() {
-    mouseActive = false;
-  }, { passive: true });
-
-  stage.addEventListener('click', function(e) {
-    var rect = stage.getBoundingClientRect();
-    var px = (e.clientX - rect.left) * dpr;
-    var py = (e.clientY - rect.top) * dpr;
-    triggerShockwave(px, py);
-    if (window.SFX && window.SFX.playBlip) {
-      window.SFX.playBlip(540);
-    }
-    wake();
-  });
-
-  // Zero-Cycles Idle Invariant via IntersectionObserver
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        isIntersecting = entry.isIntersecting;
-        if (isIntersecting) {
-          wake();
-        } else if (rafId) {
-          cancelAnimationFrame(rafId);
-          rafId = null;
-        }
-      });
-    }, { threshold: 0.05 });
-    observer.observe(stage);
-  }
-
-  document.addEventListener('visibilitychange', function() {
-    isVisible = !document.hidden;
-    if (isVisible) wake();
-    else if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-  });
-
-  // Export theme hook to window so theme.js can update sun colors
-  window.updateMainscreenSun = function() {
-    updatePalette();
-    wake();
-  };
-
-  // Init
-  updatePalette();
-  resize();
-  wake();
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

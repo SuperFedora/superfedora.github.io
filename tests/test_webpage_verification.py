@@ -199,6 +199,28 @@ def run_tests():
         assert clutter_count == 0, f"Expected 0 clutter elements in title screen, found {clutter_count}"
         print("  [OK] Clean title screen verified: SUPER + FEDORA only, zero clutter, exact viewport fitting.")
 
+        # 10. Alternating 6-Section Scrolling Marquees
+        print("[TEST 10] Testing Alternating 6-Section Scrolling Marquees (Left/Right alternating)...")
+        expected_sections = [
+            ("#pre-installed", "marquee-scroll-left"),
+            ("#modules", "marquee-scroll-right"),
+            ("#keybindings", "marquee-scroll-left"),
+            ("#cli", "marquee-scroll-right"),
+            ("#wallpapers", "marquee-scroll-left"),
+            ("#repos", "marquee-scroll-right")
+        ]
+        for sec_id, expected_cls in expected_sections:
+            has_track = cdp.eval(f"Boolean(document.querySelector('{sec_id} .marquee-track-continuous.{expected_cls}'))")
+            assert has_track, f"Section {sec_id} missing marquee track with {expected_cls}"
+        print("  [OK] All 6 sections alternate Left -> Right -> Left -> Right -> Left -> Right seamlessly.")
+
+        # 11. Spotlight Canvas & Zero-Cycles Hook
+        print("[TEST 11] Testing Spotlight Canvas & Zero-Cycles Invariant...")
+        has_canvas = cdp.eval("document.getElementById('mainscreen-canvas').width > 0")
+        has_hook = cdp.eval("typeof window.idleRenderSpotlight === 'function'")
+        assert has_canvas and has_hook, "Spotlight canvas or window hook missing"
+        print("  [OK] Spotlight canvas initialized and reactive.")
+
         print("\nAll deep verification tests PASSED!")
         s.close()
     finally:

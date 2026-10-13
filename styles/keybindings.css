@@ -26,7 +26,7 @@
   border: none;
   outline: none;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-white);
   width: 100%;
 }
@@ -42,9 +42,10 @@
 }
 
 .key-filter-btn {
-  font-family: var(--font-pixel-sub);
-  font-size: 10px;
-  padding: 6px 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pixel);
@@ -95,7 +96,7 @@
 
 .kbd-badge {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: #ffffff;
   background: #24283b;
@@ -112,8 +113,9 @@
 }
 
 .key-action-name {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
   color: var(--text-primary);
 }
 
