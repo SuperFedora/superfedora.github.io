@@ -55,7 +55,6 @@
     var n = parseInt(hex, 16);
     return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
   }
-
   function getAccentRgb() {
     try {
       var p = getComputedStyle(document.documentElement).getPropertyValue('--jewel-primary').trim() || '#7aa2f7';
@@ -78,30 +77,29 @@
   }
 
   function wakeRender() {
-    if (!rafId && !reducedMotion && isVisible && isIntersecting && targetSubdued < 1.0) {
-      rafId = requestAnimationFrame(render);
-    }
+    if (!rafId && !reducedMotion && isVisible && isIntersecting && targetSubdued < 1.0) rafId = requestAnimationFrame(render);
   }
-
   function updateScroll() {
     var rect = stage.getBoundingClientRect(), stageH = stage.offsetHeight || window.innerHeight;
     targetSubdued = Math.min(1.0, Math.max(0, -rect.top / (stageH * 0.55)));
-    if (targetSubdued >= 1.0) { if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } } else { wakeRender(); }
+    if (targetSubdued >= 1.0) { if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } } else wakeRender();
   }
-
   function deactivate() {
-    if (!mouse.active && smoothMouse.strength <= 0) return;
+    if (!mouse.active) return;
     mouse.active = false; wakeRender();
   }
 
   function onPointerMove(e) {
+    if (!e || e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+      deactivate(); return;
+    }
     var rect = stage.getBoundingClientRect();
     if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
       deactivate(); return;
     }
     var px = (e.clientX - rect.left) * dpr, py = (e.clientY - rect.top) * dpr;
     if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) {
-      smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 0;
+      smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 1.0;
     }
     mouse.x = px; mouse.y = py; mouse.active = true; lastPointerTime = performance.now();
     wakeRender();
@@ -119,12 +117,22 @@
   }
 
   function updateLights(t) {
-    var targetStr = mouse.active ? 1.0 : 0.0;
-    smoothMouse.x += (mouse.x - smoothMouse.x) * 0.22;
-    smoothMouse.y += (mouse.y - smoothMouse.y) * 0.22;
-    smoothMouse.strength += (targetStr - smoothMouse.strength) * 0.24;
-    if (smoothMouse.strength < 0.01) smoothMouse.strength = 0;
-    else if (smoothMouse.strength > 0.99 && mouse.active) smoothMouse.strength = 1.0;
+    var sec = t * 0.001, targetX, targetY;
+    if (mouse.active) {
+      targetX = mouse.x; targetY = mouse.y;
+      smoothMouse.x += (targetX - smoothMouse.x) * 0.22;
+      smoothMouse.y += (targetY - smoothMouse.y) * 0.22;
+    } else {
+      var wmcX = originX + (WM_W * cellPx) * 0.5, wmcY = originY + (WM_H * cellPx) * 0.5;
+      var orbAngle = reducedMotion ? 0 : sec * 0.95;
+      var orbRx = (WM_W * cellPx) * 0.44, orbRy = Math.max((WM_H * cellPx) * 0.90, 85 * dpr);
+      targetX = wmcX + Math.cos(orbAngle) * orbRx;
+      targetY = wmcY + Math.sin(orbAngle) * orbRy;
+      smoothMouse.x += (targetX - smoothMouse.x) * 0.08;
+      smoothMouse.y += (targetY - smoothMouse.y) * 0.08;
+    }
+    smoothMouse.strength += (1.0 - smoothMouse.strength) * 0.18;
+    if (smoothMouse.strength > 0.99) smoothMouse.strength = 1.0;
 
     currentSubdued += (targetSubdued - currentSubdued) * 0.15;
     if (Math.abs(targetSubdued - currentSubdued) < 0.005) currentSubdued = targetSubdued;
@@ -136,15 +144,15 @@
   }
 
   function isSettled(t) {
+    if (reducedMotion) return true;
+    if (targetSubdued >= 1.0 || !isVisible || !isIntersecting) return true;
+    if (!mouse.active) return false;
     if (ripples.length > 0 || Math.abs(targetSubdued - currentSubdued) > 0.005) return false;
     var acc = getAccentRgb();
     for (var i = 0; i < 3; i++) { if (Math.abs(smoothAcc[i] - acc[i]) > 0.5) return false; }
-    if (mouse.active) {
-      var timeSinceMove = t - lastPointerTime;
-      var distSq = (smoothMouse.x - mouse.x) * (smoothMouse.x - mouse.x) + (smoothMouse.y - mouse.y) * (smoothMouse.y - mouse.y);
-      return (timeSinceMove > 500 && distSq < 1.0 && Math.abs(1.0 - smoothMouse.strength) < 0.005);
-    }
-    return smoothMouse.strength <= 0;
+    var timeSinceMove = t - lastPointerTime;
+    var distSq = (smoothMouse.x - mouse.x) * (smoothMouse.x - mouse.x) + (smoothMouse.y - mouse.y) * (smoothMouse.y - mouse.y);
+    return (timeSinceMove > 600 && distSq < 1.0 && Math.abs(1.0 - smoothMouse.strength) < 0.005);
   }
 
   function render(t) {
@@ -226,6 +234,8 @@
     window.addEventListener('pointermove', onPointerMove, { passive: true });
     stage.addEventListener('pointerdown', onPointerDown, { passive: true });
     document.addEventListener('pointerleave', deactivate, { passive: true });
+    window.addEventListener('mouseout', function(e) { if (!e.relatedTarget && !e.toElement) deactivate(); }, { passive: true });
+    window.addEventListener('blur', deactivate, { passive: true });
     document.addEventListener('visibilitychange', function() {
       isVisible = !document.hidden;
       if (isVisible) wakeRender(); else { deactivate(); if (rafId) { cancelAnimationFrame(rafId); rafId = 0; } }
