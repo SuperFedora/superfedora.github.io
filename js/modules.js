@@ -12,7 +12,8 @@
       packages: ["snapper", "btrfs-progs", "sudo", "curl"],
       configs: ["/etc/snapper/configs/root", "Btrfs snapshot #1 baseline"],
       verification: "snapper list | grep baseline",
-      tags: ["Btrfs", "Snapper", "Safety Net", "Fedora 42+"]
+      tags: ["Btrfs", "Snapper", "Safety Net", "Fedora 42+"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[BTRFS: BASELINE #1]", type: "hot" }, { text: "[SAFETY: 100% REVERSIBLE]", type: "cyan" }]
     },
     {
       id: "10",
@@ -23,7 +24,8 @@
       packages: ["fedora-workstation-repositories", "dnf5-plugins"],
       configs: ["/etc/yum.repos.d/rpmfusion-*.repo", "/etc/yum.repos.d/_copr_lionheartp-hyprland.repo"],
       verification: "dnf repolist | grep -E 'rpmfusion|copr|tailscale'",
-      tags: ["RPM Fusion", "COPR", "Tailscale", "Hyprland Repo"]
+      tags: ["RPM Fusion", "COPR", "Tailscale", "Hyprland Repo"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[REPOS: RPM FUSION+COPR]", type: "hot" }, { text: "[SAFETY: CLEAN SPLIT]", type: "cyan" }]
     },
     {
       id: "20",
@@ -34,7 +36,8 @@
       packages: ["NetworkManager-wifi", "pipewire", "wireplumber", "bluez", "power-profiles-daemon", "mesa-va-drivers", "ffmpeg", "dejavu-sans-fonts"],
       configs: ["/etc/systemd/system/bluetooth.service", "/etc/pipewire/pipewire.conf"],
       verification: "wpctl status && bluetoothctl show && vainfo",
-      tags: ["PipeWire", "Wi-Fi", "Bluetooth", "VA-API", "FFmpeg"]
+      tags: ["PipeWire", "Wi-Fi", "Bluetooth", "VA-API", "FFmpeg"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[HARDWARE: ACCELERATED]", type: "hot" }, { text: "[AUDIO: LOW-LATENCY]", type: "cyan" }]
     },
     {
       id: "30",
@@ -45,7 +48,8 @@
       packages: ["greetd", "greetd-tuigreet", "uwsm"],
       configs: ["/etc/greetd/config.toml", "/usr/share/wayland-sessions/hyprland-uwsm.desktop"],
       verification: "systemctl is-active greetd",
-      tags: ["greetd", "tuigreet", "uwsm", "systemd session"]
+      tags: ["greetd", "tuigreet", "uwsm", "systemd session"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SESSION: UWSM SYSTEMD]", type: "hot" }, { text: "[LOGIN: TUIGREET]", type: "cyan" }]
     },
     {
       id: "40",
@@ -56,7 +60,8 @@
       packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "fuzzel", "grim", "slurp", "wl-clipboard", "jetbrains-mono-nerd-fonts"],
       configs: ["~/.config/hypr/hyprland.conf", "~/.config/quickshell/shell.qml", "~/.config/fuzzel/fuzzel.ini"],
       verification: "hyprctl version && quickshell --version",
-      tags: ["Hyprland", "Quickshell", "fuzzel", "hypridle", "hyprlock"]
+      tags: ["Hyprland", "Quickshell", "fuzzel", "hypridle", "hyprlock"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[WAYLAND: 144Hz HYPR]", type: "hot" }, { text: "[HUD: QUICKSHELL QML]", type: "cyan" }]
     },
     {
       id: "50",
@@ -67,7 +72,8 @@
       packages: ["kitty", "foot", "firefox", "nautilus", "google-chrome-stable", "microsoft-edge-stable", "tailscale", "btop", "fastfetch"],
       configs: ["~/.config/kitty/kitty.conf", "~/.config/foot/foot.ini", "~/.config/mimeapps.list"],
       verification: "kitty -v && firefox -v && btop -v",
-      tags: ["kitty", "Firefox", "Nautilus", "Tailscale", "btop"]
+      tags: ["kitty", "Firefox", "Nautilus", "Tailscale", "btop"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[GPU: TERMINALS]", type: "hot" }, { text: "[NETWORK: TAILSCALE]", type: "cyan" }]
     },
     {
       id: "60",
@@ -78,7 +84,8 @@
       packages: ["idlescreen", "idlescreen-themes"],
       configs: ["~/.config/hypr/conf/hypridle.conf", "~/.config/idlescreen/config.toml"],
       verification: "idlescreen status && idlescreen tui",
-      tags: ["IdleScreen", "Wayland Screensaver", "ASCII", "Zero Cycles"]
+      tags: ["IdleScreen", "Wayland Screensaver", "ASCII", "Zero Cycles"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[IDLE: ZERO-CYCLES]", type: "hot" }, { text: "[SCREENSAVER: 48 SCENES]", type: "cyan" }]
     },
     {
       id: "70",
@@ -89,7 +96,8 @@
       packages: ["gcc", "make", "cmake", "git", "gh", "nodejs", "rustup", "uv"],
       configs: ["~/.cargo/env", "~/.rustup/"],
       verification: "rustc --version && cargo --version && node --version && uv --version",
-      tags: ["Rust", "Node.js", "Python uv", "GCC", "GitHub CLI"]
+      tags: ["Rust", "Node.js", "Python uv", "GCC", "GitHub CLI"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[POLYGLOT: RUST/UV/NODE]", type: "hot" }, { text: "[DEV: NEOVIM LUA]", type: "cyan" }]
     },
     {
       id: "80",
@@ -100,7 +108,8 @@
       packages: ["antigravity-cli", "grok-cli", "minimax-code", "mistral-vibe"],
       configs: ["~/.local/bin/antigravity", "~/.config/antigravity/"],
       verification: "antigravity --version && grok --version",
-      tags: ["Antigravity", "Grok CLI", "MiniMax", "Mistral Vibe"]
+      tags: ["Antigravity", "Grok CLI", "MiniMax", "Mistral Vibe"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[AI: CODING CLIS]", type: "hot" }, { text: "[WRAPPERS: NATIVE]", type: "cyan" }]
     },
     {
       id: "90",
@@ -111,7 +120,8 @@
       packages: ["sf", "superfedora"],
       configs: ["~/.config/hypr/", "~/.config/quickshell/", "~/.config/fuzzel/", "~/.local/bin/sf"],
       verification: "sf doctor && sf verify",
-      tags: ["Zero Symlinks", "sf CLI", "Backups", "Dotfiles"]
+      tags: ["Zero Symlinks", "sf CLI", "Backups", "Dotfiles"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[DOTFILES: 0-SYMLINK]", type: "hot" }, { text: "[SAFETY: TIMESTAMPED BACKUPS]", type: "cyan" }]
     }
   ];
 
@@ -145,6 +155,17 @@
         tagsEl.appendChild(span);
       });
     }
+
+    var statsEl = document.getElementById("module-stats-list");
+    if (statsEl) {
+      statsEl.innerHTML = "";
+      (mod.stats || []).forEach(function(s) {
+        var badge = document.createElement("span");
+        badge.className = "module-stat-badge " + (s.type || "ready");
+        badge.textContent = s.text;
+        statsEl.appendChild(badge);
+      });
+    }
   }
 
   function initModules() {
@@ -165,6 +186,19 @@
       navList.appendChild(btn);
     });
 
+    document.querySelectorAll(".module-card, .module-card-clone").forEach(function(card, idx) {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", function() {
+        var targetMod = modulesData[idx % modulesData.length];
+        if (targetMod) {
+          selectModule(targetMod.id);
+          var hudEl = document.getElementById("modules");
+          if (hudEl) hudEl.scrollIntoView({ behavior: "smooth" });
+          if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(640);
+        }
+      });
+    });
+
     selectModule("00");
   }
 
@@ -176,3 +210,4 @@
 
   document.addEventListener("DOMContentLoaded", initModules);
 })();
+

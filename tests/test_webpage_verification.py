@@ -1,24 +1,6 @@
 #!/usr/bin/env python3
-"""tests/test_webpage_verification.py — Deep verification of SuperFedora webpage features.
-
-Validates via headless Chrome:
-1. Header is present, streamlined, and contains required minimal navigation.
-2. Persistent footer dock HUD is fixed at bottom with UP/DOWN buttons, CRT/SFX toggles, and 8 jewel swatches.
-3. Arrow key navigation (Up/Down) rotates 16-bit color palettes.
-4. Clicking footer dock jewel swatches updates CSS variables.
-5. Dedicated Pre-Installed section contains all 10 required workstation components.
-6. Dual-opposing scrolling marquees (left and right) exist and contain required badges.
-7. Keyboard shortcuts help modal toggles via '?' / 'h' and closes on Escape.
-8. CRT and SFX toggles respond and persist.
-"""
-import base64
-import json
-import os
-import socket
-import subprocess
-import sys
-import time
-import urllib.request
+"""tests/test_webpage_verification.py — Deep verification of SuperFedora webpage features via Chrome CDP."""
+import base64, json, os, socket, subprocess, sys, time, urllib.request
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 PORT_HTTP = 8894
@@ -240,10 +222,15 @@ def run_tests():
         # 12. Interactive Modules HUD, Keybinding Matrix, CLI & Wallpapers
         print("[TEST 12] Testing Interactive Modules HUD, Keys Matrix, CLI Simulator & Wallpapers...")
         assert cdp.eval("document.querySelectorAll('#module-nav-list .module-btn').length === 10"), "10 module buttons"
+        assert cdp.eval("document.querySelectorAll('#module-stats-list .module-stat-badge').length >= 3"), "Dynamic telemetry stats"
         assert cdp.eval("document.querySelectorAll('#keys-grid .key-card').length === 20"), "20 key cards"
         assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf'))"), "CLI simulator"
+        assert cdp.eval("Boolean(document.getElementById('cli-copy-cmd'))"), "CLI copy command button"
         assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4"), "4 wallpapers"
-        print("  [OK] Modules HUD (10), COSMIC Matrix (20), CLI Simulator, and Wallpaper Gallery verified.")
+        assert cdp.eval("!document.querySelector('#wallpapers .marquee-track-continuous img[src*=\"avatar.jpg\"]')"), "Marquee wallpapers must use real pixel art"
+        assert cdp.eval("Boolean(document.getElementById('header-theme-toggle') && document.getElementById('nav-theme-name').textContent.includes('THEME:'))"), "Header theme toggle"
+        print("  [OK] Modules HUD (10), dynamic telemetry, COSMIC Matrix (20), CLI Simulator, and Wallpaper Gallery verified.")
+
 
         print("\nAll deep verification tests PASSED!")
         s.close()

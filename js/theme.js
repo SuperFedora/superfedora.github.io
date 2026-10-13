@@ -93,6 +93,17 @@
     root.style.setProperty("--jewel-rgb", p.rgb);
     root.style.setProperty("--jewel-glow", p.glow);
     root.style.setProperty("--jewel-dim", p.dim);
+    root.dataset.theme = key;
+
+    // Update sticky header theme badge if present
+    var navNameEl = document.getElementById("nav-theme-name");
+    if (navNameEl) navNameEl.textContent = "[THEME: " + p.name.toUpperCase() + "]";
+    var navPipEl = document.getElementById("nav-theme-pip");
+    if (navPipEl) navPipEl.style.background = p.primary;
+
+    // Update hero ticker palette badge if present
+    var tickerThemeEl = document.getElementById("ticker-theme-item");
+    if (tickerThemeEl) tickerThemeEl.textContent = "[PALETTE: " + p.name.toUpperCase() + "]";
 
     // Sync all swatch buttons across footer dock and legacy controls
     document.querySelectorAll(".dock-jewel-dot, .jewel-btn").forEach(function(btn) {
@@ -137,6 +148,13 @@
       } catch (e) {}
       applyTheme(saved, false);
 
+      var navToggle = document.getElementById("header-theme-toggle");
+      if (navToggle) {
+        navToggle.addEventListener("click", function() {
+          cycleRandom(true);
+        });
+      }
+
       document.addEventListener("click", function(e) {
         var btn = e.target.closest(".dock-jewel-dot, .jewel-btn");
         if (btn) {
@@ -146,6 +164,7 @@
       });
     }
   };
+
 
   document.addEventListener("DOMContentLoaded", function() {
     window.SuperTheme.init();

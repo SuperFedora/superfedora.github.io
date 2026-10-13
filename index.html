@@ -92,6 +92,10 @@
       </nav>
 
       <div class="header-actions">
+        <button type="button" class="nav-theme-btn" id="header-theme-toggle" aria-label="Cycle 16-bit jewel theme" title="Cycle 16-bit jewel theme (or press Up/Down arrows)">
+          <span class="theme-swatch-pip" id="nav-theme-pip"></span>
+          <span class="nav-theme-text" id="nav-theme-name">[THEME: SUPER BLUE]</span>
+        </button>
         <span class="nav-status-badge" title="Workstation System Daemon Active">
           <span class="status-pip"></span>[SYS: READY]
         </span>
@@ -122,6 +126,8 @@
       <div class="retro-ticker-ribbon" aria-label="System status telemetry">
         <div class="ticker-content">
           <span class="ticker-item ready"><span class="ticker-pip green"></span>[SYS: READY]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item highlight" id="ticker-theme-item">[PALETTE: SUPER BLUE]</span>
           <span class="ticker-sep">*</span>
           <span class="ticker-item highlight">[BTRFS: BASELINE #1 OK]</span>
           <span class="ticker-sep">*</span>
@@ -1020,11 +1026,7 @@
               <h3 class="module-detail-title" id="module-detail-title">00 // Preflight &amp; Btrfs Baseline</h3>
               <span class="module-detail-badge" id="module-detail-badge">00-preflight.sh</span>
             </div>
-            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11px;">
-              <span style="color:#9ece6a;">[STATUS: IDEMPOTENT]</span>
-              <span style="color:var(--jewel-hot);">[BTRFS: BASELINE #1]</span>
-              <span style="color:#7dcfff;">[SAFETY: 100% REVERSIBLE]</span>
-            </div>
+            <div class="module-stats-row" id="module-stats-list"></div>
             <p class="module-detail-desc" id="module-detail-desc"></p>
           </div>
           <div class="module-detail-grid">
@@ -1550,14 +1552,17 @@
           <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; sf bindings</button>
         </div>
         <div class="cli-window rpg-window">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:8px;">
             <div style="display:flex;align-items:center;gap:8px;">
               <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f7768e;"></span>
               <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e0af68;"></span>
               <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#9ece6a;"></span>
               <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);margin-left:6px;">SUPERFEDORA VIRTUAL TTY // ARCHITECTURE HUD</span>
             </div>
-            <span style="font-family:var(--font-mono);font-size:11px;color:#9ece6a;">[STATUS: ONLINE]</span>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <button type="button" class="cli-copy-btn" id="cli-copy-cmd" aria-label="Copy active CLI command">[ COPY COMMAND ]</button>
+              <span style="font-family:var(--font-mono);font-size:11px;color:#9ece6a;">[STATUS: ONLINE]</span>
+            </div>
           </div>
           <pre style="background:transparent;border:none;box-shadow:none;padding:0;margin:0;"><code id="cli-output" class="cli-output-line"></code></pre>
         </div>
@@ -1580,245 +1585,244 @@
 
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Metroid Cyber Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Metroid Cyber Station</span>
+              <span class="wallpaper-name">Crateria Synth</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit Tokyo Night</span>
+                <span>Metroid Synthwave</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Tokyo Night Horizon Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Tokyo Night Horizon</span>
+              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Retro Synthwave</span>
+                <span>16-Bit SNES Jewel</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="SNES Deep Space Starfield Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SNES Deep Space Starfield</span>
+              <span class="wallpaper-name">Retro Night Station</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Parallax Canvas</span>
+                <span>Wayland Cyber Grid</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Wayland Super Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Wayland Super Grid</span>
+              <span class="wallpaper-name">Dark Slate Grid</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>High Refresh OLED</span>
+                <span>Clean Minimalist</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
 
-<div class="wallpaper-marquee-card">
+          <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Metroid Cyber Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Metroid Cyber Station</span>
+              <span class="wallpaper-name">Crateria Synth</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit Tokyo Night</span>
+                <span>Metroid Synthwave</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Tokyo Night Horizon Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Tokyo Night Horizon</span>
+              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Retro Synthwave</span>
+                <span>16-Bit SNES Jewel</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="SNES Deep Space Starfield Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SNES Deep Space Starfield</span>
+              <span class="wallpaper-name">Retro Night Station</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Parallax Canvas</span>
+                <span>Wayland Cyber Grid</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Wayland Super Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Wayland Super Grid</span>
+              <span class="wallpaper-name">Dark Slate Grid</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>High Refresh OLED</span>
+                <span>Clean Minimalist</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
 
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">Crateria Synth</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Metroid Synthwave</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>16-Bit SNES Jewel</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">Retro Night Station</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Wayland Cyber Grid</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">Dark Slate Grid</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Clean Minimalist</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
 
-<div class="wallpaper-marquee-card-clone">
+          <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Metroid Cyber Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Metroid Cyber Station</span>
+              <span class="wallpaper-name">Crateria Synth</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit Tokyo Night</span>
+                <span>Metroid Synthwave</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Tokyo Night Horizon Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Tokyo Night Horizon</span>
+              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Retro Synthwave</span>
+                <span>16-Bit SNES Jewel</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="SNES Deep Space Starfield Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SNES Deep Space Starfield</span>
+              <span class="wallpaper-name">Retro Night Station</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Parallax Canvas</span>
+                <span>Wayland Cyber Grid</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Wayland Super Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Wayland Super Grid</span>
+              <span class="wallpaper-name">Dark Slate Grid</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>High Refresh OLED</span>
+                <span>Clean Minimalist</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-
-<div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Metroid Cyber Station Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Metroid Cyber Station</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>16-Bit Tokyo Night</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Tokyo Night Horizon Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Tokyo Night Horizon</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>Retro Synthwave</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="SNES Deep Space Starfield Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">SNES Deep Space Starfield</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>Parallax Canvas</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/branding/avatar.jpg" alt="Wayland Super Grid Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Wayland Super Grid</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>High Refresh OLED</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/branding/avatar.jpg" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>

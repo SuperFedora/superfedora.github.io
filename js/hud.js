@@ -49,15 +49,23 @@
       var card = document.createElement("div");
       card.className = "key-card";
       card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "button");
       card.innerHTML = '<span class="kbd-badge">' + item.kbd + '</span>' +
         '<div class="key-action-wrap">' +
           '<div class="key-action-name">' + item.action + '</div>' +
           '<span class="key-category-tag">[' + item.cat + ']</span>' +
         '</div>';
-      card.addEventListener("click", function() {
+      function triggerCard() {
         if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(720);
         card.classList.add("key-card-pulse");
         setTimeout(function() { card.classList.remove("key-card-pulse"); }, 200);
+      }
+      card.addEventListener("click", triggerCard);
+      card.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          triggerCard();
+        }
       });
       grid.appendChild(card);
     });
@@ -74,8 +82,12 @@
 
     document.querySelectorAll(".key-filter-btn").forEach(function(btn) {
       btn.addEventListener("click", function() {
-        document.querySelectorAll(".key-filter-btn").forEach(function(b) { b.classList.remove("active"); });
+        document.querySelectorAll(".key-filter-btn").forEach(function(b) {
+          b.classList.remove("active");
+          b.setAttribute("aria-pressed", "false");
+        });
         btn.classList.add("active");
+        btn.setAttribute("aria-pressed", "true");
         activeCat = btn.getAttribute("data-category") || btn.getAttribute("data-cat") || "all";
         renderKeybindings();
         if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(580);
@@ -84,6 +96,7 @@
 
     renderKeybindings();
   }
+
 
   // Interactive CLI Control Center
   var cliCommands = {
@@ -161,14 +174,17 @@
   function initCliSimulator() {
     var outputEl = document.getElementById("cli-output");
     if (!outputEl) return;
+    var activeCmdKey = "sf-doctor";
 
     function runCmd(key) {
+      activeCmdKey = key;
       var cmd = cliCommands[key] || cliCommands["sf-doctor"];
       outputEl.textContent = "$ " + cmd.prompt + "\n\n" + cmd.output;
 
       document.querySelectorAll(".cli-tab-btn").forEach(function(btn) {
         var match = btn.getAttribute("data-cmd") === key;
         btn.classList.toggle("active", match);
+        btn.setAttribute("aria-selected", match ? "true" : "false");
       });
       if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(540);
     }
@@ -180,6 +196,20 @@
       });
     });
 
+    var copyBtn = document.getElementById("cli-copy-cmd");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", function() {
+        var cmd = cliCommands[activeCmdKey] || cliCommands["sf-doctor"];
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(cmd.prompt).then(function() {
+            copyBtn.textContent = "[ COPIED! ]";
+            if (window.SFX && window.SFX.playSuccess) window.SFX.playSuccess();
+            setTimeout(function() { copyBtn.textContent = "[ COPY COMMAND ]"; }, 1500);
+          }).catch(function() {});
+        }
+      });
+    }
+
     runCmd("sf-doctor");
   }
 
@@ -188,3 +218,4 @@
     initCliSimulator();
   });
 })();
+
