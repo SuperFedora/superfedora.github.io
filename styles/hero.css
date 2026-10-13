@@ -1,5 +1,49 @@
-/* styles/hero.css — 16-Bit Hero stage, Terminal Install Box & Cartridge Bezel */
-.hero-section { padding: 60px 20px 40px; max-width: 1280px; margin: 0 auto; }
+/* styles/hero.css — 16-Bit Hero stage, Telemetry Ribbon & Cartridge Bezel */
+.hero-section { padding: 40px 20px 40px; max-width: 1280px; margin: 0 auto; }
+
+/* Dynamic Telemetry Ticker Ribbon */
+.retro-ticker-ribbon {
+  background: #090a10;
+  border: 1px solid var(--border-hard);
+  border-left: 4px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.8), 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding: 8px 14px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.ticker-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ticker-item.highlight { color: var(--jewel-hot); }
+.ticker-item.ready { color: #9ece6a; }
+
+.ticker-pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ticker-pip.green { background: #9ece6a; box-shadow: 0 0 6px #9ece6a; }
+.ticker-pip.hot { background: var(--jewel-hot); box-shadow: 0 0 6px var(--jewel-hot); }
+.ticker-sep { color: var(--border-hard); font-weight: 700; user-select: none; }
+
 .hero-grid { display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 40px; align-items: center; }
 .hero-title-group { margin-bottom: 20px; }
 .hero-main-title {

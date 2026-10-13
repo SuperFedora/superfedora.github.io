@@ -82,7 +82,19 @@
         </span>
       </a>
 
+      <nav class="header-nav-links" aria-label="Quick Section Navigation">
+        <a href="#install" class="nav-link">[INSTALL]</a>
+        <a href="#pre-installed" class="nav-link">[STACK]</a>
+        <a href="#modules" class="nav-link">[MODULES]</a>
+        <a href="#keybindings" class="nav-link">[KEYS]</a>
+        <a href="#cli" class="nav-link">[CLI]</a>
+        <a href="#wallpapers" class="nav-link">[ART]</a>
+      </nav>
+
       <div class="header-actions">
+        <span class="nav-status-badge" title="Workstation System Daemon Active">
+          <span class="status-pip"></span>[SYS: READY]
+        </span>
         <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="btn-github" title="SuperFedora on GitHub">
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
             <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
@@ -106,6 +118,29 @@
 
     <!-- HERO SECTION -->
     <section class="hero-section" id="hero">
+      <!-- Dynamic Telemetry Ticker Ribbon -->
+      <div class="retro-ticker-ribbon" aria-label="System status telemetry">
+        <div class="ticker-content">
+          <span class="ticker-item ready"><span class="ticker-pip green"></span>[SYS: READY]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item highlight">[BTRFS: BASELINE #1 OK]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item">[WAYLAND: 144Hz HYPRLAND]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item highlight">[INPUT: POP!_OS COSMIC]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item">[STATUS BAR: QUICKSHELL]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item">[SCREENSAVER: IDLESCREEN]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item ready">[ZERO CYCLES IDLE]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item highlight">[ROLLBACK: INSTANT]</span>
+          <span class="ticker-sep">*</span>
+          <span class="ticker-item">[100% IDEMPOTENT]</span>
+        </div>
+      </div>
+
       <div class="hero-grid">
         <!-- Left Hero Column -->
         <div class="hero-content">
@@ -975,6 +1010,42 @@
 
         </div>
       </div>
+
+      <!-- Interactive 10-Module Inspector HUD -->
+      <div class="modules-hud" style="margin-top:28px;">
+        <div class="module-nav-list" id="module-nav-list"></div>
+        <div class="module-detail-box rpg-window">
+          <div class="module-detail-header">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+              <h3 class="module-detail-title" id="module-detail-title">00 // Preflight &amp; Btrfs Baseline</h3>
+              <span class="module-detail-badge" id="module-detail-badge">00-preflight.sh</span>
+            </div>
+            <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;font-family:var(--font-mono);font-size:11px;">
+              <span style="color:#9ece6a;">[STATUS: IDEMPOTENT]</span>
+              <span style="color:var(--jewel-hot);">[BTRFS: BASELINE #1]</span>
+              <span style="color:#7dcfff;">[SAFETY: 100% REVERSIBLE]</span>
+            </div>
+            <p class="module-detail-desc" id="module-detail-desc"></p>
+          </div>
+          <div class="module-detail-grid">
+            <div class="module-spec-card">
+              <h4>Package Manifest</h4>
+              <div id="module-pkgs-list" style="font-family:var(--font-mono);font-size:13px;color:var(--text-white);line-height:1.6;"></div>
+            </div>
+            <div class="module-spec-card">
+              <h4>Managed Configs</h4>
+              <div id="module-cfgs-list" style="font-family:var(--font-mono);font-size:13px;color:var(--jewel-hot);white-space:pre-line;line-height:1.6;"></div>
+            </div>
+          </div>
+          <div class="module-spec-card" style="margin-top:14px;">
+            <h4>Verification Assertion</h4>
+            <code id="module-ver-code" style="display:block;padding:8px 12px;background:#0d0e15;color:#9ece6a;font-size:13px;"></code>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="module-tag-cloud" id="module-tags"></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 5: KEYBINDINGS MATRIX -->
@@ -1221,6 +1292,22 @@
 
         </div>
       </div>
+
+      <!-- Interactive Pop!_OS COSMIC Keybinding Matrix -->
+      <div class="keys-controls" style="margin-top:28px;">
+        <div class="key-search-box">
+          <span style="color:var(--jewel-primary);font-family:var(--font-mono);font-weight:700;">&gt;</span>
+          <input type="text" id="key-search-input" class="key-search-input" placeholder="Type key or action to filter matrix..." aria-label="Search keybindings">
+        </div>
+        <div class="key-filter-tabs" role="group" aria-label="Keybinding categories">
+          <button type="button" class="key-filter-btn active" data-cat="all">[ ALL (20) ]</button>
+          <button type="button" class="key-filter-btn" data-cat="window">[ WINDOW ]</button>
+          <button type="button" class="key-filter-btn" data-cat="launch">[ LAUNCH ]</button>
+          <button type="button" class="key-filter-btn" data-cat="workspace">[ WORKSPACE ]</button>
+          <button type="button" class="key-filter-btn" data-cat="system">[ SYSTEM ]</button>
+        </div>
+      </div>
+      <div class="keys-grid" id="keys-grid"></div>
     </section>
 
     <!-- SECTION 6: CLI COMMAND PLAYGROUND -->
@@ -1449,6 +1536,30 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      <!-- Interactive CLI Terminal Simulator -->
+      <div style="margin-top:28px;">
+        <div class="cli-tabs" role="tablist" aria-label="CLI commands">
+          <button type="button" class="cli-tab-btn active" data-cmd="sf-doctor" role="tab">&gt; sf doctor</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-install" role="tab">&gt; sf install</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-status" role="tab">&gt; sf status</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-rollback" role="tab">&gt; sf rollback</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-dotfiles" role="tab">&gt; sf dotfiles</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; sf bindings</button>
+        </div>
+        <div class="cli-window rpg-window">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#f7768e;"></span>
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#e0af68;"></span>
+              <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#9ece6a;"></span>
+              <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);margin-left:6px;">SUPERFEDORA VIRTUAL TTY // ARCHITECTURE HUD</span>
+            </div>
+            <span style="font-family:var(--font-mono);font-size:11px;color:#9ece6a;">[STATUS: ONLINE]</span>
+          </div>
+          <pre style="background:transparent;border:none;box-shadow:none;padding:0;margin:0;"><code id="cli-output" class="cli-output-line"></code></pre>
         </div>
       </div>
     </section>
@@ -1714,6 +1825,70 @@
 
         </div>
       </div>
+
+      <!-- Curated Wallpaper Showcase Grid -->
+      <div class="wallpapers-grid" style="margin-top:28px;">
+        <div class="wallpaper-card">
+          <div class="wallpaper-preview-wrap">
+            <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+          </div>
+          <div class="wallpaper-meta">
+            <span class="wallpaper-name">Crateria Synth</span>
+            <div class="wallpaper-specs">
+              <span>3840 x 2160 (4K OLED)</span>
+              <span>Metroid Synthwave</span>
+            </div>
+            <div class="wallpaper-actions">
+              <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+            </div>
+          </div>
+        </div>
+        <div class="wallpaper-card">
+          <div class="wallpaper-preview-wrap">
+            <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+          </div>
+          <div class="wallpaper-meta">
+            <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+            <div class="wallpaper-specs">
+              <span>3840 x 2160 (4K OLED)</span>
+              <span>16-Bit SNES Jewel</span>
+            </div>
+            <div class="wallpaper-actions">
+              <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+            </div>
+          </div>
+        </div>
+        <div class="wallpaper-card">
+          <div class="wallpaper-preview-wrap">
+            <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+          </div>
+          <div class="wallpaper-meta">
+            <span class="wallpaper-name">Retro Night Station</span>
+            <div class="wallpaper-specs">
+              <span>3840 x 2160 (4K OLED)</span>
+              <span>Wayland Cyber Grid</span>
+            </div>
+            <div class="wallpaper-actions">
+              <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+            </div>
+          </div>
+        </div>
+        <div class="wallpaper-card">
+          <div class="wallpaper-preview-wrap">
+            <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Minimalist Wallpaper" class="wallpaper-thumb pixelated">
+          </div>
+          <div class="wallpaper-meta">
+            <span class="wallpaper-name">Dark Slate Grid</span>
+            <div class="wallpaper-specs">
+              <span>3840 x 2160 (4K OLED)</span>
+              <span>Clean Minimalist</span>
+            </div>
+            <div class="wallpaper-actions">
+              <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 8: REPOSITORIES -->
@@ -1975,6 +2150,40 @@
           <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
         </a>
 
+        </div>
+      </div>
+
+      <!-- Ecosystem Quick Grid -->
+      <div class="repos-grid" style="margin-top:28px;">
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/superfedora</span>
+            <span class="brand-version-badge">MAIN</span>
+          </div>
+          <p class="repo-desc">
+            Primary workstation orchestrator: 10 modular idempotent scripts, sf CLI, systemd uwsm integration, and CI test ladder.
+          </p>
+          <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE CORE ORCHESTRATOR</a>
+        </div>
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/dotfiles</span>
+            <span class="brand-version-badge">CONFIGS</span>
+          </div>
+          <p class="repo-desc">
+            Zero-symlink direct user configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
+          </p>
+          <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE MANAGED CONFIGS</a>
+        </div>
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/assets</span>
+            <span class="brand-version-badge">ART</span>
+          </div>
+          <p class="repo-desc">
+            Curated 16-bit SNES &amp; Metroid wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
+          </p>
+          <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE 16-BIT ASSETS</a>
         </div>
       </div>
     </section>

@@ -111,21 +111,19 @@ def run_tests():
             assert cdp.eval(f"Boolean(document.querySelector('#footer-accent-picker [data-palette=\"{p}\"]'))"), f"Missing swatch {p}"
         print("  [OK] Found all 8 16-bit swatches in footer dock.")
 
-        # 3. Random Color Rotation on Arrow Down Key
+        # 3 & 4. Color Rotation on Arrow Down / Up Keys
         print("[TEST 3] Testing 16-bit color random rotation on Down Arrow key...")
-        before_theme = cdp.eval("window.SuperTheme.getCurrent()")
+        b_down = cdp.eval("window.SuperTheme.getCurrent()")
         cdp.eval("document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));")
-        after_theme = cdp.eval("window.SuperTheme.getCurrent()")
-        assert before_theme != after_theme, f"Theme did not change: {before_theme} -> {after_theme}"
-        print(f"  [OK] Color rotated on ArrowDown: {before_theme} -> {after_theme}")
+        a_down = cdp.eval("window.SuperTheme.getCurrent()")
+        assert b_down != a_down, f"Theme did not change on ArrowDown: {b_down} -> {a_down}"
+        print(f"  [OK] Color rotated on ArrowDown: {b_down} -> {a_down}")
 
-        # 4. Arrow Up key rotation
         print("[TEST 4] Testing 16-bit color random rotation on Up Arrow key...")
-        before_up = cdp.eval("window.SuperTheme.getCurrent()")
         cdp.eval("document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));")
-        after_up = cdp.eval("window.SuperTheme.getCurrent()")
-        assert before_up != after_up, f"Theme did not change: {before_up} -> {after_up}"
-        print(f"  [OK] Color rotated on ArrowUp: {before_up} -> {after_up}")
+        a_up = cdp.eval("window.SuperTheme.getCurrent()")
+        assert a_down != a_up, f"Theme did not change on ArrowUp: {a_down} -> {a_up}"
+        print(f"  [OK] Color rotated on ArrowUp: {a_down} -> {a_up}")
 
         # 5. Dedicated Pre-Installed Section
         print("[TEST 5] Testing Dedicated Pre-Installed Section...")
@@ -238,6 +236,14 @@ def run_tests():
         cdp.eval("Object.defineProperty(document, 'hidden', { value: false, configurable: true }); document.dispatchEvent(new Event('visibilitychange'));")
         cdp.eval("window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
         print("  [OK] Deep spotlight verification (dominant sizing, text shrinking, leave orbit, scroll persistence, zero-cycles) verified.")
+
+        # 12. Interactive Modules HUD, Keybinding Matrix, CLI & Wallpapers
+        print("[TEST 12] Testing Interactive Modules HUD, Keys Matrix, CLI Simulator & Wallpapers...")
+        assert cdp.eval("document.querySelectorAll('#module-nav-list .module-btn').length === 10"), "10 module buttons"
+        assert cdp.eval("document.querySelectorAll('#keys-grid .key-card').length === 20"), "20 key cards"
+        assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf'))"), "CLI simulator"
+        assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4"), "4 wallpapers"
+        print("  [OK] Modules HUD (10), COSMIC Matrix (20), CLI Simulator, and Wallpaper Gallery verified.")
 
         print("\nAll deep verification tests PASSED!")
         s.close()

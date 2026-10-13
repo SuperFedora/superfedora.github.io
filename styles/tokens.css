@@ -36,7 +36,13 @@
   --snes-orange: #ff9e64;
   --snes-coral: #f43f5e;
 
-  /* 16-Bit Chunky SNES Bevel Borders */
+  /* Retro Status & Telemetry Indicators */
+  --status-ready: #9ece6a;
+  --status-warn: #e0af68;
+  --status-alert: #f7768e;
+  --status-cyan: #7dcfff;
+
+  /* 16-Bit Chunky SNES Bevel Borders & Cartridge Drop Shadows */
   --border-subtle: #24283b;
   --border-hard: #414868;
   --bevel-light: rgba(255, 255, 255, 0.22);
@@ -44,6 +50,8 @@
   --bevel-snes-box: inset 3px 3px 0px var(--bevel-light), inset -3px -3px 0px var(--bevel-dark);
   --bevel-snes-raised: inset 2px 2px 0px var(--bevel-light), inset -2px -2px 0px var(--bevel-dark), 0 4px 0 #0a0b10;
   --bevel-snes-sunken: inset 3px 3px 0px var(--bevel-dark), inset -2px -2px 0px var(--bevel-light);
+  --cartridge-shadow: 4px 4px 0px #06070a;
+  --cartridge-border: 2px solid var(--border-hard);
 
   /* RPG Dialogue Box Gradients */
   --rpg-border-outer: #565f89;

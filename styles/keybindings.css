@@ -15,10 +15,15 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-hard);
   border-radius: var(--radius-pixel);
-  box-shadow: var(--bevel-snes-box);
+  box-shadow: var(--bevel-snes-box), var(--cartridge-shadow);
   padding: 8px 12px;
   flex: 1;
   max-width: 420px;
+}
+
+.key-search-box:focus-within {
+  border-color: var(--jewel-primary);
+  box-shadow: var(--bevel-snes-box), 0 0 10px var(--jewel-dim);
 }
 
 .key-search-input {
@@ -80,18 +85,32 @@
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-pixel);
-  box-shadow: var(--bevel-snes-box);
+  box-shadow: var(--bevel-snes-box), 3px 3px 0px #08090f;
   padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  transition: transform 0.12s ease, border-color 0.12s ease;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
 }
 
 .key-card:hover {
   transform: translateY(-2px);
   border-color: var(--jewel-border);
+  box-shadow: var(--bevel-snes-box), 3px 3px 0px #08090f, 0 0 12px var(--jewel-dim);
+}
+
+.key-card:focus-visible {
+  border-color: var(--jewel-primary);
+  outline: 2px solid var(--jewel-primary);
+}
+
+.key-card.key-card-pulse {
+  transform: scale(0.98);
+  border-color: var(--jewel-hot);
+  background: var(--bg-elevated);
 }
 
 .kbd-badge {
