@@ -26,12 +26,7 @@ PORT_CDP = 9344
 
 def ws_handshake(sock, host, port, path):
     key = base64.b64encode(os.urandom(16)).decode("utf-8")
-    req = (f"GET {path} HTTP/1.1\r\n"
-           f"Host: {host}:{port}\r\n"
-           f"Upgrade: websocket\r\n"
-           f"Connection: Upgrade\r\n"
-           f"Sec-WebSocket-Key: {key}\r\n"
-           f"Sec-WebSocket-Version: 13\r\n\r\n")
+    req = f"GET {path} HTTP/1.1\r\nHost: {host}:{port}\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Key: {key}\r\nSec-WebSocket-Version: 13\r\n\r\n"
     sock.sendall(req.encode("utf-8"))
     resp = sock.recv(4096)
     assert b"101" in resp, f"Handshake failed: {resp}"
@@ -42,12 +37,8 @@ def send_frame(sock, text):
     frame = bytearray([0x81])
     mask = os.urandom(4)
     if length <= 125: frame.append(0x80 | length)
-    elif length <= 65535:
-        frame.append(0x80 | 126)
-        frame.extend(length.to_bytes(2, "big"))
-    else:
-        frame.append(0x80 | 127)
-        frame.extend(length.to_bytes(8, "big"))
+    elif length <= 65535: frame.extend([0x80 | 126] + list(length.to_bytes(2, "big")))
+    else: frame.extend([0x80 | 127] + list(length.to_bytes(8, "big")))
     frame.extend(mask)
     frame.extend(bytes(b ^ mask[i % 4] for i, b in enumerate(data)))
     sock.sendall(frame)
@@ -71,21 +62,17 @@ class CDPClient:
         self.msg_id = 0
     def call(self, method, params=None):
         self.msg_id += 1
-        req = {"id": self.msg_id, "method": method, "params": params or {}}
-        send_frame(self.sock, json.dumps(req))
+        send_frame(self.sock, json.dumps({"id": self.msg_id, "method": method, "params": params or {}}))
         while True:
             raw = recv_frame(self.sock)
             if not raw: return None
             try:
                 msg = json.loads(raw)
-                if msg.get("id") == self.msg_id:
-                    return msg.get("result")
+                if msg.get("id") == self.msg_id: return msg.get("result")
             except: pass
     def eval(self, expr):
         res = self.call("Runtime.evaluate", {"expression": expr, "returnByValue": True})
-        if res and "result" in res and "value" in res["result"]:
-            return res["result"]["value"]
-        return res
+        return res["result"]["value"] if res and "result" in res and "value" in res["result"] else res
 
 def run_tests():
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(PORT_HTTP), "--bind", "127.0.0.1"],
@@ -115,16 +102,13 @@ def run_tests():
         print("[TEST 1] Testing Header and Footer Dock HUD presence...")
         h_sticky = cdp.eval("getComputedStyle(document.querySelector('.site-header')).position === 'sticky'")
         d_fixed = cdp.eval("getComputedStyle(document.getElementById('footer-dock')).position === 'fixed'")
-        assert h_sticky, "Header is not sticky"
-        assert d_fixed, "Footer dock is not fixed"
+        assert h_sticky and d_fixed, "Header sticky or footer dock fixed assertion failed"
         print("  [OK] Header is sticky and Footer Dock HUD is fixed.")
 
         # 2. 8 Jewel Swatches in Footer Dock
         print("[TEST 2] Testing 8 16-Bit Jewel Swatches in Footer Dock...")
-        swatches = ["blue", "purple", "red", "green", "gold", "cyan", "orange", "coral"]
-        for p in swatches:
-            has_dot = cdp.eval(f"Boolean(document.querySelector('#footer-accent-picker [data-palette=\"{p}\"]'))")
-            assert has_dot, f"Missing footer swatch for {p}"
+        for p in ["blue", "purple", "red", "green", "gold", "cyan", "orange", "coral"]:
+            assert cdp.eval(f"Boolean(document.querySelector('#footer-accent-picker [data-palette=\"{p}\"]'))"), f"Missing swatch {p}"
         print("  [OK] Found all 8 16-bit swatches in footer dock.")
 
         # 3. Random Color Rotation on Arrow Down Key
@@ -166,25 +150,23 @@ def run_tests():
         # 7. Help Modal Toggle
         print("[TEST 7] Testing Keyboard Shortcuts Help Modal (toggle via '?' and close via 'Escape')...")
         cdp.eval("document.dispatchEvent(new KeyboardEvent('keydown', { key: '?', bubbles: true }));")
-        is_open = cdp.eval("document.getElementById('shortcuts-modal').classList.contains('open')")
-        assert is_open, "Modal did not open on '?' key"
+        assert cdp.eval("document.getElementById('shortcuts-modal').classList.contains('open')"), "Modal did not open on '?' key"
         cdp.eval("document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));")
-        is_closed = not cdp.eval("document.getElementById('shortcuts-modal').classList.contains('open')")
-        assert is_closed, "Modal did not close on Escape key"
+        assert not cdp.eval("document.getElementById('shortcuts-modal').classList.contains('open')"), "Modal did not close on Escape key"
         print("  [OK] Help modal opens on '?' and closes on 'Escape'.")
 
         # 8. CRT and SFX Toggles
         print("[TEST 8] Testing CRT and SFX Toggles...")
-        before_crt = cdp.eval("document.getElementById('toggle-crt').textContent")
+        b_crt = cdp.eval("document.getElementById('toggle-crt').textContent")
         cdp.eval("window.CRT.toggle();")
-        after_crt = cdp.eval("document.getElementById('toggle-crt').textContent")
-        assert before_crt != after_crt, "CRT toggle failed"
-
-        before_sfx = cdp.eval("document.getElementById('toggle-sfx').textContent")
+        a_crt = cdp.eval("document.getElementById('toggle-crt').textContent")
+        assert b_crt != a_crt, "CRT toggle failed"
+        b_sfx = cdp.eval("document.getElementById('toggle-sfx').textContent")
         cdp.eval("window.SFX.toggle();")
-        after_sfx = cdp.eval("document.getElementById('toggle-sfx').textContent")
-        assert before_sfx != after_sfx, "SFX toggle failed"
-        print(f"  [OK] CRT toggled ({before_crt} -> {after_crt}), SFX toggled ({before_sfx} -> {after_sfx}).")
+        a_sfx = cdp.eval("document.getElementById('toggle-sfx').textContent")
+        assert b_sfx != a_sfx, "SFX toggle failed"
+        print(f"  [OK] CRT toggled ({b_crt} -> {a_crt}), SFX toggled ({b_sfx} -> {a_sfx}).")
+
 
         # 9. Initial Title Screen Presentation
         print("[TEST 9] Testing Initial Title Screen Presentation...")
@@ -214,12 +196,54 @@ def run_tests():
             assert has_track, f"Section {sec_id} missing marquee track with {expected_cls}"
         print("  [OK] All 6 sections alternate Left -> Right -> Left -> Right -> Left -> Right seamlessly.")
 
-        # 11. Spotlight Canvas & Zero-Cycles Hook
-        print("[TEST 11] Testing Spotlight Canvas & Zero-Cycles Invariant...")
+        # 11. Spotlight Canvas, Dominant Wordmark Sizing & Zero-Cycles Invariant
+        print("[TEST 11] Testing Spotlight Canvas, Dominant Sizing & Zero-Cycles Invariant...")
         has_canvas = cdp.eval("document.getElementById('mainscreen-canvas').width > 0")
         has_hook = cdp.eval("typeof window.idleRenderSpotlight === 'function'")
         assert has_canvas and has_hook, "Spotlight canvas or window hook missing"
-        print("  [OK] Spotlight canvas initialized and reactive.")
+
+        # Dominant sizing: wordmark width should take up dominant width of screen (>= 85%)
+        state = cdp.eval("window.__getSpotlightState ? window.__getSpotlightState() : null")
+        assert state is not None, "window.__getSpotlightState() is not available"
+        ratio = state["wordmarkWidth"] / state["stageWidth"]
+        assert ratio >= 0.85, f"Wordmark width ratio {ratio:.2f} is less than 0.85 dominant threshold"
+
+        # Zero-Cycles: should be idle initially once prior test transitions settle
+        time.sleep(0.6)
+        init_state = cdp.eval("window.__getSpotlightState()")
+        assert not init_state["isRunning"], "Expected spotlight engine to be idle (0 cycles) on initial load"
+
+        # Active on pointer move
+        cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 400, clientY: 300, bubbles: true }));")
+        move_state = cdp.eval("window.__getSpotlightState()")
+        assert move_state["isRunning"], "Expected spotlight engine to wake and run while pointer is moving"
+
+        # Settles to zero cycles when pointer is still
+        time.sleep(0.9)
+        still_state = cdp.eval("window.__getSpotlightState()")
+        assert not still_state["isRunning"], "Expected spotlight engine to settle to 0 cycles when pointer is still"
+
+        # Wakes up immediately when pointer moves again
+        cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 450, clientY: 320, bubbles: true }));")
+        wake_state = cdp.eval("window.__getSpotlightState()")
+        assert wake_state["isRunning"], "Expected spotlight engine to resume running when pointer moves again"
+
+        # Returns to 0 cycles when pointer leaves
+        cdp.eval("document.dispatchEvent(new Event('pointerleave'));")
+        time.sleep(0.6)
+        leave_state = cdp.eval("window.__getSpotlightState()")
+        assert not leave_state["isRunning"], "Expected spotlight engine to settle to 0 cycles after pointerleave"
+
+        # Zero cycles when scrolled away
+        cdp.eval("window.scrollTo({ top: 1500, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
+        time.sleep(0.3)
+        scroll_state = cdp.eval("window.__getSpotlightState()")
+        assert not scroll_state["isRunning"], "Expected spotlight engine to remain 0 cycles when scrolled away"
+
+        # Scroll back up to reset
+        cdp.eval("window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
+        time.sleep(0.3)
+        print("  [OK] Deep zero-cycles invariant (still / offscreen / scroll) & dominant sizing verified.")
 
         print("\nAll deep verification tests PASSED!")
         s.close()
