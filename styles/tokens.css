@@ -16,7 +16,7 @@
   --text-dim: #565f89;
   --text-white: #ffffff;
 
-  /* Default Jewel Accent: Super Blue (Fedora 16-bit Core) */
+  /* Active 16-Bit Jewel Accent (Default: Super Blue) */
   --jewel-name: "Super Blue";
   --jewel-primary: #7aa2f7;
   --jewel-border: #3c6eb4;
@@ -26,13 +26,15 @@
   --jewel-glow: rgba(122, 162, 247, 0.45);
   --jewel-dim: rgba(122, 162, 247, 0.12);
 
-  /* SNES 4-Jewel Palette Constants */
+  /* 8 Retro 16-Bit Palette Constants */
   --snes-blue: #7aa2f7;
-  --snes-green: #9ece6a;
-  --snes-red: #f7768e;
-  --snes-yellow: #e0af68;
-  --snes-cyan: #7dcfff;
   --snes-purple: #bb9af7;
+  --snes-red: #f7768e;
+  --snes-green: #9ece6a;
+  --snes-gold: #e0af68;
+  --snes-cyan: #7dcfff;
+  --snes-orange: #ff9e64;
+  --snes-coral: #f43f5e;
 
   /* 16-Bit Chunky SNES Bevel Borders */
   --border-subtle: #24283b;
@@ -55,7 +57,8 @@
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", system-ui, sans-serif;
 
   /* Dimensions */
-  --header-height: 64px;
+  --header-height: 56px;
+  --dock-height: 52px;
   --radius-pixel: 4px;
   --radius-panel: 8px;
 }

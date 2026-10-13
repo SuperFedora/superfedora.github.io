@@ -1,0 +1,125 @@
+/* styles/keybindings.css — Pop!_OS COSMIC Keybindings Matrix & Search */
+.keys-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.key-search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hard);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 8px 12px;
+  flex: 1;
+  max-width: 420px;
+}
+
+.key-search-input {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-white);
+  width: 100%;
+}
+
+.key-search-input::placeholder {
+  color: var(--text-dim);
+}
+
+.key-filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.key-filter-btn {
+  font-family: var(--font-pixel-sub);
+  font-size: 10px;
+  padding: 6px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.key-filter-btn:hover {
+  color: var(--text-white);
+  border-color: var(--border-hard);
+}
+
+.key-filter-btn.active {
+  background: var(--bg-elevated);
+  border-color: var(--jewel-primary);
+  color: var(--jewel-hot);
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2), 0 0 8px var(--jewel-dim);
+}
+
+.keys-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 12px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.key-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.key-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--jewel-border);
+}
+
+.kbd-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #24283b;
+  border: 1px solid #414868;
+  border-bottom: 2px solid #1a1b26;
+  border-radius: 4px;
+  padding: 4px 8px;
+  white-space: nowrap;
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2), 0 2px 0 #0f1017;
+}
+
+.key-action-wrap {
+  text-align: right;
+}
+
+.key-action-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.key-category-tag {
+  font-family: var(--font-pixel-sub);
+  font-size: 9px;
+  color: var(--jewel-primary);
+  text-transform: uppercase;
+}

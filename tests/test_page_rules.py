@@ -2,11 +2,13 @@
 """tests/test_page_rules.py — Comprehensive validation test suite for superfedora.github.io.
 
 Verifies:
-1. HTML5 tag balance and well-formedness of index.html (no unclosed tags, no mismatched tags).
-2. Local asset integrity: all referenced images, stylesheets, scripts, and links exist on disk.
-3. Anchor integrity: all #hash links match existing element IDs.
-4. JavaScript syntax validation across all scripts via node --check.
-5. Critical metadata and branding files presence.
+1. HTML5 tag balance and well-formedness of index.html.
+2. Local asset integrity: all referenced images, styles, scripts, anchors exist on disk.
+3. JavaScript syntax validation across all scripts via node --check.
+4. Critical metadata, stylesheets, and script files presence.
+5. The Page Rule: all code files (.sh, .js, .css, .py) are between 16 and 256 lines.
+6. Directory density: no functional directory exceeds 12 files.
+7. Strict Zero-Emoji Invariant: zero Unicode emojis across all files.
 """
 import os
 import subprocess
@@ -15,6 +17,8 @@ from html.parser import HTMLParser
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INDEX_PATH = os.path.join(REPO_ROOT, "index.html")
+EXCLUDE_DIRS = {".git", ".github"}
+CODE_EXTENSIONS = {".js", ".css", ".sh", ".py"}
 
 
 def check_html_structure():
@@ -24,7 +28,6 @@ def check_html_structure():
             "area", "base", "br", "col", "embed", "hr", "img",
             "input", "link", "meta", "param", "source", "track", "wbr"
         }
-
         def __init__(self):
             super().__init__()
             self.stack = []
@@ -34,12 +37,12 @@ def check_html_structure():
 
         def handle_starttag(self, tag, attrs):
             t = tag.lower()
-            attrs_dict = dict(attrs)
-            if "id" in attrs_dict:
-                self.ids.add(attrs_dict["id"])
+            ad = dict(attrs)
+            if "id" in ad:
+                self.ids.add(ad["id"])
             for k in ("href", "src"):
-                if k in attrs_dict:
-                    self.links.append((tag, k, attrs_dict[k], self.getpos()[0]))
+                if k in ad:
+                    self.links.append((tag, k, ad[k], self.getpos()[0]))
             if t not in self.VOID_TAGS:
                 self.stack.append((t, self.getpos()))
 
@@ -52,9 +55,7 @@ def check_html_structure():
                 return
             last, pos = self.stack.pop()
             if last != t:
-                self.issues.append(
-                    f"Mismatched tag: expected </{last}> (opened line {pos[0]}), got </{t}> at line {self.getpos()[0]}"
-                )
+                self.issues.append(f"Mismatched tag: expected </{last}>, got </{t}> at line {self.getpos()[0]}")
 
     if not os.path.exists(INDEX_PATH):
         return ["index.html not found"], set(), []
@@ -94,7 +95,6 @@ def check_js_syntax():
     js_dir = os.path.join(REPO_ROOT, "js")
     if not os.path.isdir(js_dir):
         return ["js directory missing"]
-
     issues = []
     for f in sorted(os.listdir(js_dir)):
         if f.endswith(".js"):
@@ -108,26 +108,15 @@ def check_js_syntax():
 def check_critical_files():
     """Verify presence and non-empty status of critical files."""
     required = [
-        "index.html",
-        "install.sh",
-        "VERSION",
-        "favicon.svg",
+        "index.html", "install.sh", "VERSION", "favicon.svg",
         "assets/branding/avatar.jpg",
-        "styles/tokens.css",
-        "styles/reset.css",
-        "styles/typography.css",
-        "styles/nav.css",
-        "styles/mainscreen.css",
-        "styles/hero.css",
-        "styles/panels.css",
-        "styles/crt.css",
-        "js/audio.js",
-        "js/theme.js",
-        "js/crt.js",
-        "js/copy.js",
-        "js/hud.js",
-        "js/starfield.js",
-        "js/sun.js"
+        "styles/tokens.css", "styles/reset.css", "styles/typography.css",
+        "styles/nav.css", "styles/dock.css", "styles/marquee.css",
+        "styles/mainscreen.css", "styles/hero.css", "styles/panels.css",
+        "styles/modules.css", "styles/keybindings.css", "styles/crt.css",
+        "js/audio.js", "js/theme.js", "js/crt.js", "js/copy.js",
+        "js/dock.js", "js/marquees.js", "js/modules.js", "js/rotate.js",
+        "js/starfield.js", "js/sun.js", "js/hud.js"
     ]
     issues = []
     for rel in required:
@@ -139,14 +128,69 @@ def check_critical_files():
     return issues
 
 
+def check_line_sizing_and_density():
+    """Verify 16 <= lines <= 256 for code and <= 12 files per directory."""
+    sizing_issues = []
+    density_issues = []
+
+    for root, dirs, files in os.walk(REPO_ROOT):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS and not d.startswith(".")]
+        rel_dir = os.path.relpath(root, REPO_ROOT)
+
+        functional_files = [f for f in files if not f.startswith(".")]
+        if len(functional_files) > 12:
+            density_issues.append(f"Directory {rel_dir} exceeds 12 files ({len(functional_files)} files)")
+
+        for f in functional_files:
+            ext = os.path.splitext(f)[1]
+            if ext in CODE_EXTENSIONS:
+                fpath = os.path.join(root, f)
+                rel_path = os.path.relpath(fpath, REPO_ROOT)
+                with open(fpath, "rb") as fp:
+                    lines = sum(1 for _ in fp)
+                if lines < 16:
+                    sizing_issues.append(f"{rel_path}: {lines} lines (under 16)")
+                elif lines > 256:
+                    sizing_issues.append(f"{rel_path}: {lines} lines (over 256)")
+
+    return sizing_issues, density_issues
+
+
+def check_zero_emojis():
+    """Verify strict Zero-Emoji Invariant across repository."""
+    issues = []
+    for root, dirs, files in os.walk(REPO_ROOT):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS and not d.startswith(".")]
+        for f in files:
+            if f.endswith((".jpg", ".png", ".ico", ".woff", ".woff2", ".bin")):
+                continue
+            fpath = os.path.join(root, f)
+            rel = os.path.relpath(fpath, REPO_ROOT)
+            try:
+                with open(fpath, "r", encoding="utf-8") as fp:
+                    for lno, line in enumerate(fp, 1):
+                        for ch in line:
+                            cp = ord(ch)
+                            if (0x1F300 <= cp <= 0x1FADF or
+                                0x1F600 <= cp <= 0x1F64F or
+                                0x1F680 <= cp <= 0x1F6FF or
+                                0x2600 <= cp <= 0x27BF or
+                                0x1F900 <= cp <= 0x1F9FF or
+                                0x1FA70 <= cp <= 0x1FAFF):
+                                issues.append(f"{rel}:{lno}: Prohibited emoji/symbol '{ch}' (U+{cp:04X})")
+                                break
+            except Exception:
+                pass
+    return issues
+
+
 def main():
     failures = []
 
     print("1. Checking HTML structure and tag balance...")
     html_issues, ids, links = check_html_structure()
     if html_issues:
-        for err in html_issues:
-            print(f"  [-] {err}")
+        for err in html_issues: print(f"  [-] {err}")
         failures.extend(html_issues)
     else:
         print("  [OK] index.html has 0 unclosed or mismatched HTML tags.")
@@ -154,8 +198,7 @@ def main():
     print("2. Checking local assets and internal anchors...")
     asset_issues = check_local_assets_and_anchors(ids, links)
     if asset_issues:
-        for err in asset_issues:
-            print(f"  [-] {err}")
+        for err in asset_issues: print(f"  [-] {err}")
         failures.extend(asset_issues)
     else:
         print(f"  [OK] All {len(links)} links and assets are intact and verified.")
@@ -163,8 +206,7 @@ def main():
     print("3. Checking JavaScript syntax (node --check)...")
     js_issues = check_js_syntax()
     if js_issues:
-        for err in js_issues:
-            print(f"  [-] {err}")
+        for err in js_issues: print(f"  [-] {err}")
         failures.extend(js_issues)
     else:
         print("  [OK] All JavaScript files pass node --check syntax tests.")
@@ -172,17 +214,32 @@ def main():
     print("4. Checking critical project files...")
     file_issues = check_critical_files()
     if file_issues:
-        for err in file_issues:
-            print(f"  [-] {err}")
+        for err in file_issues: print(f"  [-] {err}")
         failures.extend(file_issues)
     else:
         print("  [OK] All required branding, style, script, and metadata files exist.")
+
+    print("5. Checking Page Rules (16-256 lines) & Directory Density (<= 12 files)...")
+    sizing_issues, density_issues = check_line_sizing_and_density()
+    if sizing_issues or density_issues:
+        for err in sizing_issues + density_issues: print(f"  [-] {err}")
+        failures.extend(sizing_issues + density_issues)
+    else:
+        print("  [OK] All code files satisfy 16-256 lines and all directories have <= 12 files.")
+
+    print("6. Checking Strict Zero-Emoji Invariant...")
+    emoji_issues = check_zero_emojis()
+    if emoji_issues:
+        for err in emoji_issues: print(f"  [-] {err}")
+        failures.extend(emoji_issues)
+    else:
+        print("  [OK] Strict Zero-Emoji Invariant verified across all files.")
 
     if failures:
         print(f"\nResult: FAILED with {len(failures)} violation(s).", file=sys.stderr)
         sys.exit(1)
     else:
-        print("\nResult: All page rules, assets, and syntax checks PASSED.")
+        print("\nResult: All page rules, assets, syntax, and invariants PASSED.")
         sys.exit(0)
 
 

@@ -1,5 +1,7 @@
-/* js/theme.js — SNES Jewel Palette Switcher */
+/* js/theme.js — 16-Bit SNES Jewel Rainbow Palette Switcher & Random Rotator */
 (function() {
+  'use strict';
+
   var palettes = {
     blue: {
       name: "Super Blue",
@@ -45,13 +47,46 @@
       rgb: "224, 175, 104",
       glow: "rgba(224, 175, 104, 0.45)",
       dim: "rgba(224, 175, 104, 0.12)"
+    },
+    cyan: {
+      name: "Electric Cyan",
+      primary: "#7dcfff",
+      border: "#0284c7",
+      hot: "#00e5ff",
+      rgb: "125, 207, 255",
+      glow: "rgba(125, 207, 255, 0.45)",
+      dim: "rgba(125, 207, 255, 0.12)"
+    },
+    orange: {
+      name: "Flame Orange",
+      primary: "#ff9e64",
+      border: "#ea580c",
+      hot: "#ff7700",
+      rgb: "255, 158, 100",
+      glow: "rgba(255, 158, 100, 0.45)",
+      dim: "rgba(255, 158, 100, 0.12)"
+    },
+    coral: {
+      name: "Neon Coral",
+      primary: "#f43f5e",
+      border: "#be123c",
+      hot: "#ff4365",
+      rgb: "244, 63, 94",
+      glow: "rgba(244, 63, 94, 0.45)",
+      dim: "rgba(244, 63, 94, 0.12)"
     }
   };
 
+  var paletteKeys = ["blue", "purple", "red", "green", "gold", "cyan", "orange", "coral"];
+  var currentThemeKey = "blue";
+
   function applyTheme(key, playSound) {
-    var p = palettes[key] || palettes.blue;
+    if (!palettes[key]) key = "blue";
+    currentThemeKey = key;
+    var p = palettes[key];
     var root = document.documentElement;
 
+    root.style.setProperty("--jewel-name", p.name);
     root.style.setProperty("--jewel-primary", p.primary);
     root.style.setProperty("--jewel-border", p.border);
     root.style.setProperty("--jewel-hot", p.hot);
@@ -59,35 +94,55 @@
     root.style.setProperty("--jewel-glow", p.glow);
     root.style.setProperty("--jewel-dim", p.dim);
 
-    document.querySelectorAll(".jewel-btn").forEach(function(btn) {
-      btn.classList.toggle("active", btn.getAttribute("data-palette") === key);
+    // Sync all swatch buttons across footer dock and legacy controls
+    document.querySelectorAll(".dock-jewel-dot, .jewel-btn").forEach(function(btn) {
+      var matches = btn.getAttribute("data-palette") === key;
+      btn.classList.toggle("active", matches);
+      if (btn.hasAttribute("role") && btn.getAttribute("role") === "radio") {
+        btn.setAttribute("aria-checked", matches ? "true" : "false");
+        btn.setAttribute("tabindex", matches ? "0" : "-1");
+      }
     });
 
-    localStorage.setItem("superfedora_theme", key);
+    try {
+      localStorage.setItem("superfedora_theme", key);
+    } catch (e) {}
 
-    if (window.updateStarfieldTheme) {
-      window.updateStarfieldTheme();
-    }
-    if (window.updateMainscreenSun) {
-      window.updateMainscreenSun();
-    }
+    if (window.updateStarfieldTheme) window.updateStarfieldTheme();
+    if (window.updateMainscreenSun) window.updateMainscreenSun();
 
-    if (playSound && window.SFX) {
+    if (playSound && window.SFX && window.SFX.playBlip) {
       window.SFX.playBlip(720);
     }
+    return key;
+  }
+
+  function cycleRandom(playSound) {
+    var pool = paletteKeys.filter(function(k) { return k !== currentThemeKey; });
+    var nextKey = pool[Math.floor(Math.random() * pool.length)];
+    applyTheme(nextKey, playSound !== false);
+    return nextKey;
   }
 
   window.SuperTheme = {
     set: applyTheme,
+    cycleRandom: cycleRandom,
+    getCurrent: function() { return currentThemeKey; },
+    palettes: palettes,
+    keys: paletteKeys,
     init: function() {
-      var saved = localStorage.getItem("superfedora_theme") || "blue";
+      var saved = "blue";
+      try {
+        saved = localStorage.getItem("superfedora_theme") || "blue";
+      } catch (e) {}
       applyTheme(saved, false);
 
-      document.querySelectorAll(".jewel-btn").forEach(function(btn) {
-        btn.addEventListener("click", function() {
+      document.addEventListener("click", function(e) {
+        var btn = e.target.closest(".dock-jewel-dot, .jewel-btn");
+        if (btn) {
           var pal = btn.getAttribute("data-palette");
-          applyTheme(pal, true);
-        });
+          if (pal) applyTheme(pal, true);
+        }
       });
     }
   };

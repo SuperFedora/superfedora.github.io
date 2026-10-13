@@ -1,0 +1,224 @@
+/* styles/dock.css — Fixed 16-bit bottom dock HUD, rainbow swatches, and help modal */
+.footer-dock {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--dock-height);
+  background: rgba(15, 17, 26, 0.95);
+  background-image: linear-gradient(rgba(22, 24, 38, 0) 50%, rgba(0, 0, 0, 0.45) 50%),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.02));
+  background-size: 100% 4px, 6px 100%;
+  border-top: 2px solid var(--jewel-border);
+  box-shadow: 0 -2px 0 0 #000, 0 -8px 24px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.footer-dock-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.dock-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.dock-left { justify-content: flex-start; }
+.dock-right { justify-content: flex-end; }
+.dock-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 16-Bit Arcade Navigation Buttons */
+.dock-arrow-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--jewel-primary);
+  background: #161724;
+  border: 1px solid var(--border-hard);
+  box-shadow: var(--bevel-snes-raised);
+  border-radius: var(--radius-pixel);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  text-transform: uppercase;
+  transition: all 0.12s ease;
+  outline: none;
+}
+.dock-arrow-btn:hover:not(:disabled) {
+  background: var(--bg-elevated);
+  border-color: var(--jewel-primary);
+  color: var(--jewel-hot);
+  box-shadow: var(--bevel-snes-raised), 0 0 10px var(--jewel-glow);
+}
+.dock-arrow-btn:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: var(--bevel-snes-sunken);
+}
+.dock-arrow-btn.disabled,
+.dock-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  border-color: var(--border-subtle);
+  color: var(--text-dim);
+  box-shadow: none;
+  transform: none;
+}
+.pixel-glyph {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--jewel-hot);
+}
+/* Dock Toggle Buttons (CRT & SFX) */
+.dock-toggle-btn {
+  font-family: var(--font-pixel-sub);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  padding: 5px 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.12s ease;
+}
+.dock-toggle-btn:hover {
+  color: var(--text-white);
+  border-color: var(--jewel-border);
+}
+.dock-toggle-btn.active {
+  color: var(--jewel-primary);
+  border-color: var(--jewel-primary);
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2), 0 0 8px var(--jewel-glow);
+}
+/* 16-Bit Rainbow Swatches (Center) */
+.footer-accent-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: #0f1018;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  box-shadow: var(--bevel-snes-box);
+}
+.dock-jewel-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+.dock-jewel-dot:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 8px var(--swatch, currentColor);
+  z-index: 2;
+}
+.dock-jewel-dot.active {
+  transform: scale(1.35);
+  box-shadow: 0 0 10px var(--swatch, currentColor), inset 0 0 4px #fff, 0 0 0 1px #fff;
+  border-color: #fff;
+  z-index: 3;
+}
+/* 16-Bit Help Modal */
+.snes-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 9, 14, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.snes-modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+.snes-modal-box {
+  width: 100%;
+  max-width: 580px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.snes-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.snes-modal-title {
+  font-family: var(--font-pixel-sub);
+  font-size: 13px;
+  color: var(--jewel-hot);
+  letter-spacing: 0.06em;
+}
+.modal-close-btn {
+  font-family: var(--font-pixel-sub);
+  font-size: 10px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-hard);
+  color: var(--text-secondary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.modal-close-btn:hover {
+  background: var(--jewel-primary);
+  color: var(--bg-void);
+}
+.modal-shortcuts-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.modal-shortcuts-table td {
+  padding: 7px 6px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.modal-shortcuts-table td:first-child { width: 130px; }
+.modal-shortcuts-table td:last-child { color: var(--text-secondary); }
+@media (max-width: 768px) {
+  .dock-toggle-btn { display: none; }
+  .dock-jewel-dot { width: 13px; height: 13px; }
+  .footer-accent-picker { gap: 4px; padding: 3px 6px; }
+  .dock-arrow-btn { padding: 5px 8px; font-size: 10px; }
+}

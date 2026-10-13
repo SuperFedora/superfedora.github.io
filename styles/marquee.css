@@ -1,0 +1,106 @@
+/* styles/marquee.css — Dual-opposing 16-bit infinite horizontal scrolling marquees */
+.dual-marquee-wrap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding: 12px 0;
+  mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 4%, black 96%, transparent);
+}
+
+.dual-marquee-track-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.marquee-stream {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  will-change: transform;
+}
+
+.stream-left {
+  animation: snes-stream-left 48s linear infinite;
+}
+
+.stream-right {
+  animation: snes-stream-right 48s linear infinite;
+}
+
+.dual-marquee-wrap:hover .marquee-stream {
+  animation-play-state: paused;
+}
+
+@keyframes snes-stream-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes snes-stream-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.marquee-chip:hover {
+  border-color: var(--jewel-primary);
+  color: var(--text-white);
+  background: var(--bg-elevated);
+  box-shadow: var(--bevel-snes-raised), 0 0 10px var(--jewel-glow);
+}
+
+.marquee-chip b {
+  color: var(--jewel-hot);
+  font-weight: 700;
+}
+
+.marquee-bracket {
+  color: var(--jewel-primary);
+  font-weight: 700;
+}
+
+/* Single Marquee Strip (Hero Tenets) */
+.marquee-container {
+  margin: 30px 0 10px;
+  background: #141520;
+  border-top: 2px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
+  box-shadow: var(--bevel-snes-box);
+  overflow: hidden;
+  padding: 8px 0;
+  white-space: nowrap;
+  mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 16px;
+  animation: snes-stream-left 36s linear infinite;
+  will-change: transform;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
