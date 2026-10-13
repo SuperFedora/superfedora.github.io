@@ -30,29 +30,34 @@
   <link rel="stylesheet" href="styles/keybindings.css">
   <link rel="stylesheet" href="styles/crt.css">
 
-  <!-- Early theme & CRT hydration to prevent flash -->
+  <!-- Early theme, mode & CRT hydration to prevent flash -->
   <script>
     (function() {
       try {
         var theme = localStorage.getItem("superfedora_theme") || "blue";
+        var mode = localStorage.getItem("superfedora_mode") === "light" ? "light" : "dark";
         var palettes = {
-          blue:   { p: "#7aa2f7", b: "#3c6eb4", h: "#89b4fa", rgb: "122, 162, 247" },
-          purple: { p: "#bb9af7", b: "#7c3aed", h: "#d946ef", rgb: "187, 154, 247" },
-          red:    { p: "#f7768e", b: "#e11d48", h: "#ff5555", rgb: "247, 118, 142" },
-          green:  { p: "#9ece6a", b: "#16a34a", h: "#50fa7b", rgb: "158, 206, 106" },
-          gold:   { p: "#e0af68", b: "#ca8a04", h: "#ffd447", rgb: "224, 175, 104" },
-          cyan:   { p: "#7dcfff", b: "#0284c7", h: "#00e5ff", rgb: "125, 207, 255" },
-          orange: { p: "#ff9e64", b: "#ea580c", h: "#ff7700", rgb: "255, 158, 100" },
-          coral:  { p: "#f43f5e", b: "#be123c", h: "#ff4365", rgb: "244, 63, 94" }
+          blue:   { p: "#7aa2f7", b: "#3c6eb4", h: "#bcd3ff", rgb: "122, 162, 247", lp: "#2554a3", lb: "#1e4282", lh: "#3c6eb4", lrgb: "37, 84, 163" },
+          purple: { p: "#bb9af7", b: "#7c3aed", h: "#decbff", rgb: "187, 154, 247", lp: "#6b38b8", lb: "#532894", lh: "#8b5cf6", lrgb: "107, 56, 184" },
+          red:    { p: "#f7768e", b: "#e11d48", h: "#ffbac7", rgb: "247, 118, 142", lp: "#b91c3c", lb: "#96142e", lh: "#e11d48", lrgb: "185, 28, 60" },
+          green:  { p: "#9ece6a", b: "#16a34a", h: "#cbf0a3", rgb: "158, 206, 106", lp: "#2d7a31", lb: "#215c24", lh: "#16a34a", lrgb: "45, 122, 49" },
+          gold:   { p: "#e0af68", b: "#ca8a04", h: "#ffdf9e", rgb: "224, 175, 104", lp: "#946210", lb: "#734b0b", lh: "#ca8a04", lrgb: "148, 98, 16" },
+          cyan:   { p: "#7dcfff", b: "#0284c7", h: "#bfeaff", rgb: "125, 207, 255", lp: "#0369a1", lb: "#075985", lh: "#0284c7", lrgb: "3, 105, 161" },
+          orange: { p: "#ff9e64", b: "#ea580c", h: "#ffc9a6", rgb: "255, 158, 100", lp: "#b84309", lb: "#943506", lh: "#ea580c", lrgb: "184, 67, 9" },
+          coral:  { p: "#f43f5e", b: "#be123c", h: "#ff99ac", rgb: "244, 63, 94",   lp: "#9f1239", lb: "#881337", lh: "#be123c", lrgb: "159, 18, 57" }
         };
         var active = palettes[theme] || palettes.blue;
+        var isLight = mode === "light";
+        var rgb = isLight ? active.lrgb : active.rgb;
         var r = document.documentElement;
-        r.style.setProperty("--jewel-primary", active.p);
-        r.style.setProperty("--jewel-border", active.b);
-        r.style.setProperty("--jewel-hot", active.h);
-        r.style.setProperty("--jewel-rgb", active.rgb);
-        r.style.setProperty("--jewel-glow", "rgba(" + active.rgb + ", 0.45)");
-        r.style.setProperty("--jewel-dim", "rgba(" + active.rgb + ", 0.12)");
+        r.dataset.theme = theme;
+        r.dataset.mode = mode;
+        r.style.setProperty("--jewel-primary", isLight ? active.lp : active.p);
+        r.style.setProperty("--jewel-border", isLight ? active.lb : active.b);
+        r.style.setProperty("--jewel-hot", isLight ? active.lh : active.h);
+        r.style.setProperty("--jewel-rgb", rgb);
+        r.style.setProperty("--jewel-glow", "rgba(" + rgb + ", " + (isLight ? "0.28" : "0.45") + ")");
+        r.style.setProperty("--jewel-dim", "rgba(" + rgb + ", 0.12)");
 
         if (localStorage.getItem("superfedora_crt") === "true") {
           document.addEventListener("DOMContentLoaded", function() {
@@ -1552,6 +1557,7 @@
           <button type="button" class="cli-tab-btn" data-cmd="sf-rollback" role="tab">&gt; sf rollback</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-dotfiles" role="tab">&gt; sf dotfiles</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; sf bindings</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-theme" role="tab">&gt; sf theme</button>
         </div>
         <div class="cli-window rpg-window">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;gap:8px;">
@@ -1575,256 +1581,254 @@
     <section class="panel-section" id="wallpapers">
       <div class="snes-eyebrow">
         <span class="snes-eyebrow-pip"></span>
-        AESTHETICS // CURATED 16-BIT SNES ART
+        AESTHETICS // 16-BIT THEME ENGINE (8 JEWEL COLORS X DARK / LIGHT)
       </div>
-      <h2 class="section-heading">Pixel Wallpapers &amp; Themes</h2>
+      <h2 class="section-heading">4K 16-Bit Wallpapers &amp; Themes</h2>
       <p class="section-desc">
-        Every workstation includes 4 custom-crafted 16-bit SNES &amp; Metroid inspired pixel art wallpapers designed specifically for OLED and IPS high-refresh displays.
+        Every workstation ships with 16 native 4K (<code>3840x2160</code>) 16-bit <code>SUPER FEDORA</code> pixel art wallpapers across all 8 SNES jewel colors in both Dark (<code>#07080b</code> Obsidian) and Light (<code>#e6e8f0</code> Cartridge Alabaster) variations — synchronized across your desktop, lockscreen, top bar, launcher, terminal, and login greeter via <code>sf theme</code>.
       </p>
 
-            <div class="marquee-section-wrap" aria-label="16-Bit Wallpapers Marquee">
+      <div class="marquee-section-wrap" aria-label="16-Bit Wallpapers Marquee">
         <div class="marquee-track-continuous marquee-scroll-left">
 
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/01-super-blue.png" alt="Super Blue Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Crateria Synth</span>
+              <span class="wallpaper-name">01 // Super Blue (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Metroid Synthwave</span>
+                <span>Obsidian #7aa2f7</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/02-metroid-violet.png" alt="Metroid Violet Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+              <span class="wallpaper-name">02 // Metroid Violet (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit SNES Jewel</span>
+                <span>Obsidian #bb9af7</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/02-metroid-violet.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/03-super-ruby.png" alt="Super Ruby Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Retro Night Station</span>
+              <span class="wallpaper-name">03 // Super Ruby (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Wayland Cyber Grid</span>
+                <span>Obsidian #f7768e</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/03-super-ruby.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/04-emerald-green.png" alt="Emerald Green Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Dark Slate Grid</span>
+              <span class="wallpaper-name">04 // Emerald Green (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Clean Minimalist</span>
+                <span>Obsidian #9ece6a</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="wallpaper-marquee-card">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Crateria Synth</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>Metroid Synthwave</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/04-emerald-green.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/05-star-gold.png" alt="Star Gold Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+              <span class="wallpaper-name">05 // Star Gold (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit SNES Jewel</span>
+                <span>Obsidian #e0af68</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/05-star-gold.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/06-electric-cyan.png" alt="Electric Cyan Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Retro Night Station</span>
+              <span class="wallpaper-name">06 // Electric Cyan (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Wayland Cyber Grid</span>
+                <span>Obsidian #7dcfff</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/06-electric-cyan.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/light/01-super-blue.png" alt="Super Blue Light 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Dark Slate Grid</span>
+              <span class="wallpaper-name">01 // Super Blue (Light)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Clean Minimalist</span>
+                <span>Cartridge #2554a3</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/light/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
-
-          <div class="wallpaper-marquee-card-clone">
+          <div class="wallpaper-marquee-card">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/light/05-star-gold.png" alt="Star Gold Light 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Crateria Synth</span>
+              <span class="wallpaper-name">05 // Star Gold (Light)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Metroid Synthwave</span>
+                <span>Cartridge #946210</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>16-Bit SNES Jewel</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Retro Night Station</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>Wayland Cyber Grid</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
-              </div>
-            </div>
-          </div>
-          <div class="wallpaper-marquee-card-clone">
-            <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
-            </div>
-            <div class="wallpaper-meta">
-              <span class="wallpaper-name">Dark Slate Grid</span>
-              <div class="wallpaper-specs">
-                <span>3840 x 2160 (4K)</span>
-                <span>Clean Minimalist</span>
-              </div>
-              <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/light/05-star-gold.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
 
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/01-super-blue.png" alt="Super Blue Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Crateria Synth</span>
+              <span class="wallpaper-name">01 // Super Blue (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Metroid Synthwave</span>
+                <span>Obsidian #7aa2f7</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/02-metroid-violet.png" alt="Metroid Violet Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+              <span class="wallpaper-name">02 // Metroid Violet (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>16-Bit SNES Jewel</span>
+                <span>Obsidian #bb9af7</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/02-metroid-violet.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/03-super-ruby.png" alt="Super Ruby Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Retro Night Station</span>
+              <span class="wallpaper-name">03 // Super Ruby (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Wayland Cyber Grid</span>
+                <span>Obsidian #f7768e</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/03-super-ruby.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
           <div class="wallpaper-marquee-card-clone">
             <div class="wallpaper-preview-wrap">
-              <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Grid Wallpaper" class="wallpaper-thumb pixelated">
+              <img src="assets/wallpapers/dark/04-emerald-green.png" alt="Emerald Green Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
             </div>
             <div class="wallpaper-meta">
-              <span class="wallpaper-name">Dark Slate Grid</span>
+              <span class="wallpaper-name">04 // Emerald Green (Dark)</span>
               <div class="wallpaper-specs">
                 <span>3840 x 2160 (4K)</span>
-                <span>Clean Minimalist</span>
+                <span>Obsidian #9ece6a</span>
               </div>
               <div class="wallpaper-actions">
-                <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+                <a href="assets/wallpapers/dark/04-emerald-green.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/dark/05-star-gold.png" alt="Star Gold Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">05 // Star Gold (Dark)</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Obsidian #e0af68</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/dark/05-star-gold.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/dark/06-electric-cyan.png" alt="Electric Cyan Dark 4K Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">06 // Electric Cyan (Dark)</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Obsidian #7dcfff</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/dark/06-electric-cyan.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/light/01-super-blue.png" alt="Super Blue Light 4K Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">01 // Super Blue (Light)</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Cartridge #2554a3</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/light/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
+              </div>
+            </div>
+          </div>
+          <div class="wallpaper-marquee-card-clone">
+            <div class="wallpaper-preview-wrap">
+              <img src="assets/wallpapers/light/05-star-gold.png" alt="Star Gold Light 4K Wallpaper" class="wallpaper-thumb pixelated">
+            </div>
+            <div class="wallpaper-meta">
+              <span class="wallpaper-name">05 // Star Gold (Light)</span>
+              <div class="wallpaper-specs">
+                <span>3840 x 2160 (4K)</span>
+                <span>Cartridge #946210</span>
+              </div>
+              <div class="wallpaper-actions">
+                <a href="assets/wallpapers/light/05-star-gold.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">PREVIEW</a>
               </div>
             </div>
           </div>
@@ -1836,61 +1840,61 @@
       <div class="wallpapers-grid" style="margin-top:28px;">
         <div class="wallpaper-card">
           <div class="wallpaper-preview-wrap">
-            <img src="assets/wallpapers/pixel-crateria-synth.png" alt="Metroid Crateria Synth 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+            <img src="assets/wallpapers/dark/01-super-blue.png" alt="Super Blue Dark 4K 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
           </div>
           <div class="wallpaper-meta">
-            <span class="wallpaper-name">Crateria Synth</span>
+            <span class="wallpaper-name">01 // Super Blue (Dark)</span>
             <div class="wallpaper-specs">
               <span>3840 x 2160 (4K OLED)</span>
-              <span>Metroid Synthwave</span>
+              <span>Obsidian #7aa2f7</span>
             </div>
             <div class="wallpaper-actions">
-              <a href="assets/wallpapers/pixel-crateria-synth.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+              <a href="assets/wallpapers/dark/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
             </div>
           </div>
         </div>
         <div class="wallpaper-card">
           <div class="wallpaper-preview-wrap">
-            <img src="assets/wallpapers/pixel-superfedora-blue.png" alt="SuperFedora Tokyo Night 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+            <img src="assets/wallpapers/dark/02-metroid-violet.png" alt="Metroid Violet Dark 4K 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
           </div>
           <div class="wallpaper-meta">
-            <span class="wallpaper-name">SuperFedora Tokyo Night</span>
+            <span class="wallpaper-name">02 // Metroid Violet (Dark)</span>
             <div class="wallpaper-specs">
               <span>3840 x 2160 (4K OLED)</span>
-              <span>16-Bit SNES Jewel</span>
+              <span>Obsidian #bb9af7</span>
             </div>
             <div class="wallpaper-actions">
-              <a href="assets/wallpapers/pixel-superfedora-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+              <a href="assets/wallpapers/dark/02-metroid-violet.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
             </div>
           </div>
         </div>
         <div class="wallpaper-card">
           <div class="wallpaper-preview-wrap">
-            <img src="assets/wallpapers/pixel-retro-night.png" alt="Retro Night Station 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
+            <img src="assets/wallpapers/dark/05-star-gold.png" alt="Star Gold Dark 4K 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
           </div>
           <div class="wallpaper-meta">
-            <span class="wallpaper-name">Retro Night Station</span>
+            <span class="wallpaper-name">05 // Star Gold (Dark)</span>
             <div class="wallpaper-specs">
               <span>3840 x 2160 (4K OLED)</span>
-              <span>Wayland Cyber Grid</span>
+              <span>Obsidian #e0af68</span>
             </div>
             <div class="wallpaper-actions">
-              <a href="assets/wallpapers/pixel-retro-night.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+              <a href="assets/wallpapers/dark/05-star-gold.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
             </div>
           </div>
         </div>
         <div class="wallpaper-card">
           <div class="wallpaper-preview-wrap">
-            <img src="assets/wallpapers/pixel-dark-slate.png" alt="Dark Slate Minimalist Wallpaper" class="wallpaper-thumb pixelated">
+            <img src="assets/wallpapers/light/01-super-blue.png" alt="Super Blue Light 4K 16-Bit Wallpaper" class="wallpaper-thumb pixelated">
           </div>
           <div class="wallpaper-meta">
-            <span class="wallpaper-name">Dark Slate Grid</span>
+            <span class="wallpaper-name">01 // Super Blue (Light)</span>
             <div class="wallpaper-specs">
-              <span>3840 x 2160 (4K OLED)</span>
-              <span>Clean Minimalist</span>
+              <span>3840 x 2160 (4K IPS)</span>
+              <span>Cartridge #2554a3</span>
             </div>
             <div class="wallpaper-actions">
-              <a href="assets/wallpapers/pixel-dark-slate.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
+              <a href="assets/wallpapers/light/01-super-blue.png" target="_blank" rel="noopener noreferrer" class="wallpaper-btn">[ PREVIEW FULL ]</a>
             </div>
           </div>
         </div>
@@ -2226,11 +2230,12 @@
   <!-- PERSISTENT 16-BIT RETRO DOCK HUD (IDLESCREEN STYLE) -->
   <nav class="footer-dock" id="footer-dock" aria-label="16-Bit Navigation and Theme Palette">
     <div class="footer-dock-inner">
-      <!-- Left: Up Arrow Navigation + CRT & SFX Toggles -->
+      <!-- Left: Up Arrow Navigation + Mode, CRT & SFX Toggles -->
       <div class="dock-side dock-left">
         <button type="button" class="dock-arrow-btn" id="nav-arrow-up" aria-label="Scroll to previous section" title="Previous section (Up Arrow / k)">
           <span class="pixel-glyph">[^]</span> UP
         </button>
+        <button type="button" class="dock-toggle-btn" id="toggle-mode" title="Toggle Dark / Light 16-Bit Mode (m)">MODE: DARK</button>
         <button type="button" class="dock-toggle-btn" id="toggle-crt" title="Toggle 16-Bit CRT Scanlines">CRT: OFF</button>
         <button type="button" class="dock-toggle-btn active" id="toggle-sfx" title="Toggle 16-Bit Audio Sound Effects">SFX: ON</button>
       </div>
@@ -2279,6 +2284,10 @@
           <tr>
             <td><span class="kbd-badge">1 .. 8</span></td>
             <td>Select 16-Bit Rainbow Palette Directly</td>
+          </tr>
+          <tr>
+            <td><span class="kbd-badge">m</span></td>
+            <td>Toggle 16-Bit Dark / Light Theme Variation</td>
           </tr>
           <tr>
             <td><span class="kbd-badge">c</span></td>

@@ -185,6 +185,11 @@
         return;
       }
 
+      if (e.key === "m" || e.key === "M") {
+        if (window.SuperTheme && window.SuperTheme.toggleMode) window.SuperTheme.toggleMode(true);
+        return;
+      }
+
       if (e.key >= "1" && e.key <= "8") {
         var pKeys = (window.SuperTheme && window.SuperTheme.keys) || [];
         var numIdx = parseInt(e.key, 10) - 1;

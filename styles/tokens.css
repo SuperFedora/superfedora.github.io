@@ -1,4 +1,4 @@
-/* styles/tokens.css — SuperFedora 16-bit SNES & Tokyo Night design tokens */
+/* styles/tokens.css — SuperFedora 16-bit SNES & Tokyo Night design tokens (Dark + Light) */
 :root {
   /* Tokyo Night 16-bit Dark Canvas */
   --bg-void: #0d0e15;
@@ -70,3 +70,40 @@
   --radius-pixel: 4px;
   --radius-panel: 8px;
 }
+
+/* Cartridge Alabaster 16-Bit Light Mode (matches sf theme light variation) */
+:root[data-mode="light"] {
+  --bg-void: #d8dae5;
+  --bg-page: #e6e8f0;
+  --bg-surface: #e6e8f0;
+  --bg-panel: #d8dae5;
+  --bg-elevated: #cfd2e0;
+  --bg-highlight: #c5cae0;
+  --bg-input: #eef0f7;
+  --text-primary: #1a1b26;
+  --text-secondary: #343b58;
+  --text-muted: #565f89;
+  --text-dim: #636a8a;
+  --text-white: #1a1b26;
+  --status-ready: #2d7a31;
+  --status-warn: #946210;
+  --status-alert: #b91c3c;
+  --status-cyan: #0369a1;
+  --border-subtle: #bfc4d9;
+  --border-hard: #9ea4bd;
+  --bevel-light: rgba(255, 255, 255, 0.78);
+  --bevel-dark: rgba(26, 27, 38, 0.25);
+  --bevel-snes-raised: inset 2px 2px 0px var(--bevel-light), inset -2px -2px 0px var(--bevel-dark), 0 3px 0 #9ea4bd;
+  --cartridge-shadow: 4px 4px 0px rgba(26, 27, 38, 0.22);
+  --rpg-bg: linear-gradient(180deg, #eef0f7 0%, #d8dae5 100%);
+}
+:root[data-mode="light"] .site-header { background: rgba(230, 232, 240, 0.94); box-shadow: 0 4px 16px rgba(26, 27, 38, 0.14); }
+:root[data-mode="light"] .footer-dock { background: rgba(216, 218, 229, 0.96); background-image: none; box-shadow: 0 -2px 0 0 #9ea4bd, 0 -6px 20px rgba(26, 27, 38, 0.16); }
+:root[data-mode="light"] .footer-accent-picker,
+:root[data-mode="light"] .dock-arrow-btn,
+:root[data-mode="light"] .btn-github { background: #cfd2e0; color: #1a1b26; }
+:root[data-mode="light"] .retro-ticker-ribbon { background: #d8dae5; box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.6), 0 3px 10px rgba(26, 27, 38, 0.12); }
+:root[data-mode="light"] .snes-bezel-card,
+:root[data-mode="light"] .compare-card.card-featured { background: linear-gradient(180deg, #eef0f7 0%, #d8dae5 100%); }
+:root[data-mode="light"] .site-footer { background: rgba(216, 218, 229, 0.9); }
+:root[data-mode="light"] .install-code { color: #2d7a31; font-weight: 700; }

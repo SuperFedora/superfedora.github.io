@@ -1,4 +1,4 @@
-/* js/sun.js — Fixed Global Plasma & Interactive Spotlight Engine (SuperFedora) */
+/* js/sun.js — Global 16-Bit Pixel Grid & Wordmark Engine (Dark/Light, Circle-Free Background) */
 (function () {
   'use strict';
   var canvas = document.getElementById('spotlight-canvas') || document.getElementById('mainscreen-canvas');
@@ -36,6 +36,15 @@
     '000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000', '000111000000000000111000000000000111000000111000011100000011100001111111111100000111000000111000', '000111111111000000111111111000000111000000111000011100000011100001111111110000000111000000111000', '000111111111000000111111111000000111000000111000011100000011100001111111110000000111111111111000', '000111111111000000111111111000000111000000111000011100000011100001110001110000000111111111111000', '000111000000000000111000000000000111000000111000011100000011100001110000011100000111111111111000', '000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000', '000111000000000000111000000000000111000000111000011100000011100001110000011100000111000000111000', '000111000000000000111111111111000111111111111000011111111111100001110000000111000111000000111000', '000111000000000000111111111111000111111111110000001111111111000001110000000111000111000000111000', '000111000000000000111111111111000111111111000000000111111110000001110000000111000111000000111000', '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
   ];
 
+  function hasWordNeighbor(wmRow, wmCol) {
+    for (var dr = -1; dr <= 1; dr++) for (var dc = -1; dc <= 1; dc++) {
+      if (dr === 0 && dc === 0) continue;
+      var nr = wmRow + dr, nc = wmCol + dc;
+      if (nr >= 0 && nr < WM_H && nc >= 0 && nc < WM_W && WM_ROWS[nr][nc] === '1') return true;
+    }
+    return false;
+  }
+
   var TEXT_SEL = 'h1,h2,h3,h4,h5,h6,p,pre,code,kbd,samp,ul,ol,li,dl,dt,dd,table,tr,th,td,blockquote,cite,label,input,textarea,button,select,a,strong,em,b,i,small,span,' +
     '.snes-panel,.rpg-window,.compare-card,.terminal-install-box,.module-card,.key-row,.preinstalled-card,.wallpaper-card,.marquee-chip,.marquee-stream,.dual-marquee-wrap,.site-header,.site-footer,.footer-dock,.snes-eyebrow,.hero-rotating-wrap';
 
@@ -52,8 +61,8 @@
   var dpr = 1, width = 0, height = 0, cellPx = 10, originX = 0, originY = 0, gridCols = 0, gridRows = 0;
   var mouse = { x: -2000, y: -2000, active: false }, smoothMouse = { x: -2000, y: -2000, strength: 0 };
   var isOverText = false, smoothText = 0, lastPointerX = -2000, lastPointerY = -2000, lastHitTime = 0;
-  var wander = { x: 0, y: 0, reach: 180 }, ripples = [], rafId = 0, isVisible = true;
-  var currentSubdued = 0, targetSubdued = 0, lastPointerTime = 0, lastRender = 0, cachedStageRect = null, scrollScheduled = false, hitTimer = null;
+  var wander = { x: 0, y: 0, reach: 180 }, rafId = 0, isVisible = true;
+  var currentSubdued = 0, targetSubdued = 0, cachedStageRect = null, scrollScheduled = false, hitTimer = null;
 
   function hexToRgb(hex) {
     hex = hex.replace('#', '');
@@ -62,6 +71,9 @@
   }
   function getAccentRgb() {
     try {
+      var key = (window.SuperTheme && window.SuperTheme.getCurrent && window.SuperTheme.getCurrent()) || 'blue';
+      var pal = (window.SuperTheme && window.SuperTheme.palettes && window.SuperTheme.palettes[key]);
+      if (pal && pal.primary) return hexToRgb(pal.primary);
       var p = getComputedStyle(document.documentElement).getPropertyValue('--jewel-primary').trim() || '#7aa2f7';
       return hexToRgb(p.charAt(0) === '#' ? p : '#7aa2f7');
     } catch (e) { return [122, 162, 247]; }
@@ -117,7 +129,7 @@
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY; checkTextHit(e.target, lastPointerX, lastPointerY);
     if (smoothMouse.x < -1000 || smoothMouse.strength < 0.01) { smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 1.0; }
-    mouse.x = px; mouse.y = py; mouse.active = true; lastPointerTime = performance.now();
+    mouse.x = px; mouse.y = py; mouse.active = true;
     if (reducedMotion) render(performance.now()); else wakeRender();
   }
 
@@ -125,9 +137,7 @@
     if (!e) return;
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY; checkTextHit(e.target, lastPointerX, lastPointerY);
-    mouse.x = px; mouse.y = py; mouse.active = true; lastPointerTime = performance.now();
-    ripples.push({ x: px, y: py, born: performance.now(), maxR: Math.max(380 * dpr, cellPx * 24), dur: 950 });
-    if (ripples.length > 5) ripples.shift();
+    mouse.x = px; mouse.y = py; mouse.active = true;
     if (window.SFX && window.SFX.playBlip) window.SFX.playBlip(540);
     if (reducedMotion) render(performance.now()); else wakeRender();
   }
@@ -160,66 +170,54 @@
     var acc = getAccentRgb();
     if (!smoothAcc) smoothAcc = [acc[0], acc[1], acc[2]];
     for (var i = 0; i < 3; i++) smoothAcc[i] += (acc[i] - smoothAcc[i]) * 0.10;
-    ripples = ripples.filter(function (rp) { return (t - rp.born) < rp.dur; });
   }
 
   function render(t) {
     if (!isVisible && !reducedMotion) { rafId = 0; return; }
-    lastRender = t; updateLights(t);
-    ctx.fillStyle = '#07080b'; ctx.fillRect(0, 0, width, height);
-
-    var sub = currentSubdued, textDim = smoothText, reachScale = 1 - 0.70 * textDim;
-    var mouseReach = Math.max(260 * dpr, cellPx * 20) * reachScale, mouseReachSq = mouseReach * mouseReach;
-    var sec = t * 0.001, ringW = 28 * dpr, glareCut = 1 - 0.65 * textDim;
-    var activeRipples = ripples.map(function (rp) {
-      var progress = (t - rp.born) / rp.dur, curR = rp.maxR * (1 - Math.pow(1 - progress, 3));
-      var minR = Math.max(0, curR - ringW), maxR = curR + ringW;
-      return { x: rp.x, y: rp.y, r: curR, minRSq: minR * minR, maxRSq: maxR * maxR, amp: Math.pow(1 - progress, 1.8) };
-    });
-
+    updateLights(t);
+    var isLight = document.documentElement.dataset.mode === 'light';
+    ctx.fillStyle = isLight ? '#e6e8f0' : '#07080b'; ctx.fillRect(0, 0, width, height);
+    var sub = currentSubdued, textDim = smoothText, sec = t * 0.001;
     var ar = Math.round(smoothAcc[0]), ag = Math.round(smoothAcc[1]), ab = Math.round(smoothAcc[2]);
-    var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.45)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.45)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.45));
-    var hotRgb = hr + ',' + hg + ',' + hb, midRgb = ar + ',' + ag + ',' + ab;
-    var aFHigh = ((0.22 - 0.08 * sub) * (1 - 0.30 * textDim)).toFixed(3), aFLow = ((0.07 - 0.02 * sub) * (1 - 0.30 * textDim)).toFixed(3);
-    var colorFieldHigh = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFHigh + ')', colorFieldLow = 'rgba(' + ar + ',' + ag + ',' + ab + ',' + aFLow + ')';
-    var aHigh = ((1 - 0.35 * sub) * glareCut).toFixed(2), aMid = ((1 - 0.45 * sub) * glareCut).toFixed(2);
-    var colorSpotHigh = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + hotRgb + ')') : ('rgba(' + hotRgb + ',' + aHigh + ')');
-    var colorSpotMid = (sub < 0.05 && textDim < 0.05) ? ('rgb(' + midRgb + ')') : ('rgba(' + midRgb + ',' + aMid + ')');
-    var ditherThreshold = 0.74 + 0.02 * sub + 0.08 * textDim;
+    var hr = Math.min(255, Math.round(ar + (255 - ar) * 0.55)), hg = Math.min(255, Math.round(ag + (255 - ag) * 0.55)), hb = Math.min(255, Math.round(ab + (255 - ab) * 0.55));
+    var br = Math.round(ar * 0.72), bg = Math.round(ag * 0.72), bb = Math.round(ab * 0.72);
+    var wordSpec = isLight ? ('rgb(' + hr + ',' + hg + ',' + hb + ')') : '#ffffff';
+    var wordHot = 'rgb(' + (isLight ? ar : hr) + ',' + (isLight ? ag : hg) + ',' + (isLight ? ab : hb) + ')';
+    var wordMid = 'rgb(' + (isLight ? br : ar) + ',' + (isLight ? bg : ag) + ',' + (isLight ? bb : ab) + ')';
+    var wordBase = 'rgb(' + Math.round(ar * 0.55) + ',' + Math.round(ag * 0.55) + ',' + Math.round(ab * 0.55) + ')';
+    var fRgb = isLight ? (Math.round(ar * 0.65) + ',' + Math.round(ag * 0.65) + ',' + Math.round(ab * 0.65)) : (ar + ',' + ag + ',' + ab);
+    var aHigh = ((0.16 - 0.05 * sub) * (1 - 0.25 * textDim)).toFixed(3), aMid = ((0.11 - 0.04 * sub) * (1 - 0.25 * textDim)).toFixed(3), aLow = ((0.06 - 0.02 * sub) * (1 - 0.25 * textDim)).toFixed(3);
+    var colorFieldHigh = 'rgba(' + fRgb + ',' + aHigh + ')', colorFieldMid = 'rgba(' + fRgb + ',' + aMid + ')', colorFieldLow = 'rgba(' + fRgb + ',' + aLow + ')';
     var stageRect = cachedStageRect, wordmarkVisible = Boolean(stageRect && stageRect.top > -stageRect.height && sub < 0.95);
     var curOriginY = stageRect ? Math.round((stageRect.top + stageRect.height * 0.5) * dpr - (WM_H * cellPx) * 0.5) : originY;
-
     for (var r = 0; r < gridRows; r++) {
       var py = r * cellPx, wmRow = Math.floor((py - curOriginY) / cellPx);
-      var hasWordRow = wordmarkVisible && wmRow >= 0 && wmRow < WM_H;
+      var nearRow = wordmarkVisible && wmRow >= -1 && wmRow <= WM_H;
       for (var c = 0; c < gridCols; c++) {
         var px = c * cellPx, wmCol = Math.floor((px - originX) / cellPx);
-        var inWordBox = hasWordRow && wmCol >= 0 && wmCol < WM_W, isWord = inWordBox && WM_ROWS[wmRow] && WM_ROWS[wmRow][wmCol] === '1';
-        var cx = px + cellPx * 0.5, cy = py + cellPx * 0.5, dxm = cx - smoothMouse.x, dym = cy - smoothMouse.y, dsqM = dxm * dxm + dym * dym;
-        var sm = dsqM < mouseReachSq ? Math.pow(1 - Math.sqrt(dsqM) / mouseReach, 2) * smoothMouse.strength * (1 - 0.75 * textDim) : 0;
-        var ripGlow = 0;
-        for (var i = 0; i < activeRipples.length; i++) {
-          var rp = activeRipples[i], rx = cx - rp.x, ry = cy - rp.y, dsqR = rx * rx + ry * ry;
-          if (dsqR >= rp.minRSq && dsqR <= rp.maxRSq) ripGlow = Math.max(ripGlow, (1 - Math.abs(Math.sqrt(dsqR) - rp.r) / ringW) * rp.amp);
+        var inWordBox = nearRow && wmRow >= 0 && wmRow < WM_H && wmCol >= 0 && wmCol < WM_W;
+        var isWord = inWordBox && WM_ROWS[wmRow][wmCol] === '1';
+        var isOutline = !isWord && nearRow && wmCol >= -1 && wmCol <= WM_W && hasWordNeighbor(wmRow, wmCol);
+        var nx = c * 0.065 + sec * 0.16, ny = r * 0.065 - sec * 0.11;
+        var nVal = 0.6 * sampleNoise(nx, ny) + 0.4 * sampleNoise(nx * 0.5 - sec * 0.08, ny * 0.5 + sec * 0.07);
+
+        if (isWord && (1 - sub) > 0.08) {
+          ctx.fillStyle = (wmRow === 1 || wmRow === 8) ? (((wmCol + wmRow) % 3 !== 0) ? wordSpec : wordHot)
+            : (wmRow === 2 || wmRow === 9 || wmRow === 10) ? wordHot
+            : (wmRow === 6 || wmRow === 21 || wmRow === 22) ? wordBase
+            : (nVal > 0.68 ? wordHot : wordMid);
+          ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
+          continue;
         }
-        var wordDrawn = false;
-        if (isWord && wordmarkVisible) {
-          var lit = (0.20 + sm * 2.2 + ripGlow * 1.6) * (1 - sub) * (1 - 0.5 * textDim);
-          if (lit > 0.05) {
-            ctx.fillStyle = lit > 1.35 ? '#ffffff' : lit > 0.85 ? ('rgb(' + hotRgb + ')') : lit > 0.40 ? ('rgb(' + midRgb + ')') : ('rgb(' + Math.round(ar * 0.35) + ',' + Math.round(ag * 0.35) + ',' + Math.round(ab * 0.35) + ')');
-            ctx.fillRect(px, py, cellPx - 1, cellPx - 1); wordDrawn = true;
-          }
+        if (isOutline && (1 - sub) > 0.08) {
+          if (isLight) { ctx.fillStyle = '#1a1b26'; ctx.fillRect(px, py, cellPx - 1, cellPx - 1); }
+          continue;
         }
-        if (!wordDrawn) {
-          var nx = c * 0.07 + sec * 0.16, ny = r * 0.07 - sec * 0.11;
-          var nVal = 0.6 * sampleNoise(nx, ny) + 0.4 * sampleNoise(nx * 0.5 - sec * 0.08, ny * 0.5 + sec * 0.07);
-          var energy = nVal * 0.75 + (0.5 + 0.5 * Math.sin(sec * 1.8 + (r * 37 + c * 11) % 6.283)) * 0.25;
-          if (inWordBox && wordmarkVisible) energy *= sub;
-          var fieldVal = energy * 0.38 + sm * 0.90 + ripGlow * 0.95, dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
-          if (fieldVal > dither * ditherThreshold) {
-            ctx.fillStyle = (sm > 0.38 || ripGlow > 0.4) ? colorSpotHigh : (sm > 0.14 || ripGlow > 0.15) ? colorSpotMid : fieldVal > 0.54 ? colorFieldHigh : colorFieldLow;
-            ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
-          }
+        var wave = 0.5 + 0.5 * Math.sin(sec * 1.8 + (r * 37 + c * 11) % 6.283);
+        var fieldVal = nVal * 0.78 + wave * 0.22, dither = BAYER[(r & 7) * 8 + (c & 7)] / 64;
+        if (fieldVal > dither * 0.82) {
+          ctx.fillStyle = fieldVal > 0.66 ? colorFieldHigh : fieldVal > 0.48 ? colorFieldMid : colorFieldLow;
+          ctx.fillRect(px, py, cellPx - 1, cellPx - 1);
         }
       }
     }

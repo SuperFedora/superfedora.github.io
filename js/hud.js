@@ -168,6 +168,17 @@
               "| Super + G              Toggle grouped window tabbed container         |\n" +
               "| Super + F1             Launch live on-screen keybindings HUD          |\n" +
               "+-----------------------------------------------------------------------+"
+    },
+    "sf-theme": {
+      prompt: "sf theme status",
+      output: "Active Theme : Super Blue (01-super-blue) [dark]\n" +
+              "Palettes     : 01-super-blue 02-metroid-violet 03-super-ruby 04-emerald-green\n" +
+              "               05-star-gold 06-electric-cyan 07-flame-orange 08-neon-coral\n\n" +
+              "[OK] Desktop Wallpaper : ~/Pictures/Wallpapers/dark/01-super-blue.png (4K)\n" +
+              "[OK] Lockscreen        : ~/.config/hypr/hyprlock.conf (Unblurred 4K Hero)\n" +
+              "[OK] Compositor & Bar  : Hyprland borders + Quickshell Theme.qml synced\n" +
+              "[OK] Launcher & Term   : Fuzzel + Kitty (SIGUSR1 live reload) synced\n" +
+              "[OK] Login & IdleScreen: tuigreet ANSI theme + superfedora screensaver active"
     }
   };
 
