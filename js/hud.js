@@ -80,9 +80,9 @@
       });
     }
 
-    document.querySelectorAll(".key-filter-btn").forEach(function(btn) {
+    document.querySelectorAll("#keybindings .key-filter-btn").forEach(function(btn) {
       btn.addEventListener("click", function() {
-        document.querySelectorAll(".key-filter-btn").forEach(function(b) {
+        document.querySelectorAll("#keybindings .key-filter-btn").forEach(function(b) {
           b.classList.remove("active");
           b.setAttribute("aria-pressed", "false");
         });

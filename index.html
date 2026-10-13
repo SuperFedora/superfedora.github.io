@@ -181,10 +181,10 @@
 
           <!-- Install Mode Selector: Quick Install vs Build from Source -->
           <div class="key-filter-tabs" role="group" aria-label="Installation mode selector" style="margin-bottom: 8px;">
-            <button type="button" class="key-filter-btn install-mode-btn active" data-install-mode="quick" aria-pressed="true" onclick="setInstallMode('quick', this)">
+            <button type="button" id="installModeQuick" class="key-filter-btn install-mode-btn active" data-install-mode="quick" aria-pressed="true" onclick="setInstallMode('quick', this)">
               [ 1. QUICK INSTALL (BINARY) ]
             </button>
-            <button type="button" class="key-filter-btn install-mode-btn" data-install-mode="source" aria-pressed="false" onclick="setInstallMode('source', this)">
+            <button type="button" id="installModeSource" class="key-filter-btn install-mode-btn" data-install-mode="source" aria-pressed="false" onclick="setInstallMode('source', this)">
               [ 2. BUILD FROM SOURCE (-march=native) ]
             </button>
           </div>

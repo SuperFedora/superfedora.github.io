@@ -54,7 +54,9 @@ class CDPClient:
             except: pass
     def eval(self, expr):
         res = self.call("Runtime.evaluate", {"expression": expr, "returnByValue": True})
-        return res["result"]["value"] if res and "result" in res and "value" in res["result"] else res
+        if res and "exceptionDetails" in res:
+            raise RuntimeError(f"JS exception in {expr!r}: {res['exceptionDetails']}")
+        return res["result"].get("value") if res and "result" in res else None
 
 def run_tests():
     httpd = subprocess.Popen([sys.executable, "-m", "http.server", str(PORT_HTTP), "--bind", "127.0.0.1"],
@@ -231,9 +233,11 @@ def run_tests():
         assert cdp.eval("Boolean(document.getElementById('header-theme-toggle') && document.getElementById('nav-theme-name').textContent.includes('THEME:'))"), "Header theme toggle"
         assert cdp.eval("Array.from(document.querySelectorAll('#keys-grid .key-card')).some(el => el.textContent.includes('Quake AI'))"), "Quake AI keybinding present"
         cdp.eval("document.getElementById('installModeSource').click();")
-        assert cdp.eval("document.getElementById('installCmd').textContent.includes('--build-from-source')"), "Build from Source toggle updates command"
+        assert cdp.eval("document.getElementById('install-cmd').textContent.includes('--build-from-source')"), "Build from Source toggle updates command"
+        assert cdp.eval("document.getElementById('installModeSource').classList.contains('active') && !document.getElementById('installModeQuick').classList.contains('active')"), "Source button active state"
         cdp.eval("document.getElementById('installModeQuick').click();")
-        assert cdp.eval("!document.getElementById('installCmd').textContent.includes('--build-from-source')"), "Quick Install toggle restores command"
+        assert cdp.eval("!document.getElementById('install-cmd').textContent.includes('--build-from-source')"), "Quick Install toggle restores command"
+        assert cdp.eval("document.getElementById('installModeQuick').classList.contains('active') && !document.getElementById('installModeSource').classList.contains('active')"), "Quick button active state"
         print("  [OK] Modules HUD (10), Install Mode toggle, COSMIC Matrix (20 incl. Quake AI), CLI Simulator, and Wallpaper Gallery verified.")
 
 
