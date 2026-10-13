@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SuperFedora 🛸</title>
+<meta name="description" content="Curated keyboard-driven Fedora workstation in one command.">
+<style>
+  :root { --bg:#1a1b26; --panel:#24283b; --fg:#c0caf5; --dim:#7982a9; --blue:#7aa2f7; --cyan:#7dcfff; --green:#9ece6a; }
+  * { box-sizing:border-box; }
+  body { background:var(--bg); color:var(--fg); font:16px/1.6 system-ui, sans-serif; max-width:52rem; margin:0 auto; padding:3rem 1.5rem 5rem; }
+  .header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; }
+  .header-text { flex:1; }
+  .avatar { width:96px; height:96px; border-radius:14px; border:2px solid var(--blue); margin-left:1.5rem; image-rendering:pixelated; }
+  h1 { color:var(--blue); font-size:2.4rem; margin:0; }
+  h2 { color:var(--blue); margin-top:3rem; border-bottom:1px solid var(--panel); padding-bottom:.3rem; }
+  .tag { color:var(--dim); margin-top:.25rem; }
+  pre { background:var(--panel); padding:1rem 1.25rem; border-radius:6px; overflow-x:auto; }
+  code { font-family:"JetBrains Mono", ui-monospace, monospace; font-size:.92em; }
+  pre code, td code { color:var(--green); }
+  a { color:var(--cyan); }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  th, td { text-align:left; padding:.45rem .6rem; border-bottom:1px solid var(--panel); vertical-align:top; }
+  th { color:var(--dim); font-weight:600; }
+  td:first-child { white-space:nowrap; }
+  ol li { margin:.5rem 0; }
+  nav a { margin-right:1rem; }
+  footer { margin-top:4rem; color:var(--dim); font-size:.9rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-text">
+    <h1>SuperFedora 🛸</h1>
+    <p class="tag">Curated keyboard-driven Fedora workstation, in one command.</p>
+    <nav>
+      <a href="#install">Install</a><a href="#commands">Commands</a><a href="#components">Components</a>
+      <a href="#keys">Keybindings</a><a href="#repo">Repository</a>
+      <a href="https://github.com/SuperFedora/superfedora">GitHub</a>
+    </nav>
+  </div>
+  <img src="https://raw.githubusercontent.com/SuperFedora/artwork/main/branding/avatar.jpg" alt="SuperFedora" class="avatar">
+</div>
+
+<h2 id="install">Install</h2>
+<ol>
+  <li>Install Fedora from the <a href="https://fedoraproject.org/misc/#everything">Everything netinstall</a> ISO. Under <i>Software Selection</i> pick <b>Minimal Install</b>, and create a user with administrator rights. Keep the default Btrfs layout to enable snapshot rollbacks.</li>
+  <li>Log in on the console and run:
+<pre><code>curl -fsSL https://superfedora.github.io/install.sh | bash</code></pre></li>
+  <li>Reboot. Log in at the tuigreet screen and Hyprland starts automatically. <b>Super + F1</b> lists every keybinding.</li>
+</ol>
+<p>SuperFedora checks every component first and installs only what is missing, so it's safe to run again at any time. It also works on an existing Fedora Workstation or Server.</p>
+
+<h2 id="commands">Commands</h2>
+<table>
+  <tr><th>Command</th><th>What it does</th></tr>
+  <tr><td><code>superfedora status</code></td><td>Checks every component: ✓ present, ✗ missing. Changes nothing</td></tr>
+  <tr><td><code>superfedora install</code></td><td>Installs whatever is missing</td></tr>
+  <tr><td><code>superfedora install --dry-run</code></td><td>Shows what <code>install</code> would do</td></tr>
+  <tr><td><code>superfedora install --only desktop,dotfiles</code></td><td>Runs selected modules (by name or number); <code>--skip</code> works the same way</td></tr>
+  <tr><td><code>superfedora update</code></td><td>Fetches the latest release, then runs <code>install</code></td></tr>
+  <tr><td><code>superfedora dotfiles [--check]</code></td><td>Re-deploys the desktop configs, or lists local edits</td></tr>
+  <tr><td><code>superfedora rollback</code></td><td>Reverts system files to the Btrfs snapshot taken before the first install</td></tr>
+</table>
+<p>The install log is <code>~/.config/superfedora/install.log</code>. Config files that were replaced are backed up in <code>~/.config/superfedora/backups/</code>.</p>
+
+<h2 id="components">Components</h2>
+<table>
+  <tr><th>Module</th><th>Installs</th></tr>
+  <tr><td>00 preflight</td><td>Checks Fedora 42+, network and sudo; Snapper, plus a baseline Btrfs snapshot</td></tr>
+  <tr><td>10 repos</td><td>RPM Fusion, COPR lionheartp/Hyprland and phracek/PyCharm, IdleScreen, Google Chrome, Microsoft Edge, Tailscale</td></tr>
+  <tr><td>20 base</td><td>What Minimal Install lacks: NetworkManager and Wi-Fi, PipeWire, Bluetooth, power profiles, firmware, VA-API drivers, full ffmpeg, fonts</td></tr>
+  <tr><td>30 session</td><td>greetd + tuigreet login. Hyprland is started through uwsm, as a proper systemd session</td></tr>
+  <tr><td>40 desktop</td><td>Hyprland, hypridle, hyprlock, hyprpaper, Quickshell, portals, fuzzel, screenshot and clipboard tools, JetBrainsMono Nerd Font</td></tr>
+  <tr><td>50 apps</td><td>kitty, foot, Firefox, Files, Chrome, Edge, Tailscale, PyCharm, btop, fastfetch. Synology Drive and Msty Studio are listed as manual steps</td></tr>
+  <tr><td>60 idlescreen</td><td>IdleScreen screensaver, started by hypridle after 2 minutes idle</td></tr>
+  <tr><td>70 dev</td><td>gcc, make, cmake, Node.js, gh, rustup (musl target, cargo-binstall, cargo-deb, cargo-generate-rpm), uv</td></tr>
+  <tr><td>80 ai</td><td>Antigravity CLI, xAI Grok CLI, MiniMax Code, Mistral Vibe</td></tr>
+  <tr><td>90 dotfiles</td><td>Desktop configs, default browser and file manager, XDG folders</td></tr>
+</table>
+<p>The desktop: Tokyo Night styling; a Quickshell bar (workspaces, tray, network, audio, battery, notifications); touchpad swipes between workspaces; idle → screensaver (2 min) → lock (5 min) → screen off (10 min) → suspend on battery (30 min).</p>
+
+<h2 id="keys">Keybindings</h2>
+<p>Keybindings follow the Pop!_OS COSMIC defaults:</p>
+<table>
+  <tr><th>Keys</th><th>Action</th></tr>
+  <tr><td>Super + T / B / F</td><td>Terminal / browser / file manager</td></tr>
+  <tr><td>Super + Q</td><td>Close window</td></tr>
+  <tr><td>Tap Super, Super + /</td><td>Launcher</td></tr>
+  <tr><td>Super + arrows / HJKL</td><td>Move focus</td></tr>
+  <tr><td>Super + Shift + arrows</td><td>Move window (joins and leaves stacks)</td></tr>
+  <tr><td>Super + 1–9, Super + Ctrl + ←/→</td><td>Switch workspace</td></tr>
+  <tr><td>Super + S / G / M / R</td><td>Stack / float / maximize / resize mode</td></tr>
+  <tr><td>Super + Esc</td><td>Lock</td></tr>
+  <tr><td>Super + F1</td><td>Every binding, searchable</td></tr>
+</table>
+<p>See the <a href="https://github.com/SuperFedora/superfedora/blob/main/docs/keybindings.md">full list</a>.</p>
+
+<h2 id="repo">Repository</h2>
+<pre><code>install.sh          web installer: fetch latest release, run `superfedora install`
+bin/superfedora     the command
+lib/                detect-then-install helpers, dotfile deployer, Snapper setup
+modules/NN-*.sh     ordered, idempotent install steps
+packages/*.txt      package lists: one name per line
+system/etc/         managed system files (greetd, repo definitions)
+dotfiles/           user configs, laid out as in $HOME
+docs/               component notes; keybindings.md is generated</code></pre>
+
+<footer>MIT © 2026 <a href="https://github.com/SuperFedora">SuperFedora</a> · <a href="https://github.com/SuperFedora/superfedora/releases">Releases</a> · <a href="https://github.com/SuperFedora/superfedora/blob/main/CHANGELOG.md">Changelog</a></footer>
+</body>
+</html>
