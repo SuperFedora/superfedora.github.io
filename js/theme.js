@@ -68,6 +68,9 @@
     if (window.updateStarfieldTheme) {
       window.updateStarfieldTheme();
     }
+    if (window.updateMainscreenSun) {
+      window.updateMainscreenSun();
+    }
 
     if (playSound && window.SFX) {
       window.SFX.playBlip(720);

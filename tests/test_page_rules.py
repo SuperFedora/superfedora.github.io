@@ -117,6 +117,7 @@ def check_critical_files():
         "styles/reset.css",
         "styles/typography.css",
         "styles/nav.css",
+        "styles/mainscreen.css",
         "styles/hero.css",
         "styles/panels.css",
         "styles/crt.css",
@@ -125,7 +126,8 @@ def check_critical_files():
         "js/crt.js",
         "js/copy.js",
         "js/hud.js",
-        "js/starfield.js"
+        "js/starfield.js",
+        "js/sun.js"
     ]
     issues = []
     for rel in required:

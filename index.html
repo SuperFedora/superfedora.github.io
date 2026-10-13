@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="styles/reset.css">
   <link rel="stylesheet" href="styles/typography.css">
   <link rel="stylesheet" href="styles/nav.css">
+  <link rel="stylesheet" href="styles/mainscreen.css">
   <link rel="stylesheet" href="styles/hero.css">
   <link rel="stylesheet" href="styles/panels.css">
   <link rel="stylesheet" href="styles/crt.css">
@@ -65,7 +66,7 @@
   <!-- Sticky 16-Bit HUD Header -->
   <header class="site-header">
     <div class="nav-container">
-      <a href="#" class="brand-link" aria-label="SuperFedora Homepage">
+      <a href="#mainscreen" class="brand-link" aria-label="SuperFedora Homepage">
         <img src="assets/branding/avatar.jpg" alt="SuperFedora 16-Bit Avatar" class="brand-avatar-mini pixelated">
         <div class="brand-title-wrap">
           <span class="brand-name">
@@ -134,6 +135,61 @@
   </header>
 
   <main>
+    <!-- 16-BIT RETRO MAINSCREEN STAGE (ROTATING PIXEL SUN) -->
+    <section class="mainscreen-stage" id="mainscreen">
+      <canvas id="mainscreen-canvas" class="mainscreen-canvas" aria-hidden="true"></canvas>
+
+      <div class="mainscreen-overlay">
+        <!-- Top Status Badge -->
+        <div class="mainscreen-badge">
+          <span class="mainscreen-badge-dot" aria-hidden="true"></span>
+          <span>16-BIT RETRO POWER // TOKYO NIGHT EDITION</span>
+        </div>
+
+        <!-- Center Showcase -->
+        <div class="mainscreen-center">
+          <div class="mainscreen-logo-group">
+            <div class="mainscreen-avatar-frame">
+              <img src="assets/branding/avatar.jpg" alt="SuperFedora 16-Bit Avatar" class="mainscreen-avatar-img pixelated">
+            </div>
+            <div class="mainscreen-title-box">
+              <span class="mainscreen-super-title super-metallic">SUPER</span>
+              <span class="mainscreen-fedora-title">FEDORA</span>
+            </div>
+          </div>
+
+          <p class="mainscreen-tagline">
+            Curated keyboard-driven workstation on clean Fedora.
+          </p>
+
+          <div class="mainscreen-pills">
+            <span class="mainscreen-pill">FEDORA 44</span>
+            <span class="mainscreen-pill">HYPRLAND</span>
+            <span class="mainscreen-pill">COSMIC KEYS</span>
+            <span class="mainscreen-pill">QUICKSHELL</span>
+            <span class="mainscreen-pill">IDLESCREEN</span>
+            <span class="mainscreen-pill">BTRFS SNAPPER</span>
+          </div>
+
+          <div class="mainscreen-actions">
+            <a href="#install" class="btn-snes-primary mainscreen-start-btn">&gt; PRESS START (INSTALL)</a>
+            <a href="#hero" class="btn-snes-secondary">&gt; WORKSTATION SPECS</a>
+          </div>
+
+          <div class="mainscreen-cmd-box">
+            <span class="mainscreen-cmd-prompt">sf / superfedora:~$</span>
+            <code>curl -fsSL https://superfedora.github.io/install.sh | bash</code>
+          </div>
+        </div>
+
+        <!-- Scroll Cue -->
+        <a href="#hero" class="mainscreen-scroll-cue" aria-label="Scroll down to specifications">
+          <span>SCROLL DOWN // MISSION BRIEF</span>
+          <span class="mainscreen-arrow" aria-hidden="true">[v]</span>
+        </a>
+      </div>
+    </section>
+
     <!-- HERO SECTION -->
     <section class="hero-section" id="hero">
       <div class="hero-grid">
@@ -628,6 +684,7 @@
   <script src="js/theme.js"></script>
   <script src="js/crt.js"></script>
   <script src="js/starfield.js"></script>
+  <script src="js/sun.js"></script>
   <script src="js/copy.js"></script>
   <script src="js/hud.js"></script>
 </body>
