@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="snes-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1f2335"/>
+      <stop offset="100%" stop-color="#13141c"/>
+    </linearGradient>
+    <linearGradient id="fedora-blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7aa2f7"/>
+      <stop offset="100%" stop-color="#3c6eb4"/>
+    </linearGradient>
+    <linearGradient id="super-gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd447"/>
+      <stop offset="100%" stop-color="#ff9e3b"/>
+    </linearGradient>
+  </defs>
+  <!-- Beveled SNES Card Chassis -->
+  <rect x="2" y="2" width="60" height="60" rx="8" fill="url(#snes-bg)" stroke="#7aa2f7" stroke-width="2"/>
+  <rect x="5" y="5" width="54" height="54" rx="6" fill="none" stroke="#2ac3de" stroke-width="1" opacity="0.4"/>
+  
+  <!-- 4 SNES Jewel Dots -->
+  <circle cx="10" cy="10" r="2.5" fill="#7aa2f7"/>
+  <circle cx="54" cy="10" r="2.5" fill="#f7768e"/>
+  <circle cx="10" cy="54" r="2.5" fill="#e0af68"/>
+  <circle cx="54" cy="54" r="2.5" fill="#9ece6a"/>
+
+  <!-- Fedora 16-bit 'f' shape -->
+  <path d="M 32 16 C 24 16 18 22 18 30 C 18 36 21 41 26 44 L 26 38 C 23 35 23 32 23 30 C 23 25 27 21 32 21 C 37 21 41 25 41 30 L 41 46 C 41 50 38 52 34 52 C 31 52 29 50 29 47 L 24 47 C 24 53 28 56 34 56 C 41 56 46 51 46 46 L 46 30 C 46 22 40 16 32 16 Z" fill="url(#fedora-blue)"/>
+  <rect x="23" y="28" width="18" height="4" fill="url(#fedora-blue)"/>
+
+  <!-- Angled 16-bit "SUPER" Star / Bolt -->
+  <polygon points="46,14 56,14 50,23 58,23 44,38 48,27 42,27" fill="url(#super-gold)" stroke="#1a1b26" stroke-width="1"/>
+</svg>

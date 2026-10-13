@@ -1,0 +1,343 @@
+/* styles/hero.css — 16-Bit Hero stage, Terminal Install Box & Marquee */
+.hero-section {
+  padding: 60px 20px 40px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Left Column: Hero Content */
+.hero-title-group {
+  margin-bottom: 20px;
+}
+
+.hero-main-title {
+  font-size: clamp(34px, 5.5vw, 62px);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-pixel-sub);
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--jewel-hot);
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+}
+
+.hero-description {
+  font-size: clamp(15px, 1.4vw, 17px);
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 620px;
+}
+
+/* 16-Bit Terminal Install Box */
+.terminal-install-box {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-hard);
+  border-left: 5px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box), 0 12px 32px rgba(0, 0, 0, 0.6);
+  padding: 14px 18px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.install-cmd-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.3vw, 15px);
+  overflow-x: auto;
+}
+
+.install-prompt {
+  color: var(--jewel-primary);
+  font-weight: 700;
+  user-select: none;
+}
+
+.install-code {
+  color: #9ece6a;
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.copy-btn {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 8px 14px;
+  background: var(--bg-elevated);
+  color: var(--jewel-hot);
+  border: 1px solid var(--jewel-border);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  white-space: nowrap;
+}
+
+.copy-btn:hover {
+  background: var(--jewel-primary);
+  color: var(--bg-void);
+  box-shadow: 0 0 12px var(--jewel-glow);
+}
+
+.copy-btn:active {
+  transform: translateY(2px);
+  box-shadow: var(--bevel-snes-sunken);
+}
+
+.copy-btn.copied {
+  background: #9ece6a;
+  color: #0d0e15;
+  border-color: #73daca;
+}
+
+.install-meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.install-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.install-meta span::before {
+  content: "✓";
+  color: #9ece6a;
+  font-weight: 700;
+}
+
+/* Hero Action Buttons */
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-snes-primary {
+  font-family: var(--font-pixel-sub);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  padding: 10px 18px;
+  background: linear-gradient(180deg, var(--jewel-primary) 0%, var(--jewel-border) 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised), 0 0 16px var(--jewel-glow);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.12s ease;
+}
+
+.btn-snes-primary:hover {
+  filter: brightness(1.15);
+  box-shadow: var(--bevel-snes-raised), 0 0 24px var(--jewel-glow);
+}
+
+.btn-snes-primary:active {
+  transform: translateY(2px);
+  box-shadow: var(--bevel-snes-sunken);
+}
+
+.btn-snes-secondary {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hard);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.12s ease;
+}
+
+.btn-snes-secondary:hover {
+  background: var(--bg-elevated);
+  border-color: var(--jewel-primary);
+  color: var(--jewel-hot);
+}
+
+.btn-snes-secondary:active {
+  transform: translateY(2px);
+  box-shadow: var(--bevel-snes-sunken);
+}
+
+/* Right Column: SNES Bezel Cartridge Frame */
+.snes-bezel-card {
+  background: linear-gradient(180deg, #1f2335 0%, #161724 100%);
+  border: 3px solid var(--border-hard);
+  border-radius: 8px;
+  box-shadow: var(--bevel-snes-box), 0 16px 40px rgba(0, 0, 0, 0.7);
+  padding: 18px;
+  position: relative;
+}
+
+.snes-bezel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.snes-led-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.snes-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.snes-led-red { background: #f7768e; box-shadow: 0 0 8px #f7768e; }
+.snes-led-yellow { background: #e0af68; }
+.snes-led-green { background: #9ece6a; }
+
+.snes-bezel-title {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  color: var(--jewel-primary);
+  letter-spacing: 0.1em;
+}
+
+/* Avatar Frame */
+.snes-screen-frame {
+  background: #090a10;
+  border: 2px solid #292e42;
+  border-radius: 4px;
+  padding: 6px;
+  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.9), inset -1px -1px 0px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.snes-avatar-img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  image-rendering: pixelated;
+  display: block;
+}
+
+/* Specs HUD */
+.snes-specs-list {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.snes-spec-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.snes-spec-label {
+  font-family: var(--font-pixel-sub);
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.snes-spec-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-top: 2px;
+}
+
+/* Marquee Tenets Strip */
+.marquee-container {
+  margin: 40px 0 20px;
+  background: #141520;
+  border-top: 2px solid var(--border-subtle);
+  border-bottom: 2px solid var(--border-subtle);
+  box-shadow: var(--bevel-snes-box);
+  overflow: hidden;
+  padding: 10px 0;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 20px;
+  animation: snes-marquee 32s linear infinite;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marquee-item b {
+  color: var(--jewel-hot);
+}
+
+@keyframes snes-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}

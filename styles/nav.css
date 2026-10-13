@@ -1,0 +1,251 @@
+/* styles/nav.css — Sticky 16-bit HUD Header with SNES Jewel Switcher */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: var(--header-height);
+  background: rgba(19, 20, 31, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 2px solid var(--border-subtle);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.nav-container {
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Brand Link */
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.brand-avatar-mini {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  border: 2px solid var(--jewel-primary);
+  box-shadow: 0 0 10px var(--jewel-glow);
+  image-rendering: pixelated;
+}
+
+.brand-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-pixel-sub);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-white);
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.brand-version-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--jewel-hot);
+  background: var(--jewel-dim);
+  border: 1px solid rgba(var(--jewel-rgb), 0.3);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+/* Nav Links */
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.nav-link {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: all 0.15s ease;
+  padding: 6px 4px;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-white);
+  text-shadow: 0 0 8px var(--jewel-glow);
+}
+
+.nav-link:hover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--jewel-primary);
+  box-shadow: 0 0 6px var(--jewel-primary);
+}
+
+/* HUD Controls Bar (Jewels + CRT + SFX) */
+.hud-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* SNES 4-Jewel Button Pad */
+.jewel-pad {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #161724;
+  padding: 4px 8px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: var(--bevel-snes-box);
+}
+
+.jewel-pad-label {
+  font-family: var(--font-pixel-sub);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.06em;
+  margin-right: 2px;
+}
+
+.jewel-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.jewel-btn::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 6px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+}
+
+.jewel-btn:hover {
+  transform: scale(1.2);
+}
+
+.jewel-btn.active {
+  box-shadow: 0 0 8px currentColor, inset 0 0 4px #fff;
+  transform: scale(1.25);
+  border-color: #fff;
+}
+
+.jewel-blue   { background: radial-gradient(circle at 35% 35%, #93c5fd, #3c6eb4); color: #7aa2f7; }
+.jewel-purple { background: radial-gradient(circle at 35% 35%, #d8b4fe, #7c3aed); color: #bb9af7; }
+.jewel-red    { background: radial-gradient(circle at 35% 35%, #fca5a5, #e11d48); color: #f7768e; }
+.jewel-green  { background: radial-gradient(circle at 35% 35%, #86efac, #16a34a); color: #9ece6a; }
+.jewel-gold   { background: radial-gradient(circle at 35% 35%, #fde047, #ca8a04); color: #e0af68; }
+
+/* CRT and Audio Toggles */
+.toggle-btn {
+  font-family: var(--font-pixel-sub);
+  font-size: 10px;
+  padding: 5px 9px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.toggle-btn:hover {
+  color: var(--text-white);
+  border-color: var(--jewel-border);
+}
+
+.toggle-btn.active {
+  color: var(--jewel-primary);
+  border-color: var(--jewel-primary);
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.2), 0 0 8px var(--jewel-glow);
+}
+
+.toggle-btn:active {
+  transform: translateY(2px);
+  box-shadow: var(--bevel-snes-sunken);
+}
+
+.btn-github {
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  padding: 6px 12px;
+  background: #24283b;
+  border: 1px solid var(--border-hard);
+  color: var(--text-white);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-raised);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-github:hover {
+  background: var(--jewel-primary);
+  color: var(--bg-void);
+  border-color: var(--jewel-hot);
+  box-shadow: 0 0 12px var(--jewel-glow);
+}
+
+.btn-github:active {
+  transform: translateY(2px);
+}
+
+/* Mobile Toggle */
+.mobile-toggle {
+  display: none;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+.mobile-drawer {
+  display: none;
+  background: rgba(19, 20, 31, 0.98);
+  border-bottom: 2px solid var(--border-hard);
+  padding: 16px 20px 24px;
+}
+
+.mobile-drawer.open {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 980px) {
+  .desktop-nav { display: none; }
+  .mobile-toggle { display: block; }
+  .jewel-pad-label { display: none; }
+}

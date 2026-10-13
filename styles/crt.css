@@ -1,0 +1,53 @@
+/* styles/crt.css — Subtle 16-Bit CRT Scanlines and Phosphor Screen Shader */
+.crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+body.crt-active .crt-overlay {
+  opacity: 1;
+}
+
+/* Authentic horizontal scanlines */
+body.crt-active .crt-overlay::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.28) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Subtle CRT curved vignette and phosphor beam */
+body.crt-active .crt-overlay::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.45) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Screen turn-on effect animation */
+@keyframes crt-on {
+  0% { transform: scale(1, 0.002); opacity: 0; }
+  50% { transform: scale(1, 0.002); opacity: 1; }
+  100% { transform: scale(1, 1); opacity: 1; }
+}
+
+.crt-transition {
+  animation: crt-on 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+}

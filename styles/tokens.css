@@ -1,0 +1,61 @@
+/* styles/tokens.css — SuperFedora 16-bit SNES & Tokyo Night design tokens */
+:root {
+  /* Tokyo Night 16-bit Dark Canvas */
+  --bg-void: #0d0e15;
+  --bg-page: #13141f;
+  --bg-surface: #1a1b26;
+  --bg-panel: #1f2335;
+  --bg-elevated: #24283b;
+  --bg-highlight: #292e42;
+  --bg-input: #16161e;
+
+  /* Typography Colors */
+  --text-primary: #f0f3ff;
+  --text-secondary: #a9b1d6;
+  --text-muted: #787c99;
+  --text-dim: #565f89;
+  --text-white: #ffffff;
+
+  /* Default Jewel Accent: Super Blue (Fedora 16-bit Core) */
+  --jewel-name: "Super Blue";
+  --jewel-primary: #7aa2f7;
+  --jewel-border: #3c6eb4;
+  --jewel-hot: #89b4fa;
+  --jewel-shadow: #1e3a8a;
+  --jewel-rgb: 122, 162, 247;
+  --jewel-glow: rgba(122, 162, 247, 0.45);
+  --jewel-dim: rgba(122, 162, 247, 0.12);
+
+  /* SNES 4-Jewel Palette Constants */
+  --snes-blue: #7aa2f7;
+  --snes-green: #9ece6a;
+  --snes-red: #f7768e;
+  --snes-yellow: #e0af68;
+  --snes-cyan: #7dcfff;
+  --snes-purple: #bb9af7;
+
+  /* 16-Bit Chunky SNES Bevel Borders */
+  --border-subtle: #24283b;
+  --border-hard: #414868;
+  --bevel-light: rgba(255, 255, 255, 0.22);
+  --bevel-dark: rgba(0, 0, 0, 0.7);
+  --bevel-snes-box: inset 3px 3px 0px var(--bevel-light), inset -3px -3px 0px var(--bevel-dark);
+  --bevel-snes-raised: inset 2px 2px 0px var(--bevel-light), inset -2px -2px 0px var(--bevel-dark), 0 4px 0 #0a0b10;
+  --bevel-snes-sunken: inset 3px 3px 0px var(--bevel-dark), inset -2px -2px 0px var(--bevel-light);
+
+  /* RPG Dialogue Box Gradients */
+  --rpg-border-outer: #565f89;
+  --rpg-border-inner: #7aa2f7;
+  --rpg-bg: linear-gradient(180deg, #1f2335 0%, #161622 100%);
+
+  /* Font Stacks */
+  --font-pixel-title: "Press Start 2P", monospace;
+  --font-pixel-sub: "Silkscreen", monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", system-ui, sans-serif;
+
+  /* Dimensions */
+  --header-height: 64px;
+  --radius-pixel: 4px;
+  --radius-panel: 8px;
+}

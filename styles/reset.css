@@ -1,0 +1,70 @@
+/* styles/reset.css — Baseline resets and pixel art rendering */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 24px);
+  background-color: var(--bg-void);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-void);
+  background-image: 
+    radial-gradient(ellipse at 50% 0%, rgba(var(--jewel-rgb), 0.12) 0%, transparent 60%),
+    radial-gradient(circle at 10% 40%, rgba(65, 72, 104, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(122, 162, 247, 0.06) 0%, transparent 40%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img.pixelated {
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+button {
+  font: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+a {
+  color: var(--jewel-primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--jewel-hot);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--jewel-primary);
+  color: var(--bg-void);
+}

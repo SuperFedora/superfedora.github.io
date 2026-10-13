@@ -1,0 +1,131 @@
+/* styles/typography.css — 16-Bit SNES & Super Metroid typography */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Press+Start+2P&family=Silkscreen:wght@400;700&display=swap');
+
+/* Angled 3D Metallic "SUPER" title styling */
+.super-metallic {
+  font-family: var(--font-pixel-title);
+  font-style: italic;
+  letter-spacing: -0.05em;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #e2e8f0 25%,
+    #93c5fd 50%,
+    #3b82f6 70%,
+    #1d4ed8 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(2px 2px 0px #0a0b10) drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.8));
+  display: inline-block;
+  transform: skewX(-6deg);
+}
+
+.fedora-word {
+  font-family: var(--font-pixel-title);
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  text-shadow: 
+    2px 2px 0px #0a0b10,
+    0 0 16px var(--jewel-glow);
+  display: inline-block;
+}
+
+/* SNES Section Eyebrows & Badges */
+.snes-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-pixel-sub);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--jewel-primary);
+  background: var(--jewel-dim);
+  border: 1px solid rgba(var(--jewel-rgb), 0.35);
+  box-shadow: inset 1px 1px 0px rgba(255, 255, 255, 0.15);
+  padding: 4px 10px;
+  border-radius: var(--radius-pixel);
+  margin-bottom: 12px;
+}
+
+.snes-eyebrow-pip {
+  width: 6px;
+  height: 6px;
+  background: var(--jewel-primary);
+  box-shadow: 0 0 6px var(--jewel-primary);
+  transform: rotate(45deg);
+  animation: snes-pip-pulse 2s infinite ease-in-out;
+}
+
+@keyframes snes-pip-pulse {
+  0%, 100% { opacity: 1; transform: rotate(45deg) scale(1); }
+  50% { opacity: 0.3; transform: rotate(45deg) scale(0.7); }
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h2.section-heading {
+  font-family: var(--font-pixel-sub);
+  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+  color: var(--text-white);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+h2.section-heading::before {
+  content: "◆";
+  color: var(--jewel-primary);
+  font-size: 0.9em;
+  text-shadow: 0 0 8px var(--jewel-primary);
+}
+
+.section-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+
+/* Monospace & Code */
+code, kbd, samp, pre {
+  font-family: var(--font-mono);
+}
+
+code {
+  font-size: 0.88em;
+  background: rgba(36, 40, 59, 0.7);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+  color: var(--jewel-hot);
+}
+
+pre {
+  background: var(--bg-panel);
+  border: 2px solid var(--border-subtle);
+  box-shadow: var(--bevel-snes-box);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-pixel);
+  overflow-x: auto;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #9ece6a;
+}
+
+/* Text helpers */
+.text-jewel { color: var(--jewel-primary); }
+.text-hot { color: var(--jewel-hot); }
+.text-dim { color: var(--text-dim); }
+.text-muted { color: var(--text-muted); }
