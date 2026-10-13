@@ -158,7 +158,7 @@
 .repo-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; flex: 1; }
 
 /* Page Bottom Footer */
-.site-footer { margin-top: 80px; border-top: 2px solid var(--border-subtle); background: #0f1017; padding: 40px 20px 84px; }
+.site-footer { margin-top: 80px; border-top: 2px solid var(--border-subtle); background: rgba(15, 16, 23, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 40px 20px 84px; }
 .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 .footer-nav { display: flex; flex-wrap: wrap; gap: 24px; font-family: var(--font-mono); font-size: 14px; font-weight: 600; line-height: 1.6; }
 .footer-copy { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }

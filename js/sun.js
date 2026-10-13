@@ -5,9 +5,6 @@
   if (!canvas) return;
   var stage = document.getElementById('mainscreen'), ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return;
-  if (!document.getElementById('mainscreen-canvas')) {
-    try { var origGet = document.getElementById.bind(document); document.getElementById = function(id) { return id === 'mainscreen-canvas' ? canvas : origGet(id); }; } catch (e) {}
-  }
 
   var BAYER = [0, 32, 8, 40, 2, 34, 10, 42, 48, 16, 56, 24, 50, 18, 58, 26, 12, 44, 4, 36, 14, 46, 6, 38, 60, 28, 52, 20, 62, 30, 54, 22, 3, 35, 11, 43, 1, 33, 9, 41, 51, 19, 59, 27, 49, 17, 57, 25, 15, 47, 7, 39, 13, 45, 5, 37, 63, 31, 55, 23, 61, 29, 53, 21];
   var N = 128, WM_W = 96, WM_H = 24, smoothAcc = null;
@@ -119,7 +116,7 @@
     if (!e || e.clientX < 0 || e.clientY < 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) { deactivate(); return; }
     var px = e.clientX * dpr, py = e.clientY * dpr;
     lastPointerX = e.clientX; lastPointerY = e.clientY; checkTextHit(e.target, lastPointerX, lastPointerY);
-    if (!mouse.active || smoothMouse.strength < 0.01 || smoothMouse.x < -1000) { smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 1.0; }
+    if (smoothMouse.x < -1000 || smoothMouse.strength < 0.01) { smoothMouse.x = px; smoothMouse.y = py; smoothMouse.strength = 1.0; }
     mouse.x = px; mouse.y = py; mouse.active = true; lastPointerTime = performance.now();
     if (reducedMotion) render(performance.now()); else wakeRender();
   }
@@ -136,7 +133,10 @@
   }
 
   function updateLights(t) {
-    var sec = t * 0.001, wmcX = originX + (WM_W * cellPx) * 0.5, wmcY = originY + (WM_H * cellPx) * 0.5;
+    var sec = t * 0.001, wmcX = originX + (WM_W * cellPx) * 0.5;
+    var stageRect = cachedStageRect;
+    var curOriginY = stageRect ? Math.round((stageRect.top + stageRect.height * 0.5) * dpr - (WM_H * cellPx) * 0.5) : originY;
+    var wmcY = curOriginY + (WM_H * cellPx) * 0.5;
     var orbAngle = reducedMotion ? 0 : sec * 0.95, orbRx = (WM_W * cellPx) * 0.44, orbRy = Math.max((WM_H * cellPx) * 0.88, 85 * dpr);
     var orbitX = wmcX + Math.cos(orbAngle) * orbRx, orbitY = wmcY + Math.sin(orbAngle) * orbRy;
     var wanderX = width * (0.5 + 0.35 * Math.sin(sec * 0.72)), wanderY = height * (0.47 + 0.22 * Math.sin(sec * 1.15 + 1.3));

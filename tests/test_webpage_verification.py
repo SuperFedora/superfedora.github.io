@@ -198,7 +198,7 @@ def run_tests():
 
         # 11. Spotlight Canvas, Dominant Wordmark Sizing & Zero-Cycles Invariant
         print("[TEST 11] Testing Spotlight Canvas, Dominant Sizing & Zero-Cycles Invariant...")
-        has_canvas = cdp.eval("document.getElementById('mainscreen-canvas').width > 0")
+        has_canvas = cdp.eval("Boolean((document.getElementById('spotlight-canvas') || document.getElementById('mainscreen-canvas')).width > 0)")
         has_hook = cdp.eval("typeof window.idleRenderSpotlight === 'function'")
         assert has_canvas and has_hook, "Spotlight canvas or window hook missing"
 

@@ -43,7 +43,7 @@ img, svg, video, canvas {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 0;
+  z-index: 2;
   opacity: 0.85;
   image-rendering: pixelated;
 }
