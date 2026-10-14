@@ -111,7 +111,7 @@
     },
     "sf-install": {
       prompt: "sf install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.3.0\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.4.0\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
               "[OK] [00-preflight] Host: Fedora 44 (x86_64) | Sudo: YES | Baseline snapshot #1 ready\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
@@ -141,7 +141,7 @@
     },
     "sf-status": {
       prompt: "sf status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.3.0\n" +
+      output: "SuperFedora 16-Bit Workstation // Release 0.4.0\n" +
               "Session: hyprland-uwsm.desktop (Wayland)\n" +
               "Theme: Super Blue (01-super-blue) [dark]\n" +
               "Panels: Top Bar [ON] | Bottom Intellihide Dock [ON] | Quake AI [SUPER+`]\n" +
@@ -159,7 +159,7 @@
     },
     "sf-dotfiles": {
       prompt: "sf dotfiles --check",
-      output: "In sync with SuperFedora v0.3.0\n" +
+      output: "In sync with SuperFedora v0.4.0\n" +
               "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
               "[OK] ~/.config/quickshell/ (Bar, EdgePanel, DockApps, QuakeAi, PanelSettingsPopup)\n" +
               "[OK] ~/Pictures/Wallpapers/ (16 4K dark/light 16-bit Hero wallpapers)\n" +
