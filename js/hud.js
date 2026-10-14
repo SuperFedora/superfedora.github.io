@@ -111,74 +111,73 @@
     },
     "sf-install": {
       prompt: "sf install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.4.0\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.5.0\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
               "[OK] [00-preflight] Host: Fedora 44 (x86_64) | Sudo: YES | Baseline snapshot #1 ready\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
               "[OK] [20-base] PipeWire, VA-API, mesa-va-drivers, ffmpeg, /etc/superfedora/release\n" +
               "[OK] [30-session] greetd & tuigreet enabled | uwsm systemd targets bound\n" +
-              "[OK] [40-desktop] Hyprland, Quickshell Multi-Edge, wiremix, wlctl, bluetui ready\n" +
+              "[OK] [40-desktop] Hyprland, Quickshell SuperDeck + Quattro Dock, wiremix, wlctl, bluetui\n" +
               "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
               "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
-              "[OK] [70-dev] Localhost hardware profile generated + native source builds complete\n" +
+              "[OK] [70-dev] sf forge hardware profile generated + native source builds complete\n" +
               "[OK] [80-ai] Antigravity CLI (agy), Grok CLI, MiniMax, Mistral Vibe ready\n" +
-              "[OK] [90-dotfiles] Direct configs + Quake AI (Super+`) deployed | sf CLI linked"
+              "[OK] [90-dotfiles] Direct configs + 16-bit SNES SFX + Boot-Guard deployed"
     },
     "sf-build": {
-      prompt: "sf build status",
-      output: "SuperFedora Localhost Hardware Build Profile\n" +
-              "  Install Mode   : source (--build-from-source)\n" +
-              "  Target Arch    : -march=native / target-cpu=native (8 threads, LTO=auto)\n" +
-              "  ISA Extensions : aes avx avx2 bmi2 fma sse4_2\n" +
-              "  CFLAGS         : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
-              "  RUSTFLAGS      : -C opt-level=3 -C target-cpu=native -C codegen-units=1\n\n" +
-              "  COMPONENT   STATE           BINARY\n" +
-              "  wlctl       [source-native] ~/.local/bin/wlctl\n" +
-              "  bluetui     [source-native] ~/.local/bin/bluetui\n" +
-              "  wiremix     [source-native] ~/.local/bin/wiremix\n" +
-              "  fuzzel      [source-native] ~/.local/bin/fuzzel\n" +
-              "  btop        [source-native] ~/.local/bin/btop"
+      prompt: "sf forge status",
+      output: "SuperFedora Forge — Hardware-Tuned Source Builder\n" +
+              "  Target Arch  : -march=skylake (x86_64, 8 threads, LTO=auto)\n" +
+              "  SIMD / ISA   : aes avx avx2 bmi2 fma sse4_2\n" +
+              "  CFLAGS       : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
+              "  RUSTFLAGS    : -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols\n\n" +
+              "  PRESET       BINARY            STATUS\n" +
+              "  ripgrep      rg                [forged (skylake)]\n" +
+              "  fastfetch    fastfetch         [forged (skylake)]\n" +
+              "  idlescreen   idlescreen        [forged (skylake)]\n" +
+              "  fd           fd                [forged (skylake)]\n" +
+              "  zoxide       zoxide            [forged (skylake)]\n" +
+              "  btop         btop              [forged (skylake)]"
     },
     "sf-status": {
       prompt: "sf status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.4.0\n" +
+      output: "SuperFedora 16-Bit Workstation // Release 0.5.0\n" +
               "Session: hyprland-uwsm.desktop (Wayland)\n" +
-              "Theme: Super Blue (01-super-blue) [dark]\n" +
-              "Panels: Top Bar [ON] | Bottom Intellihide Dock [ON] | Quake AI [SUPER+`]\n" +
-              "Snapper Snapshots: Baseline #1 verified (sf rollback)\n" +
-              "IdleScreen: superfedora 16-bit theme (120s timeout)\n" +
+              "Theme: Super Blue (01-super-blue) [mode: night, corners: square, nightlight: off]\n" +
+              "Desktop: Top Bar Pocket + Quick Settings Pill | Unified SuperDeck | Quattro Dock\n" +
+              "Snapper & Boot-Guard: grub-btrfs active + superfedora-boot-guard.service ready\n" +
+              "16-Bit SNES Audio: sf sfx [ON] | IdleScreen: superfedora 16-bit theme\n" +
               "Audio / Net / BT TUIs: wiremix + wlctl + bluetui"
     },
     "sf-rollback": {
-      prompt: "sf rollback --dry-run",
-      output: "[+] Querying Btrfs Snapper snapshot timeline...\n" +
+      prompt: "sf rollback --list",
+      output: "[+] Querying Btrfs Snapper timeline & Boot-Guard status...\n" +
+              "[OK] GRUB 41_snapshots-btrfs menu generator installed\n" +
+              "[OK] superfedora-boot-guard.service armed (auto-rollback after 3 failed boots)\n" +
               "[OK] Found immutable baseline snapshot #1 (superfedora-preinstall-baseline)\n" +
-              "[+] Prepared rollback target: Subvolume /@ to snapshot #1\n" +
-              "[--] DRY-RUN MODE: No modifications applied to disk.\n" +
-              "To execute live rollback: run 'sf rollback'"
+              "To execute live rollback: run 'sf rollback --baseline' or 'sf rollback <id>'"
     },
     "sf-dotfiles": {
       prompt: "sf dotfiles --check",
-      output: "In sync with SuperFedora v0.4.0\n" +
+      output: "In sync with SuperFedora v0.5.0\n" +
               "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
-              "[OK] ~/.config/quickshell/ (Bar, EdgePanel, DockApps, QuakeAi, PanelSettingsPopup)\n" +
+              "[OK] ~/.config/quickshell/ (Bar, SuperDeck, Quattro Dock, 16-bit SNES Osd, LockScreen)\n" +
               "[OK] ~/Pictures/Wallpapers/ (16 4K dark/light 16-bit Hero wallpapers)\n" +
               "[OK] Managed symlinks: 0 (Strict direct file deployment enforced)"
     },
     "sf-bindings": {
-      prompt: "sf ai status",
-      output: "Agent: Antigravity CLI (agy) (agy) | Geometry: 1280x626+320+74\n" +
-              "Keybinding : Super + ` (toggle slide-down) | Super + Shift + ` (cycle agent)\n" +
-              "Agents     : [1] Antigravity (agy)  [2] xAI Grok  [3] MiniMax  [4] Mistral Vibe"
+      prompt: "sf tui banner",
+      output: "SUPER FEDORA 16-BIT ENTERTAINMENT & WORKSTATION SYSTEM v0.5.0\n" +
+              "Keybindings: 100% Pop!_OS COSMIC + Layout Save/Restore (Super+Alt+Home / Super+Home)\n" +
+              "Two-Speed Resize: Super+R -> CTRL+HJKL (10px fine) / ALT+HJKL (80px coarse)"
     },
     "sf-theme": {
       prompt: "sf theme status",
-      output: "Active Theme : Super Blue (01-super-blue) [dark]\n" +
-              "Palettes     : 01-super-blue 02-metroid-violet 03-super-ruby 04-emerald-green\n" +
-              "               05-star-gold 06-electric-cyan 07-flame-orange 08-neon-coral\n\n" +
-              "[OK] Desktop Wallpaper : ~/Pictures/Wallpapers/dark/01-super-blue.png (4K)\n" +
-              "[OK] Lockscreen        : ~/.config/hypr/hyprlock.conf (Clock-free 4K Hero)\n" +
-              "[OK] Quickshell IPC    : Live color reload (zero popup) + Multi-Edge Panels"
+      output: "Active Theme : Super Blue (01-super-blue) [mode: dark, corners: square, nightlight: off]\n" +
+              "Palettes     : 01-super-blue..08-neon-coral snes tokyo-night catppuccin nord\n\n" +
+              "[OK] Sync Targets : Hyprland, Quickshell, Fuzzel, Kitty, Ghostty, Tmux, Neovim, GTK\n" +
+              "[OK] Geometry     : Square 90-deg pixel corners | Rounded 10px corners (--corners)\n" +
+              "[OK] Nightlight   : wlsunset / hyprsunset 4200K warm filter (--nightlight)"
     }
   };
 
