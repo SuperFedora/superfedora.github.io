@@ -102,52 +102,56 @@
       prompt: "sf doctor",
       output: "[OK] Host OS: Fedora 44 Workstation (x86_64)\n" +
               "[OK] Compositor: Hyprland 0.53+ (Wayland native, layerrule v2)\n" +
-              "[OK] Session Manager: uwsm (systemd user session bound)\n" +
-              "[OK] Panels & Dock: Quickshell Multi-Edge + Quake AI (Super+`) online\n" +
+              "[OK] Session Manager: uwsm + superlock (systemd user session bound)\n" +
+              "[OK] Panels & Dock: supershell (superdock, superbar, supersettings, supernotify)\n" +
+              "[OK] Quake AI & Harness: superagent + OpenClaw + sf-ollama (Super+`) online\n" +
               "[OK] Btrfs Root: /dev/nvme0n1p3 (Snapper baseline #1 verified)\n" +
-              "[OK] IdleScreen: 16-bit superfedora theme unlocked & active\n" +
-              "[OK] Dotfiles Integrity: Zero-symlink direct deployment intact\n\n" +
+              "[OK] Theme & Audio: supertheme (16 rainbow palettes + 16-bit WAV SFX) active\n\n" +
               "Result: 7/7 systems healthy. Workstation is operational."
     },
     "sf-install": {
       prompt: "sf install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.5.0\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.6.0\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
               "[OK] [00-preflight] Host: Fedora 44 (x86_64) | Sudo: YES | Baseline snapshot #1 ready\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
               "[OK] [20-base] PipeWire, VA-API, mesa-va-drivers, ffmpeg, /etc/superfedora/release\n" +
-              "[OK] [30-session] greetd & tuigreet enabled | uwsm systemd targets bound\n" +
-              "[OK] [40-desktop] Hyprland, Quickshell SuperDeck + Quattro Dock, wiremix, wlctl, bluetui\n" +
+              "[OK] [30-session] greetd & tuigreet enabled | uwsm + superlock bound\n" +
+              "[OK] [40-desktop] Hyprland, Quickshell, supertheme, superdock, superbar, supersettings, supernotify\n" +
               "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
               "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
-              "[OK] [70-dev] sf forge hardware profile generated + native source builds complete\n" +
-              "[OK] [80-ai] Antigravity CLI (agy), Grok CLI, MiniMax, Mistral Vibe ready\n" +
-              "[OK] [90-dotfiles] Direct configs + 16-bit SNES SFX + Boot-Guard deployed"
+              "[OK] [70-dev] superforge hardware profile + recipes.toml native source builds complete\n" +
+              "[OK] [80-ai] superagent, OpenClaw, sf-ollama, Antigravity (agy), Grok, MiniMax, Vibe ready\n" +
+              "[OK] [90-dotfiles] Direct configs + 32 4K wallpapers (01-crimson..16-fuchsia) deployed"
     },
     "sf-build": {
-      prompt: "sf forge status",
-      output: "SuperFedora Forge — Hardware-Tuned Source Builder\n" +
-              "  Target Arch  : -march=skylake (x86_64, 8 threads, LTO=auto)\n" +
-              "  SIMD / ISA   : aes avx avx2 bmi2 fma sse4_2\n" +
+      prompt: "superforge status",
+      output: "SuperForge v0.6.0 — Native Rust 1.99 Source Compiler & Package Manager\n" +
+              "  Target Arch  : -march=native (x86_64, LTO=thin, target-cpu=native)\n" +
+              "  Catalog      : ~/.config/superfedora/recipes.toml (17 targets)\n" +
               "  CFLAGS       : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
               "  RUSTFLAGS    : -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols\n\n" +
               "  PRESET       BINARY            STATUS\n" +
-              "  ripgrep      rg                [forged (skylake)]\n" +
-              "  fastfetch    fastfetch         [forged (skylake)]\n" +
-              "  idlescreen   idlescreen        [forged (skylake)]\n" +
-              "  fd           fd                [forged (skylake)]\n" +
-              "  zoxide       zoxide            [forged (skylake)]\n" +
-              "  btop         btop              [forged (skylake)]"
+              "  superfedora  superfedora (sf)  [FORGED]\n" +
+              "  supertheme   supertheme        [FORGED]\n" +
+              "  superforge   superforge        [FORGED]\n" +
+              "  supershell   superdock+4       [FORGED]\n" +
+              "  superagent   superagent        [FORGED]\n" +
+              "  ripgrep      rg                [FORGED]\n" +
+              "  fastfetch    fastfetch         [FORGED]\n" +
+              "  idlescreen   idlescreen        [FORGED]\n" +
+              "  fd           fd                [FORGED]\n" +
+              "  btop         btop              [FORGED]"
     },
     "sf-status": {
       prompt: "sf status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.5.0\n" +
-              "Session: hyprland-uwsm.desktop (Wayland)\n" +
-              "Theme: Super Blue (01-super-blue) [mode: night, corners: square, nightlight: off]\n" +
-              "Desktop: Top Bar Pocket + Quick Settings Pill | Unified SuperDeck | Quattro Dock\n" +
+      output: "SuperFedora 16-Bit Workstation // Release 0.6.0 (Rust 1.99 Native Engine)\n" +
+              "Session: hyprland-uwsm.desktop (Wayland) via superlock\n" +
+              "Theme: Cobalt Blue (12-cobalt) [mode: dark, corners: square, nightlight: off]\n" +
+              "Shell: superbar + superdock + supersettings + supernotify (Quickshell QML)\n" +
               "Snapper & Boot-Guard: grub-btrfs active + superfedora-boot-guard.service ready\n" +
-              "16-Bit SNES Audio: sf sfx [ON] | IdleScreen: superfedora 16-bit theme\n" +
-              "Audio / Net / BT TUIs: wiremix + wlctl + bluetui"
+              "16-Bit SNES Audio: supertheme sfx [ON] | IdleScreen: superfedora 16-bit theme\n" +
+              "AI & Forge: superagent (AGY // OPENCLAW) + superforge (-march=native)"
     },
     "sf-rollback": {
       prompt: "sf rollback --list",
@@ -159,25 +163,29 @@
     },
     "sf-dotfiles": {
       prompt: "sf dotfiles --check",
-      output: "In sync with SuperFedora v0.5.0\n" +
+      output: "In sync with SuperFedora v0.6.0\n" +
+              "[OK] ~/.local/bin/ (sf, superfedora, supertheme, superforge, superdock, superbar, supersettings, supernotify, superlock, superagent)\n" +
               "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
               "[OK] ~/.config/quickshell/ (Bar, SuperDeck, Quattro Dock, 16-bit SNES Osd, LockScreen)\n" +
-              "[OK] ~/Pictures/Wallpapers/ (16 4K dark/light 16-bit Hero wallpapers)\n" +
+              "[OK] ~/Pictures/Wallpapers/ (32 4K dark/light 16-bit Rainbow wallpapers: 01-crimson..16-fuchsia)\n" +
               "[OK] Managed symlinks: 0 (Strict direct file deployment enforced)"
     },
     "sf-bindings": {
-      prompt: "sf tui banner",
-      output: "SUPER FEDORA 16-BIT ENTERTAINMENT & WORKSTATION SYSTEM v0.5.0\n" +
-              "Keybindings: 100% Pop!_OS COSMIC + Layout Save/Restore (Super+Alt+Home / Super+Home)\n" +
-              "Two-Speed Resize: Super+R -> CTRL+HJKL (10px fine) / ALT+HJKL (80px coarse)"
+      prompt: "superagent status",
+      output: "SuperAgent v0.6.0 — Autonomous Workstation Agent & OpenClaw Harness\n" +
+              "[OK] Active Agent  : agy (Antigravity CLI) // AGY // OPENCLAW Cast Comms\n" +
+              "[OK] Local / LAN   : sf-ollama (http://127.0.0.1:11434)\n" +
+              "[OK] Installed CLIs: openclaw, agy, mcode (MiniMax), grok (xAI), vibe (Mistral)\n" +
+              "[OK] Quake Console : Super + ` (Grave) drop-down terminal ready"
     },
     "sf-theme": {
-      prompt: "sf theme status",
-      output: "Active Theme : Super Blue (01-super-blue) [mode: dark, corners: square, nightlight: off]\n" +
-              "Palettes     : 01-super-blue..08-neon-coral snes tokyo-night catppuccin nord\n\n" +
-              "[OK] Sync Targets : Hyprland, Quickshell, Fuzzel, Kitty, Ghostty, Tmux, Neovim, GTK\n" +
-              "[OK] Geometry     : Square 90-deg pixel corners | Rounded 10px corners (--corners)\n" +
-              "[OK] Nightlight   : wlsunset / hyprsunset 4200K warm filter (--nightlight)"
+      prompt: "supertheme status",
+      output: "Active Theme : Cobalt Blue (12-cobalt) [mode: dark, corners: square, nightlight: off]\n" +
+              "Palettes (16): 01-crimson 02-ruby 03-vermilion 04-tangerine 05-amber 06-gold 07-chartreuse 08-emerald\n" +
+              "               09-jade 10-teal 11-cyan 12-cobalt 13-indigo 14-violet 15-magenta 16-fuchsia\n\n" +
+              "[OK] Sync Targets : Hyprland, Quickshell, Fuzzel, Kitty, Ghostty, Tmux, Neovim, GTK, OpenRGB\n" +
+              "[OK] Geometry     : Square 90-deg pixel corners | Rounded 10px corners (supertheme corners toggle)\n" +
+              "[OK] Audio & Cast : 6 16-bit PCM WAV cues + 5 SVG cast portraits synced"
     }
   };
 

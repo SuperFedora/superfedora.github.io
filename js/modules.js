@@ -55,13 +55,13 @@
       id: "40",
       num: "40",
       slug: "40-desktop",
-      name: "Hyprland, Multi-Edge Panels & TUIs",
-      desc: "High-refresh Hyprland 0.53+ compositor, Quickshell multi-edge panels (Top Bar, Intellihide Bottom Dock, Left/Right Hardware Telemetry Docks, Panel Studio, and Quake AI Drop-Down HUD), GNOME-style 16-bit hyprlock, fuzzel, and Omarchy-style Ratatui TUIs (wiremix, wlctl, bluetui).",
-      packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "fuzzel", "wiremix", "wlctl", "bluetui"],
+      name: "Hyprland, SuperShell & SuperTheme",
+      desc: "High-refresh Hyprland 0.53+ compositor, native Rust supershell suite (superdock, superbar, supersettings, supernotify, superlock), native Rust supertheme (16-color rainbow palette + 16-bit WAV SFX), Quickshell multi-edge QML panels, fuzzel, and Ratatui TUIs (wiremix, wlctl, bluetui).",
+      packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "supertheme", "superdock", "superbar", "supersettings", "supernotify", "superlock", "fuzzel", "wiremix", "wlctl", "bluetui"],
       configs: ["~/.config/hypr/hyprland.conf", "~/.config/quickshell/shell.qml", "~/.config/quickshell/panels/QuakeAi.qml"],
-      verification: "hyprctl version && qs ipc call panels reload",
-      tags: ["Hyprland", "Quickshell", "Multi-Edge Dock", "wiremix", "wlctl", "bluetui"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[HUD: MULTI-EDGE QML]", type: "hot" }, { text: "[TUIS: WIREMIX/WLCTL/BLUETUI]", type: "cyan" }]
+      verification: "supertheme status && superdock status && hyprctl version",
+      tags: ["Hyprland", "Quickshell", "supertheme", "supershell", "wiremix", "wlctl", "bluetui"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SHELL: SUPERSHELL + QML]", type: "hot" }, { text: "[THEME: SUPERTHEME 16-COLOR]", type: "cyan" }]
     },
     {
       id: "50",
@@ -91,37 +91,37 @@
       id: "70",
       num: "70",
       slug: "70-dev",
-      name: "Dev Toolchain & Native Source Builder",
-      desc: "Polyglot developer toolchain (GCC, CMake, Git, gh, Node.js 22, Rustup with musl target, cargo-binstall, uv) plus the Localhost Source Builder (lib/build-source.sh). When --build-from-source is selected, tunes and compiles workstation binaries with -march=native -mtune=native -flto=auto and target-cpu=native.",
-      packages: ["gcc", "gcc-c++", "make", "cmake", "gh", "nodejs22-bin", "rustup", "cargo-binstall", "uv"],
-      configs: ["~/.config/superfedora/hardware-flags.env", "~/.rpmmacros"],
-      verification: "sf build status && rustc --version && uv --version",
-      tags: ["Build from Source", "-march=native", "Rust", "Node.js", "Python uv"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[NATIVE: -march=native]", type: "hot" }, { text: "[RUST: target-cpu=native]", type: "cyan" }]
+      name: "Dev Toolchain & SuperForge Compiler",
+      desc: "Polyglot developer toolchain (GCC, CMake, Git, gh, Node.js 22, Rustup 1.99 with musl target, cargo-binstall, uv) plus the native Rust SuperForge source compiler (superforge + recipes.toml). Compiles and tunes workstation binaries with -march=native -mtune=native -flto=auto and target-cpu=native.",
+      packages: ["superforge", "gcc", "gcc-c++", "make", "cmake", "gh", "nodejs22-bin", "rustup", "cargo-binstall", "uv"],
+      configs: ["~/.config/superfedora/hardware-flags.env", "~/.config/superfedora/recipes.toml", "~/.rpmmacros"],
+      verification: "superforge status && rustc --version && uv --version",
+      tags: ["superforge", "-march=native", "recipes.toml", "Rust 1.99", "Node.js", "Python uv"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[FORGE: -march=native]", type: "hot" }, { text: "[RUST: target-cpu=native]", type: "cyan" }]
     },
     {
       id: "80",
       num: "80",
       slug: "80-ai",
-      name: "AI CLI Suite & Quake Drop-Down",
-      desc: "Curated terminal AI engineering agents: Antigravity CLI (agy / antigravity-cli), xAI Grok CLI, MiniMax Code, and Mistral Vibe — integrated into the Quake-style slide-down AI console on Super + ` (grave) with instant agent switching.",
-      packages: ["agy (antigravity-cli)", "grok", "mcode", "vibe"],
-      configs: ["~/.config/hypr/scripts/quake-ai.sh", "~/.config/quickshell/panels/QuakeAi.qml"],
-      verification: "sf ai status && agy --version",
-      tags: ["Quake AI (Super+`)", "Antigravity CLI", "Grok CLI", "MiniMax", "Mistral Vibe"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[QUAKE AI: SUPER+`]", type: "hot" }, { text: "[DEFAULT: ANTIGRAVITY]", type: "cyan" }]
+      name: "SuperAgent, OpenClaw & Quake AI",
+      desc: "Standalone Rust autonomous workstation agent (superagent): OpenClaw harness, local/LAN Ollama (sf-ollama), Antigravity CLI (agy), xAI Grok CLI, MiniMax Code (mcode), and Mistral Vibe — integrated into the Quake slide-down AI console on Super + ` with AGY // OPENCLAW Cast Comms.",
+      packages: ["superagent", "openclaw", "sf-ollama", "agy (antigravity-cli)", "grok", "mcode", "vibe"],
+      configs: ["~/.config/superfedora/ai-agent", "~/.config/superfedora/ollama-host", "~/.config/quickshell/panels/QuakeAi.qml"],
+      verification: "superagent status && agy --version",
+      tags: ["superagent", "OpenClaw", "sf-ollama", "Antigravity CLI", "Grok CLI", "MiniMax"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[QUAKE AI: SUPER+`]", type: "hot" }, { text: "[HARNESS: AGY // OPENCLAW]", type: "cyan" }]
     },
     {
       id: "90",
       num: "90",
       slug: "90-dotfiles",
-      name: "Zero-Symlink Dotfiles & 16-Bit Themes",
-      desc: "Deploys direct files into ~/.config/ and 16 4K 16-bit wallpapers into ~/Pictures/Wallpapers/ with automatic timestamped backups. Enforces Firefox default browser MIME handlers and provides sf theme, sf panel, sf build, and sf ai orchestrators.",
-      packages: ["sf", "superfedora"],
+      name: "Zero-Symlink Dotfiles & 9 Rust Binaries",
+      desc: "Deploys direct files into ~/.config/ and 32 4K 16-bit wallpapers (01-crimson..16-fuchsia) into ~/Pictures/Wallpapers/ with automatic timestamped backups. Installs all 9 native Rust binaries (sf, supertheme, superforge, superdock, superbar, supersettings, supernotify, superlock, superagent) into ~/.local/bin/.",
+      packages: ["sf", "superfedora", "supertheme", "superforge", "superdock", "superbar", "supersettings", "supernotify", "superlock", "superagent"],
       configs: ["~/.config/hypr/", "~/.config/quickshell/", "~/Pictures/Wallpapers/", "~/.local/bin/sf"],
       verification: "sf dotfiles --check && sf status",
-      tags: ["Zero Symlinks", "16-Bit Themes", "4K Wallpapers", "sf CLI"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[DOTFILES: 0-SYMLINK]", type: "hot" }, { text: "[THEMES: 8 JEWELS X DARK/LIGHT]", type: "cyan" }]
+      tags: ["Zero Symlinks", "16 Rainbow Palettes", "4K Wallpapers", "9 Rust Binaries"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[DOTFILES: 0-SYMLINK]", type: "hot" }, { text: "[THEMES: 16 RAINBOW X DARK/LIGHT]", type: "cyan" }]
     }
   ];
 
