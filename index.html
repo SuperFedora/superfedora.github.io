@@ -210,7 +210,7 @@
           <!-- Hero Action Buttons -->
           <div class="hero-actions">
             <a href="#install" class="btn-snes-primary">&gt; Quick / Source Install</a>
-            <a href="#manual" class="btn-snes-secondary">&gt; Manual &amp; Fedora Swaps</a>
+            <a href="#manual" class="btn-snes-secondary">&gt; Manual &amp; Minimal Stack</a>
             <a href="#modules" class="btn-snes-secondary">&gt; 10 Modules HUD</a>
             <a href="#keybindings" class="btn-snes-secondary">&gt; COSMIC Keys</a>
           </div>
@@ -1590,24 +1590,24 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
       </div>
     </section>
 
-    <!-- SECTION 6B: OPERATOR MANUAL & STOCK FEDORA SWAP MATRIX -->
+    <!-- SECTION 6B: OPERATOR MANUAL & FEDORA MINIMAL ARCHITECTURE MATRIX -->
     <section class="panel-section" id="manual">
       <div class="snes-eyebrow">
         <span class="snes-eyebrow-pip"></span>
-        OPERATOR MANUAL // STOCK FEDORA SWAP MATRIX &amp; FULL CLI/TUI REFERENCE
+        OPERATOR MANUAL // BUILT FROM FEDORA MINIMAL &amp; FULL CLI/TUI REFERENCE
       </div>
-      <h2 class="section-heading">Operator Manual &amp; What SuperFedora Swaps Out in Fedora</h2>
+      <h2 class="section-heading">Operator Manual &amp; How SuperFedora Builds on Fedora Minimal</h2>
       <p class="section-desc">
-        SuperFedora takes a clean Fedora Minimal or Workstation install and systematically swaps out crippled codecs, heavy background daemons, passive filesystems, and generic desktop plumbing for hardware-accelerated, socket-activated, native Rust 1.99 16-bit components. Below is the complete <strong>Stock Fedora vs. SuperFedora Swap Matrix</strong> followed by the full <strong>Operator Manual &amp; Command Reference</strong>.
+        SuperFedora is engineered to start from a clean <strong>Fedora Everything &rarr; Minimal Install</strong> (~400 packages, bare TTY login, zero GNOME/KDE bloat). From that pure Linux kernel + <code>systemd</code> + <code>Btrfs</code> + <code>SELinux</code> + <code>dnf5</code> foundation, SuperFedora layers a complete native Rust 1.99 16-bit workstation while swapping out the patent-restricted codecs and default daemon timeouts that Fedora Minimal's dependencies pull in.
       </p>
 
-      <!-- PART 1: WHAT SUPERFEDORA SWAPS OUT IN STOCK FEDORA -->
+      <!-- PART 1: BUILT FROM FEDORA MINIMAL: WHAT WE LAYER ON & SWAP -->
       <div class="rpg-window" style="margin-top: 20px;">
         <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 6px;">
-          [ PART I // STOCK FEDORA VS. SUPERFEDORA SWAP &amp; UPGRADE MATRIX ]
+          [ PART I // FEDORA MINIMAL BASE VS. SUPERFEDORA WORKSTATION STACK &amp; SWAPS ]
         </h3>
         <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.55;">
-          Every subsystem listed below is idempotently inspected and swapped during <code>superfedora install</code> or <code>superfedora hardware optimize</code>.
+          Start from a bare <strong>Fedora Minimal</strong> TTY (or transition an existing Fedora install). Every subsystem below is idempotently built, configured, or swapped during <code>superfedora install</code> and <code>superfedora hardware optimize</code>.
         </p>
 
         <div class="swap-matrix-grid">
@@ -1618,12 +1618,12 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[VA-API // DMABUF]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Crippled <code>ffmpeg-free</code> &amp; <code>mesa-va-drivers</code> lacking patent-encumbered H.264/HEVC/AV1 hardware decode; CPU-bound browser video.
+              <span class="swap-label">[-] Fedora Default Dependency</span><br>
+              Even on Fedora Minimal, installing Mesa/Firefox pulls in patent-restricted <code>ffmpeg-free</code> &amp; <code>mesa-va-drivers</code> without H.264/HEVC hardware decode.
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
-              <code>dnf5 install --allowerasing ffmpeg</code> + full RPM Fusion VA-API (<code>mesa-va-drivers-freeworld</code>, <code>intel-media-driver</code>, <code>nvidia-vaapi-driver</code>) + Firefox zero-copy Wayland DMABUF.
+              <span class="swap-label">[+] SuperFedora Upgrade &amp; Swap</span><br>
+              <code>dnf5 swap ffmpeg-free ffmpeg</code> + full RPM Fusion VA-API (<code>mesa-va-drivers-freeworld</code>, <code>intel-media-driver</code>, <code>nvidia-vaapi-driver</code>) + Firefox zero-copy Wayland DMABUF.
             </div>
           </div>
 
@@ -1634,11 +1634,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[HYPRLAND // UWSM]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Heavy mouse-centric GNOME/KDE desktop environment (1.5GB+ idle RAM) or bare Minimal TTY with no systemd session target bindings.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Raw text TTY login with zero Wayland compositor, no PipeWire/WirePlumber session wiring, and no desktop portals (and zero 1.5GB GNOME/KDE bloat).
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
               Hyprland 0.53+ (<code>vfr = true</code>, <code>direct_scanout = true</code>) + <code>uwsm</code> (<code>superfedora-session.target</code>) + native Rust <code>supershell</code> (<code>superbar</code>, <code>superdock</code>, <code>supersettings</code>, <code>superlock</code>) &amp; Quickshell HUD.
             </div>
           </div>
@@ -1650,11 +1650,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[10 CAST SPECIALISTS]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Generic, uncategorized desktop toast popups with no role routing, no interactive history TUI, and no stage banners.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              No notification daemon on Minimal (or generic uncategorized desktop toasts on Workstation with no role routing or interactive history TUI).
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
               Standalone <code>supernotify</code> with 10 animated 16-bit Cast Specialists (<code>ai</code>, <code>security</code>, <code>builder</code>, <code>engineer</code>, <code>navigator</code>, <code>medic</code>, <code>archivist</code>, <code>commander</code>, <code>synth</code>, <code>app</code>) + 4 arcade stage banners (<code>READY</code>, <code>WARNING</code>, <code>UPDATE</code>, <code>CHECKPOINT</code>).
             </div>
           </div>
@@ -1666,11 +1666,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[GREETD // TUIGREET]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Heavyweight GDM or SDDM running a second full graphical compositor session simply to render a password prompt.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Raw <code>agetty</code> on <code>tty1</code> requiring manual session launch (while stock Workstation runs a second heavy GDM/SDDM graphical compositor just for login).
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
               Ultra-lightweight <code>greetd</code> + 16-bit <code>tuigreet</code> console greeter launching <code>uwsm start hyprland-uwsm.desktop</code> with sub-second boot-to-login speed.
             </div>
           </div>
@@ -1682,12 +1682,12 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[2-TIER SUPERFORGE]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Generic baseline <code>x86_64</code> RPM binaries only; zero CPU microarchitecture tuning (<code>-march=native</code>) and no isolated web apps.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Only baseline <code>dnf5</code> (~400 core packages, no <code>git</code>/<code>gcc</code>/<code>cargo</code> pre-installed) and generic <code>x86_64</code> binaries without CPU-specific tuning.
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
-              Hybrid 3-layer pipeline: <code>dnf5</code> base + <code>superforge</code> (Tier-1 instant static <code>musl</code> binary cache + Tier-2 background <code>-O3 -march=native -flto=thin</code> source re-forge &amp; chromeless Firefox WebApps) + <code>flatpak</code>.
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
+              Stage-0 bootstrap + 3-layer pipeline: <code>dnf5</code> base + <code>superforge</code> (Tier-1 instant static <code>musl</code> binary cache + Tier-2 background <code>-O3 -march=native -flto=thin</code> source re-forge &amp; chromeless Firefox WebApps) + <code>flatpak</code>.
             </div>
           </div>
 
@@ -1698,11 +1698,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[SOCKET ACTIVATED]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              24/7 resident <code>packagekitd</code> (300MB+ RAM), always-on <code>cups.service</code>, and status bars forking <code>bash -c</code> every second.
+              <span class="swap-label">[-] Fedora Default Daemons</span><br>
+              Resident <code>packagekitd</code> (300MB+ RAM when awakened), always-on <code>cups.service</code>, and traditional desktop bars forking <code>bash -c</code> every second.
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Tuning</span><br>
               Compatibility-first socket activation (<code>cups.socket</code>, <code>sssd-kcm.socket</code>), <code>PackageKit</code> 30s idle auto-shutdown (<code>ShutdownTimeout=30</code>), hardware-triggered <code>ModemManager</code>, and zero-fork Rust <code>/proc</code> + Hyprland <code>.socket2.sock</code> streaming.
             </div>
           </div>
@@ -1714,11 +1714,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[SNAPPER // BOOT-GUARD]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Passive Btrfs root/home subvolumes with zero pre-configured snapshots, zero DNF hooks, and no bootable GRUB rollback menu.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Clean Anaconda Btrfs <code>root</code> and <code>home</code> subvolumes, but zero Snapper config, zero DNF transaction hooks, and no bootable GRUB rollback menu.
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
               Immutable Baseline #1 + <code>libdnf5-plugin-actions</code> automatic pre/post DNF5 snapshots + <code>grub-btrfs</code> boot menu + <code>superfedora-boot-guard.service</code> + monthly <code>btrfs-scrub@-.timer</code>.
             </div>
           </div>
@@ -1730,11 +1730,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[ZSTD // SELINUX]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Unbounded multi-gigabyte journal logs, unisolated compiler/AI memory spikes freezing the desktop, and repetitive polkit prompts.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Unbounded multi-gigabyte journal logs, unisolated compiler/AI memory spikes, and default Polkit prompts on administrative maintenance.
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Tuning</span><br>
               Declarative <code>/etc/systemd/zram-generator.conf.d/superfedora.conf</code> (<code>zstd</code>), bounded <code>journald</code> (<code>500M</code>), <code>systemd-oomd</code> slice protection (<code>background.slice</code> for builds/AI so Wayland never drops frames), SELinux <code>Enforcing</code> (<code>restorecon</code>), and Polkit <code>wheel</code> rules (<code>50-superfedora.rules</code>).
             </div>
           </div>
@@ -1746,11 +1746,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
               <span class="preinstalled-badge">[RATATUI // 16-BIT]</span>
             </div>
             <div class="swap-row swap-stock">
-              <span class="swap-label">[-] Stock Fedora</span><br>
-              Heavy GTK/Qt settings dialogs, slow GUI software centers, and mouse-dependent system monitors.
+              <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
+              Raw CLI config files only (or heavy GTK/Qt settings dialogs and slow GUI software centers on traditional desktops).
             </div>
             <div class="swap-row swap-super">
-              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <span class="swap-label">[+] SuperFedora Layer</span><br>
               Fast native Rust Ratatui TUIs: <code>superfedora</code>, <code>supersettings</code>, <code>supertheme</code>, <code>superforge</code>, <code>supernotify</code>, <code>superagent</code>, <code>wiremix</code>, <code>wlctl</code>, <code>bluetui</code>, <code>btop</code>, <code>fastfetch</code>, <code>fuzzel</code>, and <code>idlescreen</code>.
             </div>
           </div>
