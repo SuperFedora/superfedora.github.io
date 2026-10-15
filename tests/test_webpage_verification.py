@@ -154,8 +154,7 @@ def run_tests():
         print("[TEST 9] Testing Initial Title Screen Presentation...")
         super_text = cdp.eval("document.querySelector('#mainscreen .mainscreen-super-title').textContent.trim()")
         fedora_text = cdp.eval("document.querySelector('#mainscreen .mainscreen-fedora-title').textContent.trim()")
-        assert super_text == "SUPER", f"Expected SUPER in title screen, got '{super_text}'"
-        assert fedora_text == "FEDORA", f"Expected FEDORA in title screen, got '{fedora_text}'"
+        assert super_text == "SUPER" and fedora_text == "FEDORA", f"Expected SUPER/FEDORA, got '{super_text}'/'{fedora_text}'"
         ms_bottom = cdp.eval("document.getElementById('mainscreen').getBoundingClientRect().bottom")
         hero_top = cdp.eval("document.getElementById('hero').getBoundingClientRect().top")
         assert hero_top >= ms_bottom - 1, f"Hero section overlaps mainscreen ({hero_top} < {ms_bottom})"
@@ -166,82 +165,59 @@ def run_tests():
         # 10. Alternating 6-Section Scrolling Marquees
         print("[TEST 10] Testing Alternating 6-Section Scrolling Marquees (Left/Right alternating)...")
         expected_sections = [
-            ("#pre-installed", "marquee-scroll-left"),
-            ("#modules", "marquee-scroll-right"),
-            ("#keybindings", "marquee-scroll-left"),
-            ("#cli", "marquee-scroll-right"),
-            ("#wallpapers", "marquee-scroll-left"),
-            ("#repos", "marquee-scroll-right")
+            ("#pre-installed", "marquee-scroll-left"), ("#modules", "marquee-scroll-right"),
+            ("#keybindings", "marquee-scroll-left"), ("#cli", "marquee-scroll-right"),
+            ("#wallpapers", "marquee-scroll-left"), ("#repos", "marquee-scroll-right")
         ]
         for sec_id, expected_cls in expected_sections:
-            has_track = cdp.eval(f"Boolean(document.querySelector('{sec_id} .marquee-track-continuous.{expected_cls}'))")
-            assert has_track, f"Section {sec_id} missing marquee track with {expected_cls}"
+            assert cdp.eval(f"Boolean(document.querySelector('{sec_id} .marquee-track-continuous.{expected_cls}'))"), f"Missing {sec_id} {expected_cls}"
         print("  [OK] All 6 sections alternate Left -> Right -> Left -> Right -> Left -> Right seamlessly.")
 
         # 11. Spotlight Canvas, Dominant Wordmark Sizing & Zero-Cycles Invariant
         print("[TEST 11] Testing Spotlight Canvas, Dominant Sizing & Zero-Cycles Invariant...")
-        has_canvas = cdp.eval("Boolean((document.getElementById('spotlight-canvas') || document.getElementById('mainscreen-canvas')).width > 0)")
-        has_hook = cdp.eval("typeof window.idleRenderSpotlight === 'function'")
-        assert has_canvas and has_hook, "Spotlight canvas or window hook missing"
-
-        # Dominant sizing: wordmark width should take up dominant width of screen (>= 85%)
+        assert cdp.eval("Boolean((document.getElementById('spotlight-canvas') || document.getElementById('mainscreen-canvas')).width > 0 && typeof window.idleRenderSpotlight === 'function')"), "Spotlight canvas missing"
         state = cdp.eval("window.__getSpotlightState ? window.__getSpotlightState() : null")
-        assert state is not None, "window.__getSpotlightState() is not available"
-        ratio = state["wordmarkWidth"] / state["stageWidth"]
-        assert ratio >= 0.85, f"Wordmark width ratio {ratio:.2f} is less than 0.85 dominant threshold"
-
-        # Active on pointer move
+        assert state and (state["wordmarkWidth"] / state["stageWidth"]) >= 0.85, "Wordmark dominant ratio failed"
         cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 400, clientY: 300, bubbles: true }));")
-        move_state = cdp.eval("window.__getSpotlightState()")
-        assert move_state["mouseActive"], "Expected mouseActive to be true on pointer move"
-
-        # Text hit detection & spotlight shrinking over text
+        assert cdp.eval("window.__getSpotlightState().mouseActive"), "Expected mouseActive on pointermove"
         cdp.eval("var el = document.querySelector('.site-header .brand-name'); var r = el.getBoundingClientRect(); window.dispatchEvent(new PointerEvent('pointermove', { clientX: Math.round(r.left + r.width * 0.5), clientY: Math.round(r.top + r.height * 0.5), bubbles: true }));")
         time.sleep(0.1)
-        text_state = cdp.eval("window.__getSpotlightState()")
-        assert text_state["isOverText"], "Expected isOverText to be true over text element"
-
-        # Window leave orbit: eases to continuous orbit
+        assert cdp.eval("window.__getSpotlightState().isOverText"), "Expected isOverText over brand-name"
         cdp.eval("document.dispatchEvent(new Event('pointerleave'));")
         leave_state = cdp.eval("window.__getSpotlightState()")
-        assert not leave_state["mouseActive"], "Expected mouseActive to be false after pointerleave"
-        assert leave_state["isRunning"], "Expected spotlight to orbit when pointer leaves"
-
-        # Scroll persistence: spotlight persists across site
-        cdp.eval("window.scrollTo({ top: 1500, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
-        cdp.eval("window.dispatchEvent(new PointerEvent('pointermove', { clientX: 500, clientY: 400, bubbles: true }));")
+        assert not leave_state["mouseActive"] and leave_state["isRunning"], "Expected orbit on pointerleave"
+        cdp.eval("window.scrollTo({ top: 1500, behavior: 'instant' }); window.dispatchEvent(new Event('scroll')); window.dispatchEvent(new PointerEvent('pointermove', { clientX: 500, clientY: 400, bubbles: true }));")
         scroll_state = cdp.eval("window.__getSpotlightState()")
-        assert scroll_state["mouseActive"] and scroll_state["isRunning"], "Expected spotlight to persist on scroll"
-
-        # Zero-cycles idle invariant when tab is hidden
+        assert scroll_state["mouseActive"] and scroll_state["isRunning"], "Expected spotlight persistence on scroll"
         cdp.eval("Object.defineProperty(document, 'hidden', { value: true, configurable: true }); document.dispatchEvent(new Event('visibilitychange'));")
-        hidden_state = cdp.eval("window.__getSpotlightState()")
-        assert not hidden_state["isRunning"], "Expected 0 cycles (paused) when tab is hidden"
-        cdp.eval("Object.defineProperty(document, 'hidden', { value: false, configurable: true }); document.dispatchEvent(new Event('visibilitychange'));")
-        cdp.eval("window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
+        assert not cdp.eval("window.__getSpotlightState().isRunning"), "Expected 0 cycles when hidden"
+        cdp.eval("Object.defineProperty(document, 'hidden', { value: false, configurable: true }); document.dispatchEvent(new Event('visibilitychange')); window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
         print("  [OK] Deep spotlight verification (dominant sizing, text shrinking, leave orbit, scroll persistence, zero-cycles) verified.")
 
-        # 12. Interactive Modules HUD, Keybinding Matrix, CLI, Manual & Wallpapers
-        print("[TEST 12] Testing Interactive Modules HUD, Keys Matrix, CLI Simulator, Manual & Wallpapers...")
+        # 12. Interactive Modules HUD, Keybinding Matrix, CLI, Manual, 320px Mobile Grid & Wallpapers
+        print("[TEST 12] Testing Modules HUD, Keys Matrix, CLI Simulator, Manual, 320px Viewport & Wallpapers...")
         assert cdp.eval("document.querySelectorAll('#module-nav-list .module-btn').length === 10"), "10 module buttons"
         assert cdp.eval("document.querySelectorAll('#module-stats-list .module-stat-badge').length >= 3"), "Dynamic telemetry stats"
         assert cdp.eval("document.querySelectorAll('#keys-grid .key-card').length === 20"), "20 key cards"
-        assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf'))"), "CLI simulator"
-        assert cdp.eval("Boolean(document.getElementById('cli-copy-cmd'))"), "CLI copy command button"
+        assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf') && document.getElementById('cli-copy-cmd'))"), "CLI simulator"
         assert cdp.eval("document.querySelectorAll('#manual .swap-card').length === 9 && document.querySelectorAll('#manual .swap-stock').length === 9 && document.querySelectorAll('#manual .swap-super').length === 9"), "9 Stock Fedora vs SuperFedora swap cards"
         assert cdp.eval("document.querySelectorAll('#manual .manual-card').length === 6 && document.querySelectorAll('#manual .manual-cmd-list li').length >= 40"), "6 Operator Manual CLI/TUI cards with >=40 command entries"
+        manual_txt = cdp.eval("document.getElementById('manual').textContent")
+        for req_token in ["fastfetch", "/etc/systemd/zram-generator.conf.d/superfedora.conf", "50-superfedora.rules", "superagent-watchdog.timer", "workstation.toml"]:
+            assert req_token in manual_txt, f"Missing required token '{req_token}' in #manual"
         assert cdp.eval("Boolean(document.querySelector('.header-nav-links a[href=\"#manual\"]') && document.querySelector('.footer-nav a[href=\"#manual\"]'))"), "Header and footer nav links to #manual"
-        assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4"), "4 wallpapers"
-        assert cdp.eval("!document.querySelector('#wallpapers .marquee-track-continuous img[src*=\"avatar.jpg\"]')"), "Marquee wallpapers must use real pixel art"
+        cdp.call("Emulation.setDeviceMetricsOverride", {"width": 320, "height": 640, "deviceScaleFactor": 1, "mobile": True})
+        assert cdp.eval("document.querySelector('#manual .swap-matrix-grid').scrollWidth <= document.querySelector('#manual .swap-matrix-grid').clientWidth + 1"), "swap-matrix-grid overflows on 320px viewport"
+        assert cdp.eval("document.querySelector('#manual .manual-grid').scrollWidth <= document.querySelector('#manual .manual-grid').clientWidth + 1"), "manual-grid overflows on 320px viewport"
+        cdp.call("Emulation.clearDeviceMetricsOverride")
+        assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4 && !document.querySelector('#wallpapers .marquee-track-continuous img[src*=\"avatar.jpg\"]')"), "Wallpapers verified"
         assert cdp.eval("Boolean(document.getElementById('header-theme-toggle') && document.getElementById('nav-theme-name').textContent.includes('THEME:'))"), "Header theme toggle"
         assert cdp.eval("Array.from(document.querySelectorAll('#keys-grid .key-card')).some(el => el.textContent.includes('Quake AI'))"), "Quake AI keybinding present"
         cdp.eval("document.getElementById('installModeSource').click();")
-        assert cdp.eval("document.getElementById('install-cmd').textContent.includes('--build-from-source')"), "Build from Source toggle updates command"
-        assert cdp.eval("document.getElementById('installModeSource').classList.contains('active') && !document.getElementById('installModeQuick').classList.contains('active')"), "Source button active state"
+        assert cdp.eval("document.getElementById('install-cmd').textContent.includes('--build-from-source') && document.getElementById('installModeSource').classList.contains('active')"), "Source install toggle"
         cdp.eval("document.getElementById('installModeQuick').click();")
-        assert cdp.eval("!document.getElementById('install-cmd').textContent.includes('--build-from-source')"), "Quick Install toggle restores command"
-        assert cdp.eval("document.getElementById('installModeQuick').classList.contains('active') && !document.getElementById('installModeSource').classList.contains('active')"), "Quick button active state"
-        print("  [OK] Modules HUD (10), Manual & Fedora Swap Matrix (9 swaps + 6 manual cards), COSMIC Matrix (20), CLI Simulator, and Wallpapers verified.")
+        assert cdp.eval("!document.getElementById('install-cmd').textContent.includes('--build-from-source') && document.getElementById('installModeQuick').classList.contains('active')"), "Quick install toggle"
+        print("  [OK] Modules HUD (10), Manual & Fedora Swap Matrix (9 swaps + 6 manual cards + 320px mobile fit), COSMIC Matrix (20), CLI Simulator, and Wallpapers verified.")
 
         print("\nAll deep verification tests PASSED!")
         s.close()

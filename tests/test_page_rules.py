@@ -18,7 +18,7 @@ from html.parser import HTMLParser
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 INDEX_PATH = os.path.join(REPO_ROOT, "index.html")
 EXCLUDE_DIRS = {".git", ".github"}
-CODE_EXTENSIONS = {".js", ".css", ".sh", ".py"}
+CODE_EXTENSIONS = {".js", ".css", ".sh", ".py", ".svg", ".qml", ".rs"}
 
 
 def check_html_structure():
@@ -129,9 +129,15 @@ def check_critical_files():
 
 
 def check_line_sizing_and_density():
-    """Verify 16 <= lines <= 256 for code and <= 12 files per directory."""
+    """Verify 16 <= lines <= 256 for code, README.md < 25 lines, and <= 12 files per directory."""
     sizing_issues = []
     density_issues = []
+    readme_path = os.path.join(REPO_ROOT, "README.md")
+    if os.path.exists(readme_path):
+        with open(readme_path, "rb") as fp:
+            rlines = sum(1 for _ in fp)
+        if rlines >= 25:
+            sizing_issues.append(f"README.md: {rlines} lines (must be < 25)")
 
     for root, dirs, files in os.walk(REPO_ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS and not d.startswith(".")]
@@ -186,7 +192,6 @@ def check_zero_emojis():
 
 def main():
     failures = []
-
     print("1. Checking HTML structure and tag balance...")
     html_issues, ids, links = check_html_structure()
     if html_issues:
@@ -195,52 +200,26 @@ def main():
     else:
         print("  [OK] index.html has 0 unclosed or mismatched HTML tags.")
 
-    print("2. Checking local assets and internal anchors...")
-    asset_issues = check_local_assets_and_anchors(ids, links)
-    if asset_issues:
-        for err in asset_issues: print(f"  [-] {err}")
-        failures.extend(asset_issues)
-    else:
-        print(f"  [OK] All {len(links)} links and assets are intact and verified.")
-
-    print("3. Checking JavaScript syntax (node --check)...")
-    js_issues = check_js_syntax()
-    if js_issues:
-        for err in js_issues: print(f"  [-] {err}")
-        failures.extend(js_issues)
-    else:
-        print("  [OK] All JavaScript files pass node --check syntax tests.")
-
-    print("4. Checking critical project files...")
-    file_issues = check_critical_files()
-    if file_issues:
-        for err in file_issues: print(f"  [-] {err}")
-        failures.extend(file_issues)
-    else:
-        print("  [OK] All required branding, style, script, and metadata files exist.")
-
-    print("5. Checking Page Rules (16-256 lines) & Directory Density (<= 12 files)...")
-    sizing_issues, density_issues = check_line_sizing_and_density()
-    if sizing_issues or density_issues:
-        for err in sizing_issues + density_issues: print(f"  [-] {err}")
-        failures.extend(sizing_issues + density_issues)
-    else:
-        print("  [OK] All code files satisfy 16-256 lines and all directories have <= 12 files.")
-
-    print("6. Checking Strict Zero-Emoji Invariant...")
-    emoji_issues = check_zero_emojis()
-    if emoji_issues:
-        for err in emoji_issues: print(f"  [-] {err}")
-        failures.extend(emoji_issues)
-    else:
-        print("  [OK] Strict Zero-Emoji Invariant verified across all files.")
+    checks = [
+        ("2. Checking local assets and internal anchors...", lambda: check_local_assets_and_anchors(ids, links), f"All {len(links)} links and assets are intact and verified."),
+        ("3. Checking JavaScript syntax (node --check)...", check_js_syntax, "All JavaScript files pass node --check syntax tests."),
+        ("4. Checking critical project files...", check_critical_files, "All required branding, style, script, and metadata files exist."),
+        ("5. Checking Page Rules (16-256 lines) & Directory Density (<= 12 files)...", lambda: sum(check_line_sizing_and_density(), []), "All code files satisfy 16-256 lines, README.md < 25 lines, and directories <= 12 files."),
+        ("6. Checking Strict Zero-Emoji Invariant...", check_zero_emojis, "Strict Zero-Emoji Invariant verified across all files."),
+    ]
+    for title, fn, ok_msg in checks:
+        print(title)
+        errs = fn()
+        if errs:
+            for err in errs: print(f"  [-] {err}")
+            failures.extend(errs)
+        else:
+            print(f"  [OK] {ok_msg}")
 
     if failures:
         print(f"\nResult: FAILED with {len(failures)} violation(s).", file=sys.stderr)
         sys.exit(1)
-    else:
-        print("\nResult: All page rules, assets, syntax, and invariants PASSED.")
-        sys.exit(0)
+    print("\nResult: All page rules, assets, syntax, and invariants PASSED.")
 
 
 if __name__ == "__main__":

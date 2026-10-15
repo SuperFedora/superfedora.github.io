@@ -1735,7 +1735,7 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
             </div>
             <div class="swap-row swap-super">
               <span class="swap-label">[+] SuperFedora Swap</span><br>
-              Declarative <code>zram-generator</code> (<code>zstd</code>), bounded <code>journald</code> (<code>500M</code>), <code>systemd-oomd</code> slice protection (<code>background.slice</code> for builds/AI), SELinux <code>Enforcing</code> (<code>restorecon</code>), and Polkit <code>wheel</code> rules.
+              Declarative <code>/etc/systemd/zram-generator.conf.d/superfedora.conf</code> (<code>zstd</code>), bounded <code>journald</code> (<code>500M</code>), <code>systemd-oomd</code> slice protection (<code>background.slice</code> for builds/AI so Wayland never drops frames), SELinux <code>Enforcing</code> (<code>restorecon</code>), and Polkit <code>wheel</code> rules (<code>50-superfedora.rules</code>).
             </div>
           </div>
 
@@ -1747,11 +1747,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
             </div>
             <div class="swap-row swap-stock">
               <span class="swap-label">[-] Stock Fedora</span><br>
-              Bloated GTK/Qt settings dialogs, slow GUI software centers, and mouse-dependent applets.
+              Heavy GTK/Qt settings dialogs, slow GUI software centers, and mouse-dependent system monitors.
             </div>
             <div class="swap-row swap-super">
               <span class="swap-label">[+] SuperFedora Swap</span><br>
-              Instant keyboard-driven Rust Ratatui TUIs: <code>superfedora</code>, <code>supersettings</code>, <code>supertheme</code>, <code>superforge</code>, <code>supernotify</code>, <code>superagent</code>, <code>wiremix</code>, <code>wlctl</code>, <code>bluetui</code>, <code>btop</code>, <code>fuzzel</code>, and <code>idlescreen</code>.
+              Fast native Rust Ratatui TUIs: <code>superfedora</code>, <code>supersettings</code>, <code>supertheme</code>, <code>superforge</code>, <code>supernotify</code>, <code>superagent</code>, <code>wiremix</code>, <code>wlctl</code>, <code>bluetui</code>, <code>btop</code>, <code>fastfetch</code>, <code>fuzzel</code>, and <code>idlescreen</code>.
             </div>
           </div>
         </div>
@@ -1874,19 +1874,37 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
         </div>
       </div>
 
-      <!-- PART 3: WORKSTATION MODES & DECLARATIVE CLONING SUMMARY -->
+      <!-- PART 3: WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE & CLONING -->
       <div class="rpg-window" style="margin-top: 24px;">
         <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 8px;">
-          [ PART III // 4 WORKSTATION MODES &amp; DECLARATIVE WORKSTATION CLONING ]
+          [ PART III // WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE &amp; CLONING ]
         </h3>
         <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
-          Switch your entire workstation personality in one command via <code>superfedora mode &lt;profile&gt;</code>, or clone your exact setup to a new laptop or desktop via <code>superfedora export</code> / <code>superfedora import</code>:
+          Reference workflows for 16-bit Workstation Modes, Cast Specialists, <code>systemd</code> system/user units &amp; timers, Btrfs Snapper Time-Machine rollbacks, and declarative <code>workstation.toml</code> cloning:
         </p>
-        <pre><code style="color: #9ece6a; font-family: var(--font-mono); font-size: 13px;">superfedora mode stealth    # power-saver | VFR=on, blur/shadows=off | DND=on, SFX=muted (Maximum Battery / Flight Mode)
+        <pre><code style="color: #9ece6a; font-family: var(--font-mono); font-size: 13px;"># 1. Four 16-Bit Workstation Modes (Power + Hyprland + Audio + Notifications)
+superfedora mode stealth    # power-saver | VFR=on, blur/shadows=off | DND=on, SFX=muted (Maximum Battery / Flight Mode)
 superfedora mode balanced   # balanced    | VFR=on, animations=on    | DND=off, normal toasts (Daily Driver Default)
 superfedora mode forge      # performance | VFR=off, max refresh     | BUILDER // FORGE banner + CPU compile boost
 superfedora mode arcade     # performance | CRT scanlines + glow     | 16-bit WAV audio cues + Cast Comms animations
 
+# 2. Ten Animated 16-Bit Cast Specialists &amp; 4 Arcade Stage Banners (READY | WARNING | UPDATE | CHECKPOINT)
+# Roles: ai (AGY // OPENCLAW) | security (SENTINEL // SELINUX) | builder (BUILDER // FORGE) | engineer (ARCHITECT // KERNEL)
+#        navigator (NAVIGATOR // NET) | medic (MEDIC // RECOVERY) | archivist (ARCHIVIST // BTRFS)
+#        commander (COMMANDER // SYSTEMD) | synth (SYNTH // PIPEWIRE) | app (COURIER // DESKTOP)
+supernotify cast medic "THERMAL WATCH" "NVMe &amp; CPU nominal" &amp;&amp; supernotify banner checkpoint "SNAPSHOT #42 VERIFIED"
+
+# 3. Managed systemd User &amp; System Units / Timers
+# User:   superfedora-session.target | superbar.service | superdock.service | supernotify.service
+#         supertheme-sun.timer | superagent-watchdog.timer | superforge-reforge.timer
+# System: superfedora-boot-guard.service | btrfs-scrub@-.timer | cups.socket | sssd-kcm.socket
+superfedora service status &amp;&amp; superfedora service logs superagent-watchdog.timer
+
+# 4. Btrfs Time-Machine Workflows (+ Automatic libdnf5-plugin-actions &amp; grub-btrfs Rollback Menu)
+superfedora snapshot list &amp;&amp; superfedora snapshot create "pre-experiment"
+superfedora snapshot diff 1 &amp;&amp; superfedora snapshot restore 1
+
+# 5. Declarative Workstation Cloning (workstation.toml)
 superfedora export ~/.config/superfedora/workstation.toml   # Export theme, mode, dock edges, forged binaries, Flatpaks &amp; WebApps
 superfedora import ~/.config/superfedora/workstation.toml   # Reconstruct identical workstation state on any clean Fedora host</code></pre>
       </div>
