@@ -11,6 +11,7 @@
     "modules",
     "keybindings",
     "cli",
+    "manual",
     "wallpapers",
     "repos"
   ];

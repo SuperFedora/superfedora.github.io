@@ -93,6 +93,7 @@
         <a href="#modules" class="nav-link">[MODULES]</a>
         <a href="#keybindings" class="nav-link">[KEYS]</a>
         <a href="#cli" class="nav-link">[CLI]</a>
+        <a href="#manual" class="nav-link">[MANUAL]</a>
         <a href="#wallpapers" class="nav-link">[ART]</a>
       </nav>
 
@@ -209,7 +210,7 @@
           <!-- Hero Action Buttons -->
           <div class="hero-actions">
             <a href="#install" class="btn-snes-primary">&gt; Quick / Source Install</a>
-            <a href="#pre-installed" class="btn-snes-secondary">&gt; Pre-Installed Stack</a>
+            <a href="#manual" class="btn-snes-secondary">&gt; Manual &amp; Fedora Swaps</a>
             <a href="#modules" class="btn-snes-secondary">&gt; 10 Modules HUD</a>
             <a href="#keybindings" class="btn-snes-secondary">&gt; COSMIC Keys</a>
           </div>
@@ -1589,6 +1590,308 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
       </div>
     </section>
 
+    <!-- SECTION 6B: OPERATOR MANUAL & STOCK FEDORA SWAP MATRIX -->
+    <section class="panel-section" id="manual">
+      <div class="snes-eyebrow">
+        <span class="snes-eyebrow-pip"></span>
+        OPERATOR MANUAL // STOCK FEDORA SWAP MATRIX &amp; FULL CLI/TUI REFERENCE
+      </div>
+      <h2 class="section-heading">Operator Manual &amp; What SuperFedora Swaps Out in Fedora</h2>
+      <p class="section-desc">
+        SuperFedora takes a clean Fedora Minimal or Workstation install and systematically swaps out crippled codecs, heavy background daemons, passive filesystems, and generic desktop plumbing for hardware-accelerated, socket-activated, native Rust 1.99 16-bit components. Below is the complete <strong>Stock Fedora vs. SuperFedora Swap Matrix</strong> followed by the full <strong>Operator Manual &amp; Command Reference</strong>.
+      </p>
+
+      <!-- PART 1: WHAT SUPERFEDORA SWAPS OUT IN STOCK FEDORA -->
+      <div class="rpg-window" style="margin-top: 20px;">
+        <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 6px;">
+          [ PART I // STOCK FEDORA VS. SUPERFEDORA SWAP &amp; UPGRADE MATRIX ]
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.55;">
+          Every subsystem listed below is idempotently inspected and swapped during <code>superfedora install</code> or <code>superfedora hardware optimize</code>.
+        </p>
+
+        <div class="swap-matrix-grid">
+          <!-- Swap 1: Codec & GPU Stack -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">01 // Codec &amp; GPU Video Stack</h4>
+              <span class="preinstalled-badge">[VA-API // DMABUF]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Crippled <code>ffmpeg-free</code> &amp; <code>mesa-va-drivers</code> lacking patent-encumbered H.264/HEVC/AV1 hardware decode; CPU-bound browser video.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              <code>dnf5 install --allowerasing ffmpeg</code> + full RPM Fusion VA-API (<code>mesa-va-drivers-freeworld</code>, <code>intel-media-driver</code>, <code>nvidia-vaapi-driver</code>) + Firefox zero-copy Wayland DMABUF.
+            </div>
+          </div>
+
+          <!-- Swap 2: Desktop Shell & Session -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">02 // Desktop Shell &amp; Wayland Session</h4>
+              <span class="preinstalled-badge">[HYPRLAND // UWSM]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Heavy mouse-centric GNOME/KDE desktop environment (1.5GB+ idle RAM) or bare Minimal TTY with no systemd session target bindings.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Hyprland 0.53+ (<code>vfr = true</code>, <code>direct_scanout = true</code>) + <code>uwsm</code> (<code>superfedora-session.target</code>) + native Rust <code>supershell</code> (<code>superbar</code>, <code>superdock</code>, <code>supersettings</code>, <code>superlock</code>) &amp; Quickshell HUD.
+            </div>
+          </div>
+
+          <!-- Swap 3: Notifications & Alerts -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">03 // Notifications &amp; System Alerts</h4>
+              <span class="preinstalled-badge">[10 CAST SPECIALISTS]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Generic, uncategorized desktop toast popups with no role routing, no interactive history TUI, and no stage banners.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Standalone <code>supernotify</code> with 10 animated 16-bit Cast Specialists (<code>ai</code>, <code>security</code>, <code>builder</code>, <code>engineer</code>, <code>navigator</code>, <code>medic</code>, <code>archivist</code>, <code>commander</code>, <code>synth</code>, <code>app</code>) + 4 arcade stage banners (<code>READY</code>, <code>WARNING</code>, <code>UPDATE</code>, <code>CHECKPOINT</code>).
+            </div>
+          </div>
+
+          <!-- Swap 4: Display Manager / Greeter -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">04 // Display Manager &amp; Login Greeter</h4>
+              <span class="preinstalled-badge">[GREETD // TUIGREET]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Heavyweight GDM or SDDM running a second full graphical compositor session simply to render a password prompt.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Ultra-lightweight <code>greetd</code> + 16-bit <code>tuigreet</code> console greeter launching <code>uwsm start hyprland-uwsm.desktop</code> with sub-second boot-to-login speed.
+            </div>
+          </div>
+
+          <!-- Swap 5: Package & Build Pipeline -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">05 // Package &amp; Native Build Pipeline</h4>
+              <span class="preinstalled-badge">[2-TIER SUPERFORGE]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Generic baseline <code>x86_64</code> RPM binaries only; zero CPU microarchitecture tuning (<code>-march=native</code>) and no isolated web apps.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Hybrid 3-layer pipeline: <code>dnf5</code> base + <code>superforge</code> (Tier-1 instant static <code>musl</code> binary cache + Tier-2 background <code>-O3 -march=native -flto=thin</code> source re-forge &amp; chromeless Firefox WebApps) + <code>flatpak</code>.
+            </div>
+          </div>
+
+          <!-- Swap 6: System Daemons & IPC -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">06 // System Daemons &amp; Zero-Fork IPC</h4>
+              <span class="preinstalled-badge">[SOCKET ACTIVATED]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              24/7 resident <code>packagekitd</code> (300MB+ RAM), always-on <code>cups.service</code>, and status bars forking <code>bash -c</code> every second.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Compatibility-first socket activation (<code>cups.socket</code>, <code>sssd-kcm.socket</code>), <code>PackageKit</code> 30s idle auto-shutdown (<code>ShutdownTimeout=30</code>), hardware-triggered <code>ModemManager</code>, and zero-fork Rust <code>/proc</code> + Hyprland <code>.socket2.sock</code> streaming.
+            </div>
+          </div>
+
+          <!-- Swap 7: Filesystem & Recovery -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">07 // Btrfs Filesystem &amp; Time-Machine</h4>
+              <span class="preinstalled-badge">[SNAPPER // BOOT-GUARD]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Passive Btrfs root/home subvolumes with zero pre-configured snapshots, zero DNF hooks, and no bootable GRUB rollback menu.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Immutable Baseline #1 + <code>libdnf5-plugin-actions</code> automatic pre/post DNF5 snapshots + <code>grub-btrfs</code> boot menu + <code>superfedora-boot-guard.service</code> + monthly <code>btrfs-scrub@-.timer</code>.
+            </div>
+          </div>
+
+          <!-- Swap 8: Swap, Memory, Logging & Security -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">08 // Zram, OOM Slice &amp; Security</h4>
+              <span class="preinstalled-badge">[ZSTD // SELINUX]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Unbounded multi-gigabyte journal logs, unisolated compiler/AI memory spikes freezing the desktop, and repetitive polkit prompts.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Declarative <code>zram-generator</code> (<code>zstd</code>), bounded <code>journald</code> (<code>500M</code>), <code>systemd-oomd</code> slice protection (<code>background.slice</code> for builds/AI), SELinux <code>Enforcing</code> (<code>restorecon</code>), and Polkit <code>wheel</code> rules.
+            </div>
+          </div>
+
+          <!-- Swap 9: Control Panels & Utilities -->
+          <div class="swap-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title">09 // Control Panels &amp; System Utilities</h4>
+              <span class="preinstalled-badge">[RATATUI // 16-BIT]</span>
+            </div>
+            <div class="swap-row swap-stock">
+              <span class="swap-label">[-] Stock Fedora</span><br>
+              Bloated GTK/Qt settings dialogs, slow GUI software centers, and mouse-dependent applets.
+            </div>
+            <div class="swap-row swap-super">
+              <span class="swap-label">[+] SuperFedora Swap</span><br>
+              Instant keyboard-driven Rust Ratatui TUIs: <code>superfedora</code>, <code>supersettings</code>, <code>supertheme</code>, <code>superforge</code>, <code>supernotify</code>, <code>superagent</code>, <code>wiremix</code>, <code>wlctl</code>, <code>bluetui</code>, <code>btop</code>, <code>fuzzel</code>, and <code>idlescreen</code>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 2: COMPLETE OPERATOR MANUAL & CLI/TUI COMMAND REFERENCE -->
+      <div style="margin-top: 32px;">
+        <h3 style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-white); margin-bottom: 6px;">
+          [ PART II // COMPLETE CLI &amp; TUI OPERATOR MANUAL ]
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
+          Running any <code>super*</code> binary without arguments launches its interactive 16-bit Ratatui TUI (<code>j/k</code> or arrows to navigate, <code>Enter</code> to execute, <code>Tab</code> to switch panes, <code>q</code> to quit). Below is the complete subcommand reference across all 9 native Rust binaries.
+        </p>
+
+        <div class="manual-grid">
+          <!-- Manual Card 1: superfedora / sf -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">1. Core Orchestrator (superfedora / sf)</h4>
+              <span class="preinstalled-badge">[SF // CORE]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>superfedora</code> (or <code>sf</code>) — Launch interactive 5-tab Workstation Orchestrator TUI.</li>
+              <li><code>superfedora install [--quick|--build-from-source]</code> — Run all 10 idempotent modules (00..90).</li>
+              <li><code>superfedora doctor</code> | <code>superfedora status</code> | <code>superfedora verify</code> — Run 7/7 health checks, telemetry, &amp; verification ladder.</li>
+              <li><code>superfedora system-upgrade</code> — 5-stage transactional upgrade: Btrfs snapshot -&gt; <code>dnf5 upgrade</code> -&gt; <code>superforge update</code> -&gt; <code>flatpak update</code> -&gt; <code>supertheme reload</code>.</li>
+              <li><code>superfedora repo [status|test|sync]</code> — Inspect, test, or fast-forward pull all 6 sibling <code>@SuperFedora</code> repositories.</li>
+              <li><code>superfedora service [status|start|restart|logs] [unit]</code> — Manage system &amp; user systemd units and timers.</li>
+              <li><code>superfedora hardware [probe|optimize]</code> — Auto-detect GPU (AMD/Intel/NVIDIA) and configure VA-API + Firefox DMABUF.</li>
+              <li><code>superfedora snapshot [list|create|diff|restore]</code> — Btrfs Time-Machine inspection, file-level diffing, and atomic rollback.</li>
+              <li><code>superfedora mode [stealth|balanced|forge|arcade]</code> — Switch unified power/compositor/audio/notification workstation profile.</li>
+              <li><code>superfedora export [path]</code> | <code>superfedora import &lt;file.toml&gt;</code> — Export or clone full workstation state via <code>workstation.toml</code>.</li>
+            </ul>
+          </div>
+
+          <!-- Manual Card 2: superforge -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">2. Hybrid Binary &amp; Source Forge (superforge)</h4>
+              <span class="preinstalled-badge">[SUPERFORGE]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>superforge</code> — Launch interactive Native Source Builder &amp; WebApp TUI.</li>
+              <li><code>superforge status</code> — Display CPU microarchitecture flags, LTO status, and forged binary manifest.</li>
+              <li><code>superforge fetch-bin &lt;target|all&gt;</code> — Tier-1 Quick Install: download pre-forged static <code>musl</code> binaries in seconds.</li>
+              <li><code>superforge background-reforge</code> — Tier-2 low-priority (<code>nice -n 19</code>, <code>IOSchedulingClass=idle</code>) native <code>-O3 -march=native -flto=thin</code> rebuild on AC power.</li>
+              <li><code>superforge build &lt;target|all&gt; [--pgo]</code> — Compile target(s) from <code>recipes.toml</code> with optional LLVM Profile-Guided Optimization.</li>
+              <li><code>superforge update</code> — 4-stage update checker comparing installed versions against upstream GitHub releases.</li>
+              <li><code>superforge verify</code> — Verify ELF symbols, strip status, and SHA256 receipts in <code>~/.local/state/superforge/</code>.</li>
+              <li><code>superforge webapp [list|install &lt;id&gt;|remove &lt;id&gt;]</code> — Manage isolated, chromeless Firefox Wayland WebApps.</li>
+            </ul>
+          </div>
+
+          <!-- Manual Card 3: supertheme -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">3. 16-Bit Theme &amp; Audio Engine (supertheme)</h4>
+              <span class="preinstalled-badge">[SUPERTHEME]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>supertheme</code> (or <code>sf theme</code>) — Launch interactive 16-color Rainbow Palette &amp; Geometry TUI.</li>
+              <li><code>supertheme list</code> | <code>supertheme status</code> — List all 16 rainbow palettes (<code>01-crimson</code> .. <code>16-fuchsia</code>) and current state.</li>
+              <li><code>supertheme set &lt;palette&gt; [dark|light] [square|rounded]</code> — Apply palette across Hyprland, Quickshell, Kitty, Ghostty, Fuzzel, GTK, Neovim, and OpenRGB.</li>
+              <li><code>supertheme mode [dark|light|toggle]</code> — Switch between Dark (<code>#07080b</code> Obsidian) and Light (<code>#e6e8f0</code> Cartridge) modes.</li>
+              <li><code>supertheme corners [square|rounded|toggle]</code> — Toggle strict 90-degree pixel corners (<code>0px</code>) vs. smooth <code>10px</code> geometry.</li>
+              <li><code>supertheme nightlight [on|off|auto|&lt;2500-6500&gt;]</code> — Control circadian display warmth (paired with <code>supertheme-sun.timer</code>).</li>
+              <li><code>supertheme sound &lt;startup|confirm|warn|error|toast|mode&gt;</code> — Play synthesized 16-bit PCM WAV audio cues via PipeWire.</li>
+            </ul>
+          </div>
+
+          <!-- Manual Card 4: supernotify -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">4. Cast Comms &amp; Layer Overlays (supernotify)</h4>
+              <span class="preinstalled-badge">[SUPERNOTIFY]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>supernotify</code> — Launch interactive Cast Comms &amp; Notification Center TUI.</li>
+              <li><code>supernotify cast &lt;role&gt; &lt;title&gt; &lt;msg&gt;</code> — Dispatch animated 16-bit Cast Specialist popup (roles: <code>ai</code>, <code>security</code>, <code>builder</code>, <code>engineer</code>, <code>navigator</code>, <code>medic</code>, <code>archivist</code>, <code>commander</code>, <code>synth</code>, <code>app</code>).</li>
+              <li><code>supernotify animate &lt;role&gt;</code> — Render live 60fps 4-frame 16-bit sprite animation preview in terminal.</li>
+              <li><code>supernotify banner &lt;ready|warning|update|checkpoint&gt; [subtitle]</code> — Trigger full-width 16-bit arcade stage banner.</li>
+              <li><code>supernotify overlay</code> — Launch native Wayland layer-shell / Escape-to-dismiss notification overlay window.</li>
+              <li><code>supernotify history [--clear]</code> — Inspect or clear persistent JSONL notification log.</li>
+              <li><code>supernotify dnd [on|off|toggle]</code> — Control Do-Not-Disturb suppression state.</li>
+            </ul>
+          </div>
+
+          <!-- Manual Card 5: supershell -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">5. Native Wayland Shell Suite (supershell)</h4>
+              <span class="preinstalled-badge">[SUPERSHELL // 4 BINS]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>superbar</code> | <code>superbar status</code> — Launch interactive status bar configurator or print snapshot telemetry.</li>
+              <li><code>superbar --stream-json</code> — Zero-fork native Rust JSON streamer reading <code>/proc/stat</code>, <code>/proc/meminfo</code>, <code>/sys/class/hwmon</code>, and Hyprland <code>.socket2.sock</code> IPC events.</li>
+              <li><code>superbar hud</code> — Launch compact Wayland layer-shell live telemetry HUD overlay.</li>
+              <li><code>superdock [status|edge &lt;top|bottom|left|right&gt;|mode &lt;auto-hide|always-visible|intelli-hide&gt;]</code> — Configure Quattro Multi-Edge Dock.</li>
+              <li><code>superdock [pin &lt;app&gt;|unpin &lt;app&gt;]</code> — Pin or unpin desktop launchers on the Quattro Dock.</li>
+              <li><code>supersettings [audio|network|bluetooth|display|power]</code> — Unified 16-bit Control Deck TUI &amp; direct subsystem launchers.</li>
+              <li><code>superlock [--now|status|timeout &lt;sec&gt;]</code> — Trigger 16-bit lockscreen immediately or configure idle lock timeout.</li>
+            </ul>
+          </div>
+
+          <!-- Manual Card 6: superagent -->
+          <div class="manual-card">
+            <div class="preinstalled-header">
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">6. Autonomous Agent &amp; Watchdog (superagent)</h4>
+              <span class="preinstalled-badge">[SUPERAGENT]</span>
+            </div>
+            <ul class="manual-cmd-list">
+              <li><code>superagent</code> — Launch interactive AI Agent Command Center TUI (<code>Super + `</code> Quake console default).</li>
+              <li><code>superagent watchdog</code> — Zero-token local telemetry &amp; anomaly detector checking CPU/NVMe thermals (<code>medic</code>), SELinux/Polkit (<code>security</code>), routes/Tailscale (<code>navigator</code>), and failed systemd units (<code>commander</code>).</li>
+              <li><code>superagent run "&lt;task&gt;"</code> — Execute autonomous workstation engineering task via OpenClaw harness.</li>
+              <li><code>superagent ask "&lt;prompt&gt;"</code> — Query active local Ollama model or configured cloud agent CLI (<code>agy</code>, <code>mcode</code>, <code>grok</code>, <code>vibe</code>).</li>
+              <li><code>superagent ollama [status|start|pull &lt;model&gt;]</code> — Manage local/LAN <code>sf-ollama</code> inference engine.</li>
+              <li><code>superagent cast &lt;title&gt; &lt;msg&gt;</code> — Emit direct <code>AGY // OPENCLAW</code> specialist notification.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 3: WORKSTATION MODES & DECLARATIVE CLONING SUMMARY -->
+      <div class="rpg-window" style="margin-top: 24px;">
+        <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 8px;">
+          [ PART III // 4 WORKSTATION MODES &amp; DECLARATIVE WORKSTATION CLONING ]
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+          Switch your entire workstation personality in one command via <code>superfedora mode &lt;profile&gt;</code>, or clone your exact setup to a new laptop or desktop via <code>superfedora export</code> / <code>superfedora import</code>:
+        </p>
+        <pre><code style="color: #9ece6a; font-family: var(--font-mono); font-size: 13px;">superfedora mode stealth    # power-saver | VFR=on, blur/shadows=off | DND=on, SFX=muted (Maximum Battery / Flight Mode)
+superfedora mode balanced   # balanced    | VFR=on, animations=on    | DND=off, normal toasts (Daily Driver Default)
+superfedora mode forge      # performance | VFR=off, max refresh     | BUILDER // FORGE banner + CPU compile boost
+superfedora mode arcade     # performance | CRT scanlines + glow     | 16-bit WAV audio cues + Cast Comms animations
+
+superfedora export ~/.config/superfedora/workstation.toml   # Export theme, mode, dock edges, forged binaries, Flatpaks &amp; WebApps
+superfedora import ~/.config/superfedora/workstation.toml   # Reconstruct identical workstation state on any clean Fedora host</code></pre>
+      </div>
+    </section>
+
     <!-- SECTION 7: WALLPAPERS GALLERY -->
     <section class="panel-section" id="wallpapers">
       <div class="snes-eyebrow">
@@ -2165,6 +2468,7 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
         <a href="#modules">10 Modules</a>
         <a href="#keybindings">COSMIC Keys</a>
         <a href="#cli">CLI Reference</a>
+        <a href="#manual">Operator Manual</a>
         <a href="#wallpapers">Wallpapers</a>
         <a href="https://github.com/SuperFedora/superfedora/releases" target="_blank" rel="noopener noreferrer">Releases</a>
         <a href="https://github.com/SuperFedora/superfedora/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">Changelog</a>

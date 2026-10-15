@@ -221,13 +221,16 @@ def run_tests():
         cdp.eval("window.scrollTo({ top: 0, behavior: 'instant' }); window.dispatchEvent(new Event('scroll'));")
         print("  [OK] Deep spotlight verification (dominant sizing, text shrinking, leave orbit, scroll persistence, zero-cycles) verified.")
 
-        # 12. Interactive Modules HUD, Keybinding Matrix, CLI & Wallpapers
-        print("[TEST 12] Testing Interactive Modules HUD, Keys Matrix, CLI Simulator & Wallpapers...")
+        # 12. Interactive Modules HUD, Keybinding Matrix, CLI, Manual & Wallpapers
+        print("[TEST 12] Testing Interactive Modules HUD, Keys Matrix, CLI Simulator, Manual & Wallpapers...")
         assert cdp.eval("document.querySelectorAll('#module-nav-list .module-btn').length === 10"), "10 module buttons"
         assert cdp.eval("document.querySelectorAll('#module-stats-list .module-stat-badge').length >= 3"), "Dynamic telemetry stats"
         assert cdp.eval("document.querySelectorAll('#keys-grid .key-card').length === 20"), "20 key cards"
         assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf'))"), "CLI simulator"
         assert cdp.eval("Boolean(document.getElementById('cli-copy-cmd'))"), "CLI copy command button"
+        assert cdp.eval("document.querySelectorAll('#manual .swap-card').length === 9 && document.querySelectorAll('#manual .swap-stock').length === 9 && document.querySelectorAll('#manual .swap-super').length === 9"), "9 Stock Fedora vs SuperFedora swap cards"
+        assert cdp.eval("document.querySelectorAll('#manual .manual-card').length === 6 && document.querySelectorAll('#manual .manual-cmd-list li').length >= 40"), "6 Operator Manual CLI/TUI cards with >=40 command entries"
+        assert cdp.eval("Boolean(document.querySelector('.header-nav-links a[href=\"#manual\"]') && document.querySelector('.footer-nav a[href=\"#manual\"]'))"), "Header and footer nav links to #manual"
         assert cdp.eval("document.querySelectorAll('.wallpapers-grid .wallpaper-card').length === 4"), "4 wallpapers"
         assert cdp.eval("!document.querySelector('#wallpapers .marquee-track-continuous img[src*=\"avatar.jpg\"]')"), "Marquee wallpapers must use real pixel art"
         assert cdp.eval("Boolean(document.getElementById('header-theme-toggle') && document.getElementById('nav-theme-name').textContent.includes('THEME:'))"), "Header theme toggle"
@@ -238,8 +241,7 @@ def run_tests():
         cdp.eval("document.getElementById('installModeQuick').click();")
         assert cdp.eval("!document.getElementById('install-cmd').textContent.includes('--build-from-source')"), "Quick Install toggle restores command"
         assert cdp.eval("document.getElementById('installModeQuick').classList.contains('active') && !document.getElementById('installModeSource').classList.contains('active')"), "Quick button active state"
-        print("  [OK] Modules HUD (10), Install Mode toggle, COSMIC Matrix (20 incl. Quake AI), CLI Simulator, and Wallpaper Gallery verified.")
-
+        print("  [OK] Modules HUD (10), Manual & Fedora Swap Matrix (9 swaps + 6 manual cards), COSMIC Matrix (20), CLI Simulator, and Wallpapers verified.")
 
         print("\nAll deep verification tests PASSED!")
         s.close()

@@ -157,8 +157,72 @@
 .repo-title { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--text-white); }
 .repo-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 12px; flex: 1; }
 
+/* Stock Fedora vs. SuperFedora Swap Matrix & Manual Grid */
+.swap-matrix-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 18px; margin-top: 24px; }
+.swap-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-subtle);
+  border-top: 3px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box), var(--cartridge-shadow);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.14s ease, border-color 0.14s ease;
+}
+.swap-card:hover { transform: translateY(-2px); border-color: var(--jewel-primary); }
+.swap-row {
+  font-size: 13px;
+  line-height: 1.55;
+  padding: 10px 12px;
+  border-radius: var(--radius-pixel);
+  font-family: var(--font-mono);
+}
+.swap-stock {
+  background: rgba(247, 118, 142, 0.08);
+  border-left: 3px solid #f7768e;
+  color: var(--text-secondary);
+}
+.swap-super {
+  background: rgba(158, 206, 106, 0.09);
+  border-left: 3px solid #9ece6a;
+  color: var(--text-white);
+}
+.swap-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.swap-stock .swap-label { color: #f7768e; }
+.swap-super .swap-label { color: #9ece6a; }
+.manual-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; margin-top: 24px; }
+.manual-card {
+  background: var(--bg-surface);
+  border: 2px solid var(--border-hard);
+  border-left: 4px solid var(--jewel-primary);
+  border-radius: var(--radius-pixel);
+  box-shadow: var(--bevel-snes-box), var(--cartridge-shadow);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.manual-cmd-list { display: flex; flex-direction: column; gap: 8px; font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
+.manual-cmd-list li {
+  background: rgba(13, 14, 21, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 3px;
+  padding: 8px 10px;
+}
+.manual-cmd-list code { color: var(--jewel-hot); font-weight: 700; }
+
 /* Page Bottom Footer */
 .site-footer { margin-top: 80px; border-top: 2px solid var(--border-subtle); background: rgba(15, 16, 23, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 40px 20px 84px; }
 .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 .footer-nav { display: flex; flex-wrap: wrap; gap: 24px; font-family: var(--font-mono); font-size: 14px; font-weight: 600; line-height: 1.6; }
 .footer-copy { font-family: var(--font-mono); font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
