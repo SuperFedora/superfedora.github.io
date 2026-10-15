@@ -687,11 +687,11 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
             <span class="preinstalled-badge">[ORCHESTRATOR // DUAL CLI]</span>
           </div>
           <p class="preinstalled-desc">
-            Dual command interface: <code>sf</code> (fast 2-letter primary) and <code>superfedora</code>. Manages the workstation lifecycle: <code>sf install</code>, <code>sf update</code>, <code>sf doctor</code>, <code>sf rollback</code>, <code>sf dotfiles</code>, and <code>sf bindings</code>.
+            Canonical command interface: <code>superfedora</code> (primary binary) with <code>sf</code> relative symlink alias. Manages the workstation lifecycle: <code>superfedora install</code>, <code>superfedora system-upgrade</code>, <code>superfedora service</code>, <code>superfedora doctor</code>, <code>superfedora rollback</code>, and <code>superfedora dotfiles</code>.
           </p>
           <div class="preinstalled-meta">
-            <span><b>BIN:</b> ~/.local/bin/sf</span>
-            <span><b>ALIAS:</b> superfedora</span>
+            <span><b>BIN:</b> ~/.local/bin/superfedora</span>
+            <span><b>ALIAS:</b> sf -&gt; superfedora</span>
           </div>
         </div>
         </div>
@@ -1562,12 +1562,12 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
       <!-- Interactive CLI Terminal Simulator -->
       <div style="margin-top:28px;">
         <div class="cli-tabs" role="tablist" aria-label="CLI commands">
-          <button type="button" class="cli-tab-btn active" data-cmd="sf-doctor" role="tab">&gt; sf doctor</button>
-          <button type="button" class="cli-tab-btn" data-cmd="sf-install" role="tab">&gt; sf install</button>
+          <button type="button" class="cli-tab-btn active" data-cmd="sf-doctor" role="tab">&gt; superfedora doctor</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-install" role="tab">&gt; superfedora install</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-build" role="tab">&gt; superforge</button>
-          <button type="button" class="cli-tab-btn" data-cmd="sf-status" role="tab">&gt; sf status</button>
-          <button type="button" class="cli-tab-btn" data-cmd="sf-rollback" role="tab">&gt; sf rollback</button>
-          <button type="button" class="cli-tab-btn" data-cmd="sf-dotfiles" role="tab">&gt; sf dotfiles</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-status" role="tab">&gt; superfedora status</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-rollback" role="tab">&gt; superfedora rollback</button>
+          <button type="button" class="cli-tab-btn" data-cmd="sf-dotfiles" role="tab">&gt; superfedora dotfiles</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-bindings" role="tab">&gt; superagent</button>
           <button type="button" class="cli-tab-btn" data-cmd="sf-theme" role="tab">&gt; supertheme</button>
         </div>

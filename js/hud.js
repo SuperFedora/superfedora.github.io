@@ -99,36 +99,36 @@
 
   var cliCommands = {
     "sf-doctor": {
-      prompt: "sf doctor",
-      output: "[OK] Host OS: Fedora 44 Workstation (x86_64)\n" +
+      prompt: "superfedora doctor (alias: sf doctor)",
+      output: "[OK] Host OS: Fedora 44 Workstation (x86_64) // SELinux: Enforcing\n" +
               "[OK] Compositor: Hyprland 0.53+ (Wayland native, layerrule v2)\n" +
-              "[OK] Session Manager: uwsm + superlock (systemd user session bound)\n" +
+              "[OK] Session Manager: uwsm + superfedora-session.target (systemd --user bound)\n" +
               "[OK] Panels & Dock: supershell + supernotify (10 animated Cast Comms)\n" +
               "[OK] Quake AI & Harness: superagent + OpenClaw + sf-ollama (Super+`) online\n" +
-              "[OK] Btrfs Root: /dev/nvme0n1p3 (Snapper baseline #1 verified)\n" +
+              "[OK] Btrfs Root: /dev/nvme0n1p3 (Snapper baseline #1 + fstrim/oomd active)\n" +
               "[OK] Theme & Audio: supertheme (16 rainbow palettes + 16-bit WAV SFX) active\n\n" +
               "Result: 7/7 systems healthy. Workstation is operational."
     },
     "sf-install": {
-      prompt: "sf install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.6.0\n" +
+      prompt: "superfedora install --build-from-source",
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.8.0\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
-              "[OK] [00-preflight] Host: Fedora 44 (x86_64) | Sudo: YES | Baseline snapshot #1 ready\n" +
+              "[OK] [00-preflight] Host: Fedora 44 (x86_64) | SELinux: Enforcing | Baseline snapshot #1\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
-              "[OK] [20-base] PipeWire, VA-API, mesa-va-drivers, ffmpeg, /etc/superfedora/release\n" +
-              "[OK] [30-session] greetd & tuigreet enabled | uwsm + superlock bound\n" +
+              "[OK] [20-base] PipeWire, portals, zram-generator, systemd-oomd, /etc/superfedora/release\n" +
+              "[OK] [30-session] greetd & tuigreet enabled | Polkit rules | uwsm + superlock bound\n" +
               "[OK] [40-desktop] Hyprland, Quickshell, supertheme, superdock, superbar, supersettings, supernotify\n" +
               "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
               "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
               "[OK] [70-dev] superforge hardware profile + recipes.toml native source builds complete\n" +
               "[OK] [80-ai] superagent, OpenClaw, sf-ollama, Antigravity (agy), Grok, MiniMax, Vibe ready\n" +
-              "[OK] [90-dotfiles] Direct configs + 32 4K wallpapers (01-crimson..16-fuchsia) deployed"
+              "[OK] [90-dotfiles] Direct configs + systemd user units + 32 4K wallpapers deployed"
     },
     "sf-build": {
       prompt: "superforge status",
-      output: "SuperForge v0.6.0 — Native Rust 1.99 Source Compiler & Package Manager\n" +
+      output: "SuperForge v0.3.0 — Native Rust 1.99 Source Compiler & Package Manager\n" +
               "  Target Arch  : -march=native (x86_64, LTO=thin, target-cpu=native)\n" +
-              "  Catalog      : ~/.config/superfedora/recipes.toml (17 targets)\n" +
+              "  Catalog      : ~/.config/superfedora/recipes.toml (19 targets)\n" +
               "  CFLAGS       : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
               "  RUSTFLAGS    : -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols\n\n" +
               "  PRESET       BINARY            STATUS\n" +
@@ -145,9 +145,9 @@
               "  btop         btop              [FORGED]"
     },
     "sf-status": {
-      prompt: "sf status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.6.0 (Rust 1.99 Native Engine)\n" +
-              "Session: hyprland-uwsm.desktop (Wayland) via superlock\n" +
+      prompt: "superfedora status",
+      output: "SuperFedora 16-Bit Workstation // Release 0.8.0 (Rust 1.99 Native Engine)\n" +
+              "Session: hyprland-uwsm.desktop (Wayland) via superfedora-session.target\n" +
               "Theme: Cobalt Blue (12-cobalt) [mode: dark, corners: square, nightlight: off]\n" +
               "Shell: superbar + superdock + supersettings + supernotify (Quickshell QML)\n" +
               "Snapper & Boot-Guard: grub-btrfs active + superfedora-boot-guard.service ready\n" +
@@ -155,25 +155,25 @@
               "AI & Forge: superagent (AGY // OPENCLAW) + superforge (-march=native)"
     },
     "sf-rollback": {
-      prompt: "sf rollback --list",
+      prompt: "superfedora rollback --list",
       output: "[+] Querying Btrfs Snapper timeline & Boot-Guard status...\n" +
               "[OK] GRUB 41_snapshots-btrfs menu generator installed\n" +
               "[OK] superfedora-boot-guard.service armed (auto-rollback after 3 failed boots)\n" +
               "[OK] Found immutable baseline snapshot #1 (superfedora-preinstall-baseline)\n" +
-              "To execute live rollback: run 'sf rollback --baseline' or 'sf rollback <id>'"
+              "To execute live rollback: run 'superfedora rollback --baseline' (or 'sf rollback <id>')"
     },
     "sf-dotfiles": {
-      prompt: "sf dotfiles --check",
-      output: "In sync with SuperFedora v0.6.0\n" +
-              "[OK] ~/.local/bin/ (sf, superfedora, supertheme, superforge, superdock, superbar, supersettings, supernotify, superlock, superagent)\n" +
+      prompt: "superfedora dotfiles --check",
+      output: "In sync with SuperFedora v0.8.0\n" +
+              "[OK] ~/.local/bin/ (superfedora, sf -> superfedora, supertheme, superforge, superdock, superbar, supersettings, supernotify, superlock, superagent)\n" +
+              "[OK] ~/.config/systemd/user/ (superfedora-session.target, supershell, superagent, idlescreen, supertheme-sun.timer, superforge-check.timer)\n" +
               "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
               "[OK] ~/.config/quickshell/ (Bar, SuperDeck, Quattro Dock, 16-bit SNES Osd, LockScreen)\n" +
-              "[OK] ~/Pictures/Wallpapers/ (32 4K dark/light 16-bit Rainbow wallpapers: 01-crimson..16-fuchsia)\n" +
-              "[OK] Managed symlinks: 0 (Strict direct file deployment enforced)"
+              "[OK] ~/Pictures/Wallpapers/ (32 4K dark/light 16-bit Rainbow wallpapers: 01-crimson..16-fuchsia)"
     },
     "sf-bindings": {
       prompt: "superagent status",
-      output: "SuperAgent v0.6.0 — Autonomous Workstation Agent & OpenClaw Harness\n" +
+      output: "SuperAgent v0.2.0 — Autonomous Workstation Agent & OpenClaw Harness\n" +
               "[OK] Active Agent  : agy (Antigravity CLI) // AGY // OPENCLAW Cast Comms\n" +
               "[OK] Local / LAN   : sf-ollama (http://127.0.0.1:11434)\n" +
               "[OK] Installed CLIs: openclaw, agy, mcode (MiniMax), grok (xAI), vibe (Mistral)\n" +
@@ -182,11 +182,11 @@
     "sf-theme": {
       prompt: "supertheme status",
       output: "Active Theme : Cobalt Blue (12-cobalt) [mode: dark, corners: square, nightlight: off]\n" +
-              "Palettes (16): 01-crimson 02-ruby 03-vermilion 04-tangerine 05-amber 06-gold 07-chartreuse 08-emerald\n" +
-              "               09-jade 10-teal 11-cyan 12-cobalt 13-indigo 14-violet 15-magenta 16-fuchsia\n\n" +
+              "Palettes (16): 01-crimson 02-scarlet 03-ember 04-amber 05-topaz 06-citrine 07-peridot 08-emerald\n" +
+              "               09-verdant 10-lagoon 11-glacier 12-cobalt 13-indigo 14-violet 15-orchid 16-fuchsia\n\n" +
               "[OK] Sync Targets : Hyprland, Quickshell, Fuzzel, Kitty, Ghostty, Tmux, Neovim, GTK, OpenRGB\n" +
               "[OK] Geometry     : Square 90-deg pixel corners | Rounded 10px corners (supertheme corners toggle)\n" +
-              "[OK] Audio & Cast : 6 16-bit PCM WAV cues + 5 SVG cast portraits synced"
+              "[OK] Audio & Cast : 6 16-bit PCM WAV cues + 10 SVG cast portraits synced"
     }
   };
 
