@@ -111,7 +111,7 @@
     },
     "sf-install": {
       prompt: "superfedora install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.10.1\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.10.2\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
               "[OK] [00-preflight] Host: Fedora 44 (x86_64) | SELinux: Enforcing | PackageKit 30s | Baseline #1\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
