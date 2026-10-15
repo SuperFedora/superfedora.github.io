@@ -1917,260 +1917,137 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
     <section class="panel-section" id="repos">
       <div class="snes-eyebrow">
         <span class="snes-eyebrow-pip"></span>
-        ECOSYSTEM // OPEN SOURCE GITHUB ORGANIZATION
+        ECOSYSTEM // NATIVE RUST 1.99 WORKSTATION ARCHITECTURE
       </div>
-      <h2 class="section-heading">SuperFedora Repositories</h2>
+      <h2 class="section-heading">SuperFedora Repositories &amp; Binaries</h2>
       <p class="section-desc">
-        All SuperFedora code, installer scripts, dotfiles, and website portals are 100% open source under the Apache 2.0 license.
+        The SuperFedora workstation is engineered across 6 modular open-source repositories and 9 native Rust 1.99 binaries (<code>sf</code>, <code>supertheme</code>, <code>superforge</code>, <code>superdock</code>, <code>superbar</code>, <code>supersettings</code>, <code>supernotify</code>, <code>superlock</code>, <code>superagent</code>) under the Apache 2.0 license.
       </p>
 
-            <div class="marquee-section-wrap" aria-label="SuperFedora Repositories Marquee">
+      <div class="marquee-section-wrap" aria-label="SuperFedora Repositories Marquee">
         <div class="marquee-track-continuous marquee-scroll-right">
 
-        <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora</span>
-            <span class="brand-version-badge">MAIN</span>
-          </div>
-          <p class="repo-desc">
-            Primary orchestrator repository: 10 modular idempotent shell scripts, sf CLI, systemd units, and automated CI test ladder.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/dotfiles</span>
-            <span class="brand-version-badge">CONFIGS</span>
-          </div>
-          <p class="repo-desc">
-            Direct production configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora.github.io</span>
-            <span class="brand-version-badge">PORTAL</span>
-          </div>
-          <p class="repo-desc">
-            Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/.github" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/.github</span>
-            <span class="brand-version-badge">PROFILE</span>
-          </div>
-          <p class="repo-desc">
-            Organization profile, community health standards, and shared configuration files for the SuperFedora project.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/assets</span>
-            <span class="brand-version-badge">ASSETS</span>
-          </div>
-          <p class="repo-desc">
-            Curated 16-bit wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/packages" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/packages</span>
-            <span class="brand-version-badge">RPM SPEC</span>
-          </div>
-          <p class="repo-desc">
-            Curated RPM spec files, COPR build recipes, and third-party repository packaging definitions.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
+          <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superfedora</span>
+              <span class="brand-version-badge">SF / CORE</span>
+            </div>
+            <p class="repo-desc">
+              OS bootstrap, 10 idempotent installer modules (00..90), Btrfs Snapper + Boot-Guard, and native Rust <code>sf</code> / <code>superfedora</code> CLI &amp; TUI orchestrator.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/supertheme" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/supertheme</span>
+              <span class="brand-version-badge">SUPERTHEME</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust <code>supertheme</code> binary: 16-color rainbow palette (01-crimson..16-fuchsia), Dark/Light modes, Square/Rounded geometry, 4K wallpapers, cast portraits, and 16-bit WAV audio cues.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superforge" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superforge</span>
+              <span class="brand-version-badge">SUPERFORGE</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust <code>superforge</code> binary: hardware-tuned <code>-march=native</code> / LTO source compiler, declarative <code>recipes.toml</code> catalog, user-sysroot header staging, 4-stage updates, and chromeless Firefox WebApps.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/supershell" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/supershell</span>
+              <span class="brand-version-badge">SUPERSHELL</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust 16-bit Wayland desktop shell suite: <code>superdock</code>, <code>superbar</code>, <code>supersettings</code>, <code>supernotify</code>, and <code>superlock</code> plus QML runtime components.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superagent" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superagent</span>
+              <span class="brand-version-badge">SUPERAGENT</span>
+            </div>
+            <p class="repo-desc">
+              Standalone autonomous workstation agent (<code>superagent</code>): OpenClaw harness, local/LAN Ollama (<code>sf-ollama</code>), coding agents (<code>agy</code>, <code>mcode</code>, <code>grok</code>, <code>vibe</code>), and <code>AGY // OPENCLAW</code> Cast Comms.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superfedora.github.io</span>
+              <span class="brand-version-badge">PORTAL</span>
+            </div>
+            <p class="repo-desc">
+              Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
 
-<a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora</span>
-            <span class="brand-version-badge">MAIN</span>
-          </div>
-          <p class="repo-desc">
-            Primary orchestrator repository: 10 modular idempotent shell scripts, sf CLI, systemd units, and automated CI test ladder.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/dotfiles</span>
-            <span class="brand-version-badge">CONFIGS</span>
-          </div>
-          <p class="repo-desc">
-            Direct production configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora.github.io</span>
-            <span class="brand-version-badge">PORTAL</span>
-          </div>
-          <p class="repo-desc">
-            Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/.github" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/.github</span>
-            <span class="brand-version-badge">PROFILE</span>
-          </div>
-          <p class="repo-desc">
-            Organization profile, community health standards, and shared configuration files for the SuperFedora project.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/assets</span>
-            <span class="brand-version-badge">ASSETS</span>
-          </div>
-          <p class="repo-desc">
-            Curated 16-bit wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/packages" target="_blank" rel="noopener noreferrer" class="repo-marquee-card">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/packages</span>
-            <span class="brand-version-badge">RPM SPEC</span>
-          </div>
-          <p class="repo-desc">
-            Curated RPM spec files, COPR build recipes, and third-party repository packaging definitions.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-
-
-<a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora</span>
-            <span class="brand-version-badge">MAIN</span>
-          </div>
-          <p class="repo-desc">
-            Primary orchestrator repository: 10 modular idempotent shell scripts, sf CLI, systemd units, and automated CI test ladder.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/dotfiles</span>
-            <span class="brand-version-badge">CONFIGS</span>
-          </div>
-          <p class="repo-desc">
-            Direct production configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora.github.io</span>
-            <span class="brand-version-badge">PORTAL</span>
-          </div>
-          <p class="repo-desc">
-            Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/.github" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/.github</span>
-            <span class="brand-version-badge">PROFILE</span>
-          </div>
-          <p class="repo-desc">
-            Organization profile, community health standards, and shared configuration files for the SuperFedora project.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/assets</span>
-            <span class="brand-version-badge">ASSETS</span>
-          </div>
-          <p class="repo-desc">
-            Curated 16-bit wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/packages" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/packages</span>
-            <span class="brand-version-badge">RPM SPEC</span>
-          </div>
-          <p class="repo-desc">
-            Curated RPM spec files, COPR build recipes, and third-party repository packaging definitions.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-
-<a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora</span>
-            <span class="brand-version-badge">MAIN</span>
-          </div>
-          <p class="repo-desc">
-            Primary orchestrator repository: 10 modular idempotent shell scripts, sf CLI, systemd units, and automated CI test ladder.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/dotfiles</span>
-            <span class="brand-version-badge">CONFIGS</span>
-          </div>
-          <p class="repo-desc">
-            Direct production configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/superfedora.github.io</span>
-            <span class="brand-version-badge">PORTAL</span>
-          </div>
-          <p class="repo-desc">
-            Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/.github" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/.github</span>
-            <span class="brand-version-badge">PROFILE</span>
-          </div>
-          <p class="repo-desc">
-            Organization profile, community health standards, and shared configuration files for the SuperFedora project.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/assets</span>
-            <span class="brand-version-badge">ASSETS</span>
-          </div>
-          <p class="repo-desc">
-            Curated 16-bit wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
-        <a href="https://github.com/SuperFedora/packages" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
-          <div class="repo-header">
-            <span class="repo-title">SuperFedora/packages</span>
-            <span class="brand-version-badge">RPM SPEC</span>
-          </div>
-          <p class="repo-desc">
-            Curated RPM spec files, COPR build recipes, and third-party repository packaging definitions.
-          </p>
-          <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
-        </a>
+          <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superfedora</span>
+              <span class="brand-version-badge">SF / CORE</span>
+            </div>
+            <p class="repo-desc">
+              OS bootstrap, 10 idempotent installer modules (00..90), Btrfs Snapper + Boot-Guard, and native Rust <code>sf</code> / <code>superfedora</code> CLI &amp; TUI orchestrator.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/supertheme" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/supertheme</span>
+              <span class="brand-version-badge">SUPERTHEME</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust <code>supertheme</code> binary: 16-color rainbow palette (01-crimson..16-fuchsia), Dark/Light modes, Square/Rounded geometry, 4K wallpapers, cast portraits, and 16-bit WAV audio cues.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superforge" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superforge</span>
+              <span class="brand-version-badge">SUPERFORGE</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust <code>superforge</code> binary: hardware-tuned <code>-march=native</code> / LTO source compiler, declarative <code>recipes.toml</code> catalog, user-sysroot header staging, 4-stage updates, and chromeless Firefox WebApps.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/supershell" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/supershell</span>
+              <span class="brand-version-badge">SUPERSHELL</span>
+            </div>
+            <p class="repo-desc">
+              Native Rust 16-bit Wayland desktop shell suite: <code>superdock</code>, <code>superbar</code>, <code>supersettings</code>, <code>supernotify</code>, and <code>superlock</code> plus QML runtime components.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superagent" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superagent</span>
+              <span class="brand-version-badge">SUPERAGENT</span>
+            </div>
+            <p class="repo-desc">
+              Standalone autonomous workstation agent (<code>superagent</code>): OpenClaw harness, local/LAN Ollama (<code>sf-ollama</code>), coding agents (<code>agy</code>, <code>mcode</code>, <code>grok</code>, <code>vibe</code>), and <code>AGY // OPENCLAW</code> Cast Comms.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
+          <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" class="repo-marquee-card-clone">
+            <div class="repo-header">
+              <span class="repo-title">SuperFedora/superfedora.github.io</span>
+              <span class="brand-version-badge">PORTAL</span>
+            </div>
+            <p class="repo-desc">
+              Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
+            </p>
+            <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--jewel-hot);">VIEW REPOSITORY &gt;</span>
+          </a>
 
         </div>
       </div>
@@ -2180,32 +2057,62 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
         <div class="repo-card">
           <div class="repo-header">
             <span class="repo-title">SuperFedora/superfedora</span>
-            <span class="brand-version-badge">MAIN</span>
+            <span class="brand-version-badge">SF / CORE</span>
           </div>
           <p class="repo-desc">
-            Primary workstation orchestrator: 10 modular idempotent scripts, sf CLI, systemd uwsm integration, and CI test ladder.
+            OS bootstrap, 10 idempotent installer modules (00..90), Btrfs Snapper + Boot-Guard, and native Rust <code>sf</code> / <code>superfedora</code> CLI &amp; TUI orchestrator.
           </p>
           <a href="https://github.com/SuperFedora/superfedora" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE CORE ORCHESTRATOR</a>
         </div>
         <div class="repo-card">
           <div class="repo-header">
-            <span class="repo-title">SuperFedora/dotfiles</span>
-            <span class="brand-version-badge">CONFIGS</span>
+            <span class="repo-title">SuperFedora/supertheme</span>
+            <span class="brand-version-badge">SUPERTHEME</span>
           </div>
           <p class="repo-desc">
-            Zero-symlink direct user configurations for Hyprland, Quickshell, Fuzzel, IdleScreen, Ghostty, Alacritty, and Neovim.
+            Native Rust <code>supertheme</code> binary: 16-color rainbow palette, Dark/Light modes, Square/Rounded geometry, 4K wallpapers, cast portraits, and 16-bit WAV audio cues.
           </p>
-          <a href="https://github.com/SuperFedora/dotfiles" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE MANAGED CONFIGS</a>
+          <a href="https://github.com/SuperFedora/supertheme" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE SUPERTHEME</a>
         </div>
         <div class="repo-card">
           <div class="repo-header">
-            <span class="repo-title">SuperFedora/assets</span>
-            <span class="brand-version-badge">ART</span>
+            <span class="repo-title">SuperFedora/superforge</span>
+            <span class="brand-version-badge">SUPERFORGE</span>
           </div>
           <p class="repo-desc">
-            Curated 16-bit SNES &amp; Metroid wallpapers, branding avatars, retro sound effects, and pixel icon sheets.
+            Native Rust <code>superforge</code> binary: hardware-tuned <code>-march=native</code> / LTO source compiler, declarative <code>recipes.toml</code> catalog, 4-stage updates, and chromeless WebApps.
           </p>
-          <a href="https://github.com/SuperFedora/assets" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE 16-BIT ASSETS</a>
+          <a href="https://github.com/SuperFedora/superforge" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE SUPERFORGE</a>
+        </div>
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/supershell</span>
+            <span class="brand-version-badge">SUPERSHELL</span>
+          </div>
+          <p class="repo-desc">
+            Native Rust 16-bit Wayland desktop shell suite: <code>superdock</code>, <code>superbar</code>, <code>supersettings</code>, <code>supernotify</code>, and <code>superlock</code>.
+          </p>
+          <a href="https://github.com/SuperFedora/supershell" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE SUPERSHELL</a>
+        </div>
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/superagent</span>
+            <span class="brand-version-badge">SUPERAGENT</span>
+          </div>
+          <p class="repo-desc">
+            Standalone autonomous workstation agent (<code>superagent</code>): OpenClaw, local/LAN Ollama (<code>sf-ollama</code>), coding agents, and <code>AGY // OPENCLAW</code> Cast Comms.
+          </p>
+          <a href="https://github.com/SuperFedora/superagent" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE SUPERAGENT</a>
+        </div>
+        <div class="repo-card">
+          <div class="repo-header">
+            <span class="repo-title">SuperFedora/superfedora.github.io</span>
+            <span class="brand-version-badge">PORTAL</span>
+          </div>
+          <p class="repo-desc">
+            Official 16-bit web documentation, interactive modules HUD, COSMIC keybindings matrix, and bootstrap installer endpoint.
+          </p>
+          <a href="https://github.com/SuperFedora/superfedora.github.io" target="_blank" rel="noopener noreferrer" style="font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--jewel-hot);text-decoration:none;">&gt; BROWSE WEB PORTAL</a>
         </div>
       </div>
     </section>
