@@ -14,7 +14,7 @@
     { kbd: "Super + T", action: "Launch GPU terminal (Kitty)", cat: "launch" },
     { kbd: "Super + A / Super", action: "Launch Fuzzel app library", cat: "launch" },
     { kbd: "Super + B", action: "Launch Firefox browser", cat: "launch" },
-    { kbd: "Super + F", action: "Launch Files (Nautilus) manager", cat: "launch" },
+    { kbd: "Super + E / Super + F", action: "Launch Yazi file manager", cat: "launch" },
     { kbd: "Super + 1 .. 9", action: "Switch to workspace 1-9", cat: "workspace" },
     { kbd: "Super + Ctrl + Left/Right", action: "Previous / next occupied workspace (r-1 / r+1)", cat: "workspace" },
     { kbd: "Super + W", action: "Workspace & window overview picker", cat: "workspace" },
@@ -111,38 +111,38 @@
     },
     "sf-install": {
       prompt: "superfedora install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.9.0\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.10.1\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
               "[OK] [00-preflight] Host: Fedora 44 (x86_64) | SELinux: Enforcing | PackageKit 30s | Baseline #1\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
               "[OK] [20-base] VA-API hardware codecs, Firefox DMABUF, PipeWire, zram-generator, systemd-oomd\n" +
               "[OK] [30-session] greetd & tuigreet enabled | Polkit rules | uwsm + superlock bound\n" +
               "[OK] [40-desktop] Hyprland (VFR + direct_scanout), supershell, supertheme, supernotify\n" +
-              "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
+              "[OK] [50-apps] LibreOffice, Yazi, Zathura, MPV, Helix, Bazaar/Bazarr, btop, fastfetch ready\n" +
               "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
-              "[OK] [70-dev] superforge 2-tier binary cache + recipes.toml native source builds complete\n" +
+              "[OK] [70-dev] superforge 2-tier binary cache + 37 recipes.toml native source builds complete\n" +
               "[OK] [80-ai] superagent watchdog, OpenClaw, sf-ollama, Antigravity (agy), Grok, MiniMax, Vibe\n" +
-              "[OK] [90-dotfiles] Direct configs + systemd user units + 32 4K wallpapers deployed"
+              "[OK] [90-dotfiles] Direct configs + XDG MIME associations + 32 4K wallpapers deployed"
     },
     "sf-build": {
       prompt: "superforge status",
-      output: "SuperForge v0.4.0 — Native Rust 1.99 2-Tier Binary Cache & Source Compiler\n" +
+      output: "SuperForge v0.5.1 — Native Rust 1.99 2-Tier Binary Cache & Source Compiler\n" +
               "  Target Arch  : -march=native (x86_64, LTO=thin, target-cpu=native)\n" +
-              "  Tier-1 Cache : superforge fetch-bin <target> (static musl instant install)\n" +
-              "  Tier-2 Build : superforge background-reforge (-O3 -march=native on AC power)\n" +
+              "  Stamp Store  : ~/.local/share/superfedora/forge/stamps/<name>.stamp + forge.json\n" +
+              "  SHA Auditor  : superforge check-updates (git ls-remote <repo> HEAD diff)\n" +
               "  RUSTFLAGS    : -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols\n\n" +
               "  PRESET       BINARY            STATUS\n" +
               "  superfedora  superfedora (sf)  [FORGED]\n" +
-              "  supertheme   supertheme        [FORGED]\n" +
               "  superforge   superforge        [FORGED]\n" +
-              "  supershell   superdock+3       [FORGED]\n" +
-              "  supernotify  supernotify       [FORGED]\n" +
-              "  superagent   superagent        [FORGED]\n" +
-              "  ripgrep      rg                [FORGED]\n" +
-              "  fastfetch    fastfetch         [FORGED]\n" +
-              "  idlescreen   idlescreen        [FORGED]\n" +
-              "  fd           fd                [FORGED]\n" +
-              "  btop         btop              [FORGED]"
+              "  yazi         yazi              [FORGED]\n" +
+              "  zathura      zathura           [FORGED]\n" +
+              "  helix        hx                [FORGED]\n" +
+              "  oculante     oculante          [FORGED]\n" +
+              "  satty        satty             [FORGED]\n" +
+              "  wl-screenrec wl-screenrec      [FORGED]\n" +
+              "  mpv          mpv               [FORGED]\n" +
+              "  fend         fend              [FORGED]\n" +
+              "  bazarr       bazarr            [FORGED]"
     },
     "sf-status": {
       prompt: "superfedora status",

@@ -67,13 +67,13 @@
       id: "50",
       num: "50",
       slug: "50-apps",
-      name: "Curated Workstation Apps",
-      desc: "Fast, keyboard-driven day-to-day productivity suite. Kitty and foot GPU-accelerated terminals, Firefox with Wayland hardware video decode, GNOME Files (Nautilus), Google Chrome, Microsoft Edge, Tailscale mesh VPN, btop monitor, and fastfetch.",
-      packages: ["kitty", "foot", "firefox", "nautilus", "google-chrome-stable", "microsoft-edge-stable", "tailscale", "btop", "fastfetch"],
-      configs: ["~/.config/kitty/kitty.conf", "~/.config/mimeapps.list"],
-      verification: "kitty -v && firefox -v && btop -v",
-      tags: ["kitty", "Firefox", "Nautilus", "Tailscale", "btop"],
-      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[GPU: TERMINALS]", type: "hot" }, { text: "[NETWORK: TAILSCALE]", type: "cyan" }]
+      name: "DE-Independent Workstation Apps",
+      desc: "100% DE-independent productivity suite plus LibreOffice (Writer, Calc, Impress). Kitty and foot GPU terminals, Firefox with Wayland hardware video decode, Yazi file manager, Zathura PDF/EPUB viewer, imv/oculante image viewers, MPV, Helix, Bazaar Flatpak store, Bazarr subtitle manager, Tailscale, btop, and fastfetch.",
+      packages: ["libreoffice-writer", "libreoffice-calc", "libreoffice-impress", "yazi", "zathura", "imv", "oculante", "mpv", "helix", "bazaar", "bazarr", "kitty", "firefox", "tailscale", "btop", "fastfetch"],
+      configs: ["~/.config/kitty/kitty.conf", "~/.config/mimeapps.list", "~/.local/share/applications/yazi.desktop"],
+      verification: "superforge status && yazi --version && libreoffice --version",
+      tags: ["LibreOffice", "Yazi", "Zathura", "MPV", "Helix", "Bazaar", "Bazarr", "btop"],
+      stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SUITE: DE-INDEPENDENT]", type: "hot" }, { text: "[OFFICE: LIBREOFFICE]", type: "cyan" }]
     },
     {
       id: "60",
