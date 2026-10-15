@@ -1,15 +1,27 @@
 /* js/audio.js — Pure 16-Bit Web Audio API Sound Synthesizer */
 (function() {
   var audioCtx = null;
+  var suspendTimer = null;
   var sfxEnabled = localStorage.getItem("superfedora_sfx") !== "false";
+
+  function scheduleSuspend(delayMs) {
+    if (suspendTimer) clearTimeout(suspendTimer);
+    suspendTimer = setTimeout(function() {
+      suspendTimer = null;
+      if (audioCtx && audioCtx.state === "running" && typeof audioCtx.suspend === "function") {
+        audioCtx.suspend().catch(function() {});
+      }
+    }, delayMs || 500);
+  }
 
   function getAudioContext() {
     if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     }
     if (audioCtx && audioCtx.state === "suspended") {
-      audioCtx.resume();
+      audioCtx.resume().catch(function() {});
     }
+    scheduleSuspend(500);
     return audioCtx;
   }
 
@@ -140,7 +152,7 @@
 
     // Unlock Web Audio on first user interaction
     function unlockAudio() {
-      getAudioContext();
+      if (sfxEnabled) getAudioContext();
       window.removeEventListener("pointerdown", unlockAudio);
       window.removeEventListener("keydown", unlockAudio);
     }
