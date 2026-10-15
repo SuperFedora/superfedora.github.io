@@ -111,25 +111,25 @@
     },
     "sf-install": {
       prompt: "superfedora install --build-from-source",
-      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.8.0\n" +
+      output: "[+] SUPERFEDORA 16-BIT WORKSTATION INSTALLER // v0.9.0\n" +
               "[+] Mode: build-from-source (-march=native -mtune=native -flto=auto | target-cpu=native)\n" +
-              "[OK] [00-preflight] Host: Fedora 44 (x86_64) | SELinux: Enforcing | Baseline snapshot #1\n" +
+              "[OK] [00-preflight] Host: Fedora 44 (x86_64) | SELinux: Enforcing | PackageKit 30s | Baseline #1\n" +
               "[OK] [10-repos] RPM Fusion, lionheartp/Hyprland COPR, IdleScreen, Tailscale configured\n" +
-              "[OK] [20-base] PipeWire, portals, zram-generator, systemd-oomd, /etc/superfedora/release\n" +
+              "[OK] [20-base] VA-API hardware codecs, Firefox DMABUF, PipeWire, zram-generator, systemd-oomd\n" +
               "[OK] [30-session] greetd & tuigreet enabled | Polkit rules | uwsm + superlock bound\n" +
-              "[OK] [40-desktop] Hyprland, Quickshell, supertheme, superdock, superbar, supersettings, supernotify\n" +
+              "[OK] [40-desktop] Hyprland (VFR + direct_scanout), supershell, supertheme, supernotify\n" +
               "[OK] [50-apps] Kitty, Firefox, Nautilus, Tailscale, btop, fastfetch ready\n" +
               "[OK] [60-idlescreen] Exclusive 16-bit superfedora theme unlocked | 120s timeout\n" +
-              "[OK] [70-dev] superforge hardware profile + recipes.toml native source builds complete\n" +
-              "[OK] [80-ai] superagent, OpenClaw, sf-ollama, Antigravity (agy), Grok, MiniMax, Vibe ready\n" +
+              "[OK] [70-dev] superforge 2-tier binary cache + recipes.toml native source builds complete\n" +
+              "[OK] [80-ai] superagent watchdog, OpenClaw, sf-ollama, Antigravity (agy), Grok, MiniMax, Vibe\n" +
               "[OK] [90-dotfiles] Direct configs + systemd user units + 32 4K wallpapers deployed"
     },
     "sf-build": {
       prompt: "superforge status",
-      output: "SuperForge v0.3.0 — Native Rust 1.99 Source Compiler & Package Manager\n" +
+      output: "SuperForge v0.4.0 — Native Rust 1.99 2-Tier Binary Cache & Source Compiler\n" +
               "  Target Arch  : -march=native (x86_64, LTO=thin, target-cpu=native)\n" +
-              "  Catalog      : ~/.config/superfedora/recipes.toml (19 targets)\n" +
-              "  CFLAGS       : -O3 -pipe -march=native -mtune=native -flto=auto -fno-plt\n" +
+              "  Tier-1 Cache : superforge fetch-bin <target> (static musl instant install)\n" +
+              "  Tier-2 Build : superforge background-reforge (-O3 -march=native on AC power)\n" +
               "  RUSTFLAGS    : -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols\n\n" +
               "  PRESET       BINARY            STATUS\n" +
               "  superfedora  superfedora (sf)  [FORGED]\n" +
@@ -146,38 +146,39 @@
     },
     "sf-status": {
       prompt: "superfedora status",
-      output: "SuperFedora 16-Bit Workstation // Release 0.8.0 (Rust 1.99 Native Engine)\n" +
-              "Session: hyprland-uwsm.desktop (Wayland) via superfedora-session.target\n" +
-              "Theme: Cobalt Blue (12-cobalt) [mode: dark, corners: square, nightlight: off]\n" +
-              "Shell: superbar + superdock + supersettings + supernotify (Quickshell QML)\n" +
-              "Snapper & Boot-Guard: grub-btrfs active + superfedora-boot-guard.service ready\n" +
-              "16-Bit SNES Audio: supertheme sfx [ON] | IdleScreen: superfedora 16-bit theme\n" +
-              "AI & Forge: superagent (AGY // OPENCLAW) + superforge (-march=native)"
+      output: "SuperFedora 16-Bit Workstation // Release 0.9.0 (Rust 1.99 Native Engine)\n" +
+              "Session: hyprland-uwsm.desktop (VFR + Direct Scanout) via superfedora-session.target\n" +
+              "Workstation Mode: BALANCED (superfedora mode [stealth|balanced|forge|arcade])\n" +
+              "Hardware Video: VA-API + Firefox Zero-Copy DMABUF (superfedora hardware optimize)\n" +
+              "Shell & Overlay: superbar (--stream-json / hud) + supernotify (overlay / 10 Cast Specialists)\n" +
+              "Time-Machine: superfedora snapshot [list|diff|create|restore] + DNF5 auto-hooks\n" +
+              "Declarative Clone: superfedora export / import ~/.config/superfedora/workstation.toml"
     },
     "sf-rollback": {
-      prompt: "superfedora rollback --list",
-      output: "[+] Querying Btrfs Snapper timeline & Boot-Guard status...\n" +
-              "[OK] GRUB 41_snapshots-btrfs menu generator installed\n" +
-              "[OK] superfedora-boot-guard.service armed (auto-rollback after 3 failed boots)\n" +
+      prompt: "superfedora snapshot list",
+      output: "[+] Querying Btrfs Time-Machine Vault & DNF5 superfedora-snapper.actions...\n" +
+              "[OK] DNF5 Auto-Hook: /etc/dnf/libdnf5-plugins/actions.d/superfedora-snapper.actions\n" +
+              "[OK] GRUB 41_snapshots-btrfs menu generator + superfedora-boot-guard.service armed\n" +
               "[OK] Found immutable baseline snapshot #1 (superfedora-preinstall-baseline)\n" +
-              "To execute live rollback: run 'superfedora rollback --baseline' (or 'sf rollback <id>')"
+              "Run 'superfedora snapshot diff 1 0' or 'superfedora snapshot restore 1'"
     },
     "sf-dotfiles": {
       prompt: "superfedora dotfiles --check",
-      output: "In sync with SuperFedora v0.8.0\n" +
+      output: "In sync with SuperFedora v0.9.0\n" +
               "[OK] ~/.local/bin/ (superfedora, sf -> superfedora, supertheme, superforge, superdock, superbar, supersettings, supernotify, superlock, superagent)\n" +
               "[OK] ~/.config/systemd/user/ (superfedora-session.target, supershell, superagent, idlescreen, supertheme-sun.timer, superforge-check.timer)\n" +
-              "[OK] ~/.config/hypr/ (bindings, windows, looknfeel, hyprlock, quake-ai.sh)\n" +
+              "[OK] ~/.config/hypr/ (bindings, windows, looknfeel [vfr=true, direct_scanout=true], hyprlock, quake-ai.sh)\n" +
               "[OK] ~/.config/quickshell/ (Bar, SuperDeck, Quattro Dock, 16-bit SNES Osd, LockScreen)\n" +
               "[OK] ~/Pictures/Wallpapers/ (32 4K dark/light 16-bit Rainbow wallpapers: 01-crimson..16-fuchsia)"
     },
     "sf-bindings": {
-      prompt: "superagent status",
-      output: "SuperAgent v0.2.0 — Autonomous Workstation Agent & OpenClaw Harness\n" +
-              "[OK] Active Agent  : agy (Antigravity CLI) // AGY // OPENCLAW Cast Comms\n" +
-              "[OK] Local / LAN   : sf-ollama (http://127.0.0.1:11434)\n" +
-              "[OK] Installed CLIs: openclaw, agy, mcode (MiniMax), grok (xAI), vibe (Mistral)\n" +
-              "[OK] Quake Console : Super + ` (Grave) drop-down terminal ready"
+      prompt: "superagent watchdog",
+      output: "SuperAgent v0.3.0 — Zero-Token Workstation Telemetry & Anomaly Watchdog\n" +
+              "[OK] [SYS MEDIC]   CPU/NVMe Thermals & Battery Health nominal (BTRFS // HEALER)\n" +
+              "[OK] [SEC ALERT]   SELinux: Enforcing | Polkit Guard active (POLKIT // GUARD)\n" +
+              "[OK] [NAVIGATOR]   Default Route & Tailscale/WireGuard tunnel healthy (NET // TAILSCALE)\n" +
+              "[OK] [COMMANDER]   0 failed systemd system/user units (FLEET // OPS)\n" +
+              "[OK] [AI AGENT]    agy (Antigravity CLI) + sf-ollama ready (Super + ` Grave)"
     },
     "sf-theme": {
       prompt: "supertheme status",
