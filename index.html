@@ -697,6 +697,42 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
         </div>
         </div>
       </div>
+
+      <!-- DE-INDEPENDENT COMPLETE APPLICATION SUITE MATRIX -->
+      <div class="rpg-window" id="de-independent-apps" style="margin-top: 24px;">
+        <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 6px;">
+          [ 100% DE-INDEPENDENT COMPLETE APPLICATION SUITE // ZERO GNOME OR KDE BLOAT ]
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.55; margin-bottom: 14px;">
+          Every daily-driver desktop category is pre-configured out of the box without pulling in heavy GNOME (<code>nautilus</code>, <code>gnome-calculator</code>, <code>gnome-control-center</code>) or KDE Frameworks dependencies. File associations are wired in <code>~/.config/mimeapps.list</code> and every non-RPM tool is tracked by <code>superforge</code> (37 recipes in <code>recipes.toml</code>).
+        </p>
+        <div class="manual-grid">
+          <div class="app-suite-card" style="border: 1px solid var(--border-dim); padding: 12px; background: rgba(7, 8, 11, 0.65);">
+            <h4 style="font-family: var(--font-mono); font-size: 13px; color: var(--jewel-hot); margin-bottom: 6px;">FILES, ARCHIVES &amp; STORAGE</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              <code>yazi</code> (<code>Super+E</code> async TUI file manager with Kitty image previews) &bull; <code>ouch</code> (unified archive compressor/extractor) &bull; <code>dua-cli</code> (<code>dua i</code> interactive disk cleaner) &bull; <code>udiskie</code> (<code>udisks2</code> USB automounter).
+            </p>
+          </div>
+          <div class="app-suite-card" style="border: 1px solid var(--border-dim); padding: 12px; background: rgba(7, 8, 11, 0.65);">
+            <h4 style="font-family: var(--font-mono); font-size: 13px; color: var(--jewel-hot); margin-bottom: 6px;">OFFICE SUITE, PDF &amp; DOCUMENTS</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              <strong>LibreOffice</strong> (<code>libreoffice-writer</code>, <code>calc</code>, <code>impress</code> full office suite) &bull; <code>zathura</code> + <code>zathura-pdf-mupdf</code> (vim-key PDF/EPUB reader) &bull; <code>typst</code> (instant PDF typesetter) &bull; <code>csvlens</code> (TUI CSV/TSV viewer).
+            </p>
+          </div>
+          <div class="app-suite-card" style="border: 1px solid var(--border-dim); padding: 12px; background: rgba(7, 8, 11, 0.65);">
+            <h4 style="font-family: var(--font-mono); font-size: 13px; color: var(--jewel-hot); margin-bottom: 6px;">GRAPHICS, SCREENSHOTS &amp; RECORDING</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              <code>imv</code> &amp; <code>oculante</code> (Wayland &amp; GPU image viewer/editor) &bull; <code>grim</code> + <code>slurp</code> + <code>satty</code> (<code>Super+Shift+S</code> screenshot annotation) &bull; <code>hyprpicker</code> (<code>Super+Print</code> pixel picker) &bull; <code>wl-screenrec</code> (VA-API recorder).
+            </p>
+          </div>
+          <div class="app-suite-card" style="border: 1px solid var(--border-dim); padding: 12px; background: rgba(7, 8, 11, 0.65);">
+            <h4 style="font-family: var(--font-mono); font-size: 13px; color: var(--jewel-hot); margin-bottom: 6px;">MEDIA, AUDIO, CODE &amp; UTILITIES</h4>
+            <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+              <code>mpv</code> (VA-API video player) &bull; <code>termusic</code> + <code>cava</code> + <code>wiremix</code> (music, PipeWire spectrum &amp; mixer) &bull; <code>helix</code> (<code>hx</code>) + <code>neovim</code> &bull; <code>fend</code> (unit-aware calculator) &bull; <code>cliphist</code> (<code>Super+V</code> clipboard) &bull; <code>bazaar</code> (<code>io.github.kolunmi.Bazaar</code> Flatpak store) &amp; <code>bazarr</code>.
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- SECTION 3: PHILOSOPHY & COMPARISON -->
@@ -1679,15 +1715,15 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
           <div class="swap-card">
             <div class="preinstalled-header">
               <h4 class="preinstalled-title">05 // Package &amp; Native Build Pipeline</h4>
-              <span class="preinstalled-badge">[2-TIER SUPERFORGE]</span>
+              <span class="preinstalled-badge">[37 FORGE RECIPES]</span>
             </div>
             <div class="swap-row swap-stock">
               <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
-              Only baseline <code>dnf5</code> (~400 core packages, no <code>git</code>/<code>gcc</code>/<code>cargo</code> pre-installed) and generic <code>x86_64</code> binaries without CPU-specific tuning.
+              Only baseline <code>dnf5</code> (~400 core packages, no <code>git</code>/<code>gcc</code>/<code>cargo</code> pre-installed), generic <code>x86_64</code> binaries, and zero tracking for non-RPM source builds.
             </div>
             <div class="swap-row swap-super">
               <span class="swap-label">[+] SuperFedora Layer</span><br>
-              Stage-0 bootstrap + 3-layer pipeline: <code>dnf5</code> base + <code>superforge</code> (Tier-1 instant static <code>musl</code> binary cache + Tier-2 background <code>-O3 -march=native -flto=thin</code> source re-forge &amp; chromeless Firefox WebApps) + <code>flatpak</code>.
+              3-layer pipeline: <code>dnf5</code> base + <code>superforge</code> (37 hardware-tuned <code>-O3 -march=native -flto=auto</code> recipes tracked via <code>~/.local/share/superfedora/forge/stamps/*.stamp</code> git SHAs &amp; <code>forge.json</code> + Firefox WebApps) + Flathub/<code>bazaar</code>.
             </div>
           </div>
 
@@ -1742,16 +1778,16 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
           <!-- Swap 9: Control Panels & Utilities -->
           <div class="swap-card">
             <div class="preinstalled-header">
-              <h4 class="preinstalled-title">09 // Control Panels &amp; System Utilities</h4>
-              <span class="preinstalled-badge">[RATATUI // 16-BIT]</span>
+              <h4 class="preinstalled-title">09 // DE-Independent Apps &amp; Utilities</h4>
+              <span class="preinstalled-badge">[RATATUI // WAYLAND]</span>
             </div>
             <div class="swap-row swap-stock">
               <span class="swap-label">[-] Bare Fedora Minimal Base</span><br>
-              Raw CLI config files only (or heavy GTK/Qt settings dialogs and slow GUI software centers on traditional desktops).
+              Raw CLI config files only (or heavy GNOME/KDE suites like <code>nautilus</code>, <code>gnome-calculator</code>, and <code>gnome-control-center</code> pulling in 600MB+ of desktop daemons).
             </div>
             <div class="swap-row swap-super">
               <span class="swap-label">[+] SuperFedora Layer</span><br>
-              Fast native Rust Ratatui TUIs: <code>superfedora</code>, <code>supersettings</code>, <code>supertheme</code>, <code>superforge</code>, <code>supernotify</code>, <code>superagent</code>, <code>wiremix</code>, <code>wlctl</code>, <code>bluetui</code>, <code>btop</code>, <code>fastfetch</code>, <code>fuzzel</code>, and <code>idlescreen</code>.
+              100% DE-independent lineup: <strong>LibreOffice</strong>, <code>yazi</code>, <code>zathura</code>, <code>typst</code>, <code>csvlens</code>, <code>imv</code>, <code>oculante</code>, <code>satty</code>, <code>wl-screenrec</code>, <code>mpv</code>, <code>termusic</code>, <code>cava</code>, <code>helix</code>, <code>fend</code>, <code>ouch</code>, <code>dua-cli</code>, <code>cliphist</code>, <code>btop</code>, <code>fastfetch</code>, <code>lazygit</code>, <code>bazaar</code>, <code>bazarr</code>, and all <code>super*</code> Rust TUIs.
             </div>
           </div>
         </div>
@@ -1790,18 +1826,18 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
           <!-- Manual Card 2: superforge -->
           <div class="manual-card">
             <div class="preinstalled-header">
-              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">2. Hybrid Binary &amp; Source Forge (superforge)</h4>
-              <span class="preinstalled-badge">[SUPERFORGE]</span>
+              <h4 class="preinstalled-title" style="color: var(--jewel-hot);">2. Non-RPM Source Tracker &amp; Forge (superforge)</h4>
+              <span class="preinstalled-badge">[SUPERFORGE // 37 RECIPES]</span>
             </div>
             <ul class="manual-cmd-list">
-              <li><code>superforge</code> — Launch interactive Native Source Builder &amp; WebApp TUI.</li>
-              <li><code>superforge status</code> — Display CPU microarchitecture flags, LTO status, and forged binary manifest.</li>
-              <li><code>superforge fetch-bin &lt;target|all&gt;</code> — Tier-1 Quick Install: download pre-forged static <code>musl</code> binaries in seconds.</li>
-              <li><code>superforge background-reforge</code> — Tier-2 low-priority (<code>nice -n 19</code>, <code>IOSchedulingClass=idle</code>) native <code>-O3 -march=native -flto=thin</code> rebuild on AC power.</li>
-              <li><code>superforge build &lt;target|all&gt; [--pgo]</code> — Compile target(s) from <code>recipes.toml</code> with optional LLVM Profile-Guided Optimization.</li>
-              <li><code>superforge update</code> — 4-stage update checker comparing installed versions against upstream GitHub releases.</li>
-              <li><code>superforge verify</code> — Verify ELF symbols, strip status, and SHA256 receipts in <code>~/.local/state/superforge/</code>.</li>
-              <li><code>superforge webapp [list|install &lt;id&gt;|remove &lt;id&gt;]</code> — Manage isolated, chromeless Firefox Wayland WebApps.</li>
+              <li><code>superforge</code> — Launch interactive 37-recipe Native Source Builder &amp; WebApp TUI.</li>
+              <li><code>superforge status</code> — Display CPU microarchitecture flags, LTO status, stamp store (<code>~/.local/share/superfedora/forge/stamps</code>), and forged binary sizes + git SHAs.</li>
+              <li><code>superforge check-updates [--dry-run]</code> — Parallel upstream audit comparing local <code>.stamp</code> git SHAs against remote <code>git ls-remote &lt;repo&gt; HEAD</code>.</li>
+              <li><code>superforge &lt;preset|owner/repo&gt; [--force]</code> — Clone, stage <code>-devel</code> headers, compile with <code>-O3 -march=native -flto=auto</code>, install to <code>~/.local/bin/</code>, and record <code>.stamp</code> + <code>forge.json</code>.</li>
+              <li><code>superforge update [--force]</code> — 4-stage update: (1) <code>dnf upgrade</code>, (2) Flatpak + <code>rustup update</code>, (3) rebuild outdated source stamps, (4) refresh Firefox WebApps.</li>
+              <li><code>superforge rebuild</code> — Force-recompile all tracked source targets in <code>~/.config/superfedora/forge.json</code> for the current CPU.</li>
+              <li><code>superforge deps &lt;target&gt; [--install]</code> — Inspect or stage Fedora <code>-devel</code> build dependencies.</li>
+              <li><code>superforge webapp &lt;url&gt; [name] [--isolated|--shared]</code> — Forge chromeless Wayland Firefox WebApp and pin to SuperDock.</li>
             </ul>
           </div>
 
@@ -1874,10 +1910,37 @@ sf rollback       # Revert system to pre-install Btrfs baseline snapshot #1</cod
         </div>
       </div>
 
-      <!-- PART 3: WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE & CLONING -->
+      <!-- PART 3: HOW SUPERFORGE TRACKS & UPDATES NON-RPM SOURCE BUILDS -->
+      <div class="rpg-window" id="superforge-stamp-tracker" style="margin-top: 24px;">
+        <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 8px;">
+          [ PART III // HOW SUPERFORGE TRACKS &amp; UPDATES NON-RPM SOURCE BUILDS (.STAMP GIT SHAS + FORGE.JSON) ]
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+          Unlike untracked <code>cargo install</code> or manual <code>make install</code> binaries, every non-RPM package compiled by <code>superforge</code> (across Cargo, CMake, Meson, QMake, Go, Zig, and Python) writes a cryptographic build receipt in <code>~/.local/share/superfedora/forge/stamps/&lt;name&gt;.stamp</code> and registers its metadata in <code>~/.config/superfedora/forge.json</code>:
+        </p>
+        <pre><code style="color: #7dcfff; font-family: var(--font-mono); font-size: 13px;"># 1. Stamp Receipt Format (~/.local/share/superfedora/forge/stamps/yazi.stamp)
+component=yazi
+repo=https://github.com/sxyazi/yazi.git
+sha=ffb2e78cc7bf043934a1a76e54b5899d6dc9e812
+binary=/home/operator/.local/bin/yazi
+arch=skylake
+flags=-O3 -pipe -march=native -mtune=native -flto=auto | -C opt-level=3 -C target-cpu=native -C codegen-units=1 -C strip=symbols
+timestamp=2026-10-15T12:56:18Z
+
+# 2. Audit Local Stamp Git SHAs Against Upstream HEAD (Parallel 12-Thread git ls-remote)
+superforge check-updates              # Compares every ~/.local/share/superfedora/forge/stamps/*.stamp SHA vs remote HEAD
+
+# 3. Four-Stage Unified Update Pipeline (superforge update / sf forge update)
+#   [1/4] System RPMs   : sudo dnf upgrade --refresh -y (with automatic pre/post Snapper Btrfs snapshots)
+#   [2/4] Runtimes      : flatpak update -y (including Bazaar io.github.kolunmi.Bazaar) &amp;&amp; rustup update
+#   [3/4] Source Builds : Rebuilds any recipe in stamps/*.stamp whose remote HEAD SHA != local stamp SHA
+#   [4/4] WebApps       : Refreshes chromeless Firefox Wayland WebApp icons, desktop launchers &amp; profiles</code></pre>
+      </div>
+
+      <!-- PART 4: WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE & CLONING -->
       <div class="rpg-window" style="margin-top: 24px;">
         <h3 style="font-family: var(--font-mono); font-size: 16px; font-weight: 700; color: var(--jewel-hot); margin-bottom: 8px;">
-          [ PART III // WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE &amp; CLONING ]
+          [ PART IV // WORKSTATION MODES, 10 CAST SPECIALISTS, SYSTEMD UNITS, BTRFS TIME-MACHINE &amp; CLONING ]
         </h3>
         <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
           Reference workflows for 16-bit Workstation Modes, Cast Specialists, <code>systemd</code> system/user units &amp; timers, Btrfs Snapper Time-Machine rollbacks, and declarative <code>workstation.toml</code> cloning:

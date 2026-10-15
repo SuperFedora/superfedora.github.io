@@ -202,8 +202,10 @@ def run_tests():
         assert cdp.eval("Boolean(document.querySelector('.cli-tabs') && document.getElementById('cli-output').textContent.includes('sf') && document.getElementById('cli-copy-cmd'))"), "CLI simulator"
         assert cdp.eval("document.querySelectorAll('#manual .swap-card').length === 9 && document.querySelectorAll('#manual .swap-stock').length === 9 && document.querySelectorAll('#manual .swap-super').length === 9"), "9 Stock Fedora vs SuperFedora swap cards"
         assert cdp.eval("document.querySelectorAll('#manual .manual-card').length === 6 && document.querySelectorAll('#manual .manual-cmd-list li').length >= 40"), "6 Operator Manual CLI/TUI cards with >=40 command entries"
+        assert cdp.eval("Boolean(document.getElementById('de-independent-apps')) && document.getElementById('de-independent-apps').textContent.includes('LibreOffice') && document.getElementById('de-independent-apps').textContent.includes('yazi')"), "DE-Independent Application Suite missing in #pre-installed"
+        assert cdp.eval("Boolean(document.getElementById('superforge-stamp-tracker')) && document.getElementById('superforge-stamp-tracker').textContent.includes('check-updates') && document.getElementById('superforge-stamp-tracker').textContent.includes('forge.json')"), "SuperForge stamp tracker section missing in #manual"
         manual_txt = cdp.eval("document.getElementById('manual').textContent")
-        for req_token in ["fastfetch", "/etc/systemd/zram-generator.conf.d/superfedora.conf", "50-superfedora.rules", "superagent-watchdog.timer", "workstation.toml"]:
+        for req_token in ["fastfetch", "/etc/systemd/zram-generator.conf.d/superfedora.conf", "50-superfedora.rules", "superagent-watchdog.timer", "workstation.toml", "LibreOffice", "check-updates"]:
             assert req_token in manual_txt, f"Missing required token '{req_token}' in #manual"
         assert cdp.eval("Boolean(document.querySelector('.header-nav-links a[href=\"#manual\"]') && document.querySelector('.footer-nav a[href=\"#manual\"]'))"), "Header and footer nav links to #manual"
         cdp.call("Emulation.setDeviceMetricsOverride", {"width": 320, "height": 640, "deviceScaleFactor": 1, "mobile": True})
