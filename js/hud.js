@@ -103,7 +103,7 @@
       output: "[OK] Host OS: Fedora 44 Workstation (x86_64)\n" +
               "[OK] Compositor: Hyprland 0.53+ (Wayland native, layerrule v2)\n" +
               "[OK] Session Manager: uwsm + superlock (systemd user session bound)\n" +
-              "[OK] Panels & Dock: supershell (superdock, superbar, supersettings, supernotify)\n" +
+              "[OK] Panels & Dock: supershell + supernotify (10 animated Cast Comms)\n" +
               "[OK] Quake AI & Harness: superagent + OpenClaw + sf-ollama (Super+`) online\n" +
               "[OK] Btrfs Root: /dev/nvme0n1p3 (Snapper baseline #1 verified)\n" +
               "[OK] Theme & Audio: supertheme (16 rainbow palettes + 16-bit WAV SFX) active\n\n" +
@@ -135,7 +135,8 @@
               "  superfedora  superfedora (sf)  [FORGED]\n" +
               "  supertheme   supertheme        [FORGED]\n" +
               "  superforge   superforge        [FORGED]\n" +
-              "  supershell   superdock+4       [FORGED]\n" +
+              "  supershell   superdock+3       [FORGED]\n" +
+              "  supernotify  supernotify       [FORGED]\n" +
               "  superagent   superagent        [FORGED]\n" +
               "  ripgrep      rg                [FORGED]\n" +
               "  fastfetch    fastfetch         [FORGED]\n" +

@@ -56,11 +56,11 @@
       num: "40",
       slug: "40-desktop",
       name: "Hyprland, SuperShell & SuperTheme",
-      desc: "High-refresh Hyprland 0.53+ compositor, native Rust supershell suite (superdock, superbar, supersettings, supernotify, superlock), native Rust supertheme (16-color rainbow palette + 16-bit WAV SFX), Quickshell multi-edge QML panels, fuzzel, and Ratatui TUIs (wiremix, wlctl, bluetui).",
+      desc: "High-refresh Hyprland 0.53+ compositor, native Rust supershell suite (superdock, superbar, supersettings, superlock), standalone supernotify (10 animated 16-bit Cast specialists + stage banners), native Rust supertheme (16-color rainbow palette + 16-bit WAV SFX), Quickshell multi-edge QML panels, fuzzel, and Ratatui TUIs (wiremix, wlctl, bluetui).",
       packages: ["hyprland", "hypridle", "hyprlock", "hyprpaper", "quickshell", "supertheme", "superdock", "superbar", "supersettings", "supernotify", "superlock", "fuzzel", "wiremix", "wlctl", "bluetui"],
       configs: ["~/.config/hypr/hyprland.conf", "~/.config/quickshell/shell.qml", "~/.config/quickshell/panels/QuakeAi.qml"],
       verification: "supertheme status && superdock status && hyprctl version",
-      tags: ["Hyprland", "Quickshell", "supertheme", "supershell", "wiremix", "wlctl", "bluetui"],
+      tags: ["Hyprland", "Quickshell", "supertheme", "supershell", "supernotify", "wiremix", "wlctl", "bluetui"],
       stats: [{ text: "[STATUS: IDEMPOTENT]", type: "ready" }, { text: "[SHELL: SUPERSHELL + QML]", type: "hot" }, { text: "[THEME: SUPERTHEME 16-COLOR]", type: "cyan" }]
     },
     {
